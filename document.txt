@@ -26,7 +26,7 @@ Provision Message:
       p: { type: "number", alias: "RealPower" },
       q: { type: "number", alias: "ReactivePower" },
     }
-# Telemetry
+# Telemetry 
 Telemetry Topic: APIKEY/upstream
 Telemetry Message:
 {
