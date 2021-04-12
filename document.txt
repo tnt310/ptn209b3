@@ -19,7 +19,7 @@ Provisioning response example: Thingsboard provision response
 
 Provision Message:
 {
-    type: "provision",
+    type: "provision",  // if downlink: type is response
     payload: {
       v: { type: "number", alias: "Voltage" },
       i: { type: "number", alias: "Current" },
