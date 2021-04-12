@@ -1,0 +1,28 @@
+#Provision
+
+Provision Topic:
+- APIKEY/upstream
+- APIKEY: unique of every distinct gateway
+
+Provisioning request example: Thingsboard provision request
+{
+  "deviceName": "DEVICE_NAME",
+  "provisionDeviceKey": "YOUR_PROVISION_KEY_HERE",
+  "provisionDeviceSecret": "YOUR_PROVISION_SECRET_HERE"
+}
+Provisioning response example: Thingsboard provision response
+{
+  "provisionDeviceStatus":"SUCCESS",  
+  "credentialsType":"ACCESS_TOKEN",
+  "accessToken":"sLzc0gDAZPkGMzFVTyUY"
+}
+
+Provision Message:
+{
+    type: "provision",
+    payload: {
+      v: { type: "number", alias: "Voltage" },
+      i: { type: "number", alias: "Current" },
+      p: { type: "number", alias: "RealPower" },
+      q: { type: "number", alias: "ReactivePower" },
+    }
