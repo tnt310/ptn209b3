@@ -7,7 +7,6 @@ char reg[10];
 char dev[10];
 char publish_buffer[1000];
 /*------------------------------------------------------------------------------*/
-enum
 typedef struct{ // STRUCT DATA FROM EEPROM
     int id; // id
     int func;
@@ -25,6 +24,18 @@ data_t table[200] =
 	2,	3,	9,	"Voltage", "INV",
 	5, 3, 	5,	"Power", "INV"
 };
+/*------------------------------------------------------------------*/
+int* itoa_user(int val, int  base) {
+
+	static int buf[32] = { 0 };  // 32 bits
+	int i = 30;
+	if (val == 0)
+		buf[i--] = '0';
+	for (; val && i; --i, val /= base)
+		buf[i] = "0123456789abcdef"[val % base];
+
+	return &buf[i + 1];
+}
 /*----------------------------GET REG NAME AND DEV NAME--------------------------------------*/
 int Get_name(char name_1[10],char name_2[10],unsigned int channel, unsigned int id, unsigned int func, unsigned short reg)
 {
