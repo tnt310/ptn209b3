@@ -10,6 +10,7 @@ char chan[5] ="CH1";
 char buffer[50];
 char time[20] = "10:10:25 26.6.2021";
 char publih_buffer[200];
+int main_time[6] = {15,11,25,26,6,21};
 /*------------------------------------------	------------------------------------*/
 typedef struct{ // STRUCT DATA FROM EEPROM
     int id; // id
@@ -52,11 +53,9 @@ int Get_name(char name_reg[10],char name_dev[10],char channel[5], unsigned int i
 	}
 }
 /*----------------------------CREATE JSON STRING--------------------------------------------------*/
-int createJson(char demo[50],char channel[5],char name_reg[10],char name_dev[10], int val)
+int createJson(char demo[100],char channel[5],char name_reg[10],char name_dev[10], int val, int time[6])
 {
-	memset(demo,0,50);
-	//strcat(demo,"{\"");
-	//strcat(demo,"\"");
+	memset(demo,0,100);
 	strcat(demo,chan);
 	strcat(demo,"_");
 	strcat(demo,name_dev);
@@ -64,7 +63,17 @@ int createJson(char demo[50],char channel[5],char name_reg[10],char name_dev[10]
 	strcat(demo,name_reg);
 	strcat(demo,":");
     strcat(demo,"[{time:");
-    strcat(demo,time);
+    strcat(demo,itoa_user(time[0], 10)); // Hour
+    strcat(demo,":");
+    strcat(demo,itoa_user(time[1], 10)); // Minute
+    strcat(demo,":");
+    strcat(demo,itoa_user(time[2], 10)); //Second
+    strcat(demo," ");
+    strcat(demo,itoa_user(time[3], 10));// Month
+    strcat(demo,".");
+    strcat(demo,itoa_user(time[4], 10)); // Day
+    strcat(demo,".");
+    strcat(demo,itoa_user(time[5], 10)); //Year
     strcat(demo,",");
     strcat(demo,"value");
     strcat(demo,":");
@@ -79,14 +88,14 @@ int main()
     //Get_name(reg, dev, chan, table[i].id, table[i].func, table[i].reg_adr);
     //printf("%s\n",reg);
    // printf("%s",dev);
-   strcat(buffer,"{");
+   strcat(publih_buffer,"{");
    for (i = 0; i< 4; i++)
    {
-        createJson(buffer,chan,table[i].name,table[i].name_dev,table[i].reg_adr);
-        if (i<3)
+        createJson(buffer,chan,table[i].name,table[i].name_dev,table[i].reg_adr,main_time);
+        if (i < 3)
         {
-            strcat(buffer,",");
             strcat(publih_buffer,buffer);
+            strcat(publih_buffer,",");
         }
         else
         {
