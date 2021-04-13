@@ -7,6 +7,12 @@ char reg[10];
 char dev[10];
 char publish_buffer[1000];
 /*------------------------------------------------------------------------------*/
+typedef enum
+{
+	CHANNEL_1,
+	CHANNEL_2,
+	CHANNEL_3
+}channel_t;
 typedef struct{ // STRUCT DATA FROM EEPROM
     int id; // id
     int func;
