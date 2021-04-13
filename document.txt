@@ -17,12 +17,25 @@ Provisioning response example: Thingsboard provision response
   "accessToken":"sLzc0gDAZPkGMzFVTyUY"
 }
 
-Provision Message:
+Provision Message: // For modbus gateway
 {
-    type: "provision",
+    type: "provision",  // if downlink: type is response
     payload: {
       v: { type: "number", alias: "Voltage" },
       i: { type: "number", alias: "Current" },
       p: { type: "number", alias: "RealPower" },
       q: { type: "number", alias: "ReactivePower" },
     }
+# Telemetry 
+Telemetry Topic: APIKEY/upstream
+Telemetry Message:
+{
+    type: "telemetry",
+    payload: {
+      v: [{ time: timeStampInStringOrNum, value: somevalue1 }],
+      i: [{ time: timeStampInStringOrNum, value: somevalue2 }],
+      p: [{ time: timeStampInStringOrNum, value: somevalue3 }],
+      q: [{ time: timeStampInStringOrNum, value: somevalue4 }],
+    },
+  }
+v, i, p, q: name of provisioned channel.
