@@ -9,6 +9,7 @@ char publish_buffer[1000];
 char chan[5] ="CH1";
 char buffer[50];
 char time[20] = "10:10:25 26.6.2021";
+char publih_buffer[200];
 /*------------------------------------------	------------------------------------*/
 typedef struct{ // STRUCT DATA FROM EEPROM
     int id; // id
@@ -20,12 +21,12 @@ typedef struct{ // STRUCT DATA FROM EEPROM
 /*------------------------------------------------------------------------------*/
 data_t table[200] =
 {
-	1,	3,	5,	"Temperture", "INV1",
+	1,	3,	5,	"Temp", "SENSOR2",
 	10, 3,  4,	"Humidity", "SENSOR2",
 	1,	3,	2,	"Lumen", "SENSOR4",
-	2,	3,	8,	"Current", "INV2",
-	2,	3,	9,	"Voltage", "INV2",
-	5, 3, 	5,	"Power", "INV5"
+	//2,	3,	8,	"Current", "INV2",
+	//2,	3,	9,	"Voltage", "INV2",
+	//5, 3, 	5,	"Power", "INV5"
 };
 /*----------------------------ITOA_USER--------------------------------------*/
 int* itoa_user(int val, int  base) {
@@ -55,16 +56,13 @@ int createJson(char demo[50],char channel[5],char name_reg[10],char name_dev[10]
 {
 	memset(demo,0,50);
 	//strcat(demo,"{\"");
-    strcat(demo,"{");
 	//strcat(demo,"\"");
 	strcat(demo,chan);
 	strcat(demo,"_");
 	strcat(demo,name_dev);
 	strcat(demo,"_");
 	strcat(demo,name_reg);
-	//strcat(demo,"\"");
 	strcat(demo,":");
-	//strcat(demo,itoa_user(val, 10));
     strcat(demo,"[{time:");
     strcat(demo,time);
     strcat(demo,",");
@@ -72,7 +70,6 @@ int createJson(char demo[50],char channel[5],char name_reg[10],char name_dev[10]
     strcat(demo,":");
     strcat(demo,itoa_user(val, 10));
     strcat(demo,"}]");
-    strcat(demo,"}");
 
 	}
 /*------------------------------------------------------------------------------*/
@@ -82,10 +79,22 @@ int main()
     //Get_name(reg, dev, chan, table[i].id, table[i].func, table[i].reg_adr);
     //printf("%s\n",reg);
    // printf("%s",dev);
-   for (i = 0; i< 5; i++)
+   strcat(buffer,"{");
+   for (i = 0; i< 4; i++)
    {
         createJson(buffer,chan,table[i].name,table[i].name_dev,table[i].reg_adr);
-        printf("\n%s",buffer);
+        if (i<3)
+        {
+            strcat(buffer,",");
+            strcat(publih_buffer,buffer);
+        }
+        else
+        {
+            strcat(publih_buffer,"}");
+            printf("\n%s",publih_buffer);
+            memset(publih_buffer,0,sizeof(buffer));
+        }
+       
    }
     return 0;
 }
