@@ -17,7 +17,7 @@ Provisioning response example: Thingsboard provision response
   "accessToken":"sLzc0gDAZPkGMzFVTyUY"
 }
 
-Provision Message:
+Provision Message: // For modbus gateway
 {
     type: "provision",  // if downlink: type is response
     payload: {
