@@ -8,7 +8,6 @@ char dev[10];
 char publish_buffer[1000];
 char chan[5] ="CH1";
 char buffer[50];
-char time[20] = "10:10:25 26.6.2021";
 char publih_buffer[200];
 int main_time[6] = {15,11,25,26,6,21};
 /*------------------------------------------	------------------------------------*/
