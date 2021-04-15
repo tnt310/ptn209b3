@@ -20,11 +20,15 @@ data_t table[] =   // CHANNEL 1
 		3,  3, 	106,	"POWR", 	"INV2",
 		3, 	3,	107,	"RPOW",		"INV8",
 		3,	3,	108,	"HUMD",		"SENSOR7",
-		3,	3,	109,	"POWR",		"METER1"
+		3,	3,	109,	"POWR",		"METER1",	
 };
+data_t t[]=
+{
+
+}
 
 int main()
 {
-    int a =  ((sizeof(table))/(sizeof(data_t)));
+    int a =  ((sizeof(t))/(sizeof(data_t)));
     printf("%d",a);
 }
