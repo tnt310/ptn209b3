@@ -11,6 +11,6 @@ typedef struct
 
 extern provision_t table_provision[];
 
-int creatJson_provison(char buffer[30]; char *name, char *type, char *alias);
+int createJson_provison(char buffer[30], char *name, char *type, char *alias);
 
 #endif /* PROVISION_H_ */

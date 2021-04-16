@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "TEST.C": "cpp",
-        "string.h": "c"
+        "string.h": "c",
+        "provision.h": "c"
     }
 }
