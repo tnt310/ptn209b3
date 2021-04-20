@@ -9,26 +9,23 @@ typedef struct{ // STRUCT DATA FROM EEPROM
     char name_dev[10];
 } data_t;
 
-data_t table[] =   // CHANNEL 1
+extern data_t table[] =   // CHANNEL 1
 {
-		3,	3,	100,	"TEMP", 	"INV1",
-		3, 	3,  101,	"HUMD", 	"SENSOR2",
-		3,	3,	102,	"POWR",		"METER1",
-		3,	3,	103,	"LUME", 	"SENSOR4",
-		3,	3,	104,	"CURR", 	"INV2",
-		3,	3,	105,	"VOLT", 	"INV3",
-		3,  3, 	106,	"POWR", 	"INV2",
-		3, 	3,	107,	"RPOW",		"INV8",
-		3,	3,	108,	"HUMD",		"SENSOR7",
-		3,	3,	109,	"POWR",		"METER1",	
-};
-data_t t[]=
-{
+		3,	3,	0,	"TEMP", 	"INV1",
+		3, 	3,  1,	"HUMD", 	"SENSOR2",
+		3,	3,	2,	"POWR",		"METER1",
+		3,	3,	3,	"LUME", 	"SENSOR4",
+		3,	3,	4,	"CURR", 	"INV2",
+		3,	3,	5,	"VOLT", 	"INV3",
+		3,  3, 	6,	"POWR", 	"INV2",
+		3, 	3,	7,	"RPOW",		"INV8",
+		3,	3,	8,	"HUMD",		"SENSOR7",
+		3,	3,	9,	"POWR",		"METER1"
 
-}
+};
 
 int main()
 {
-    int a =  ((sizeof(t))/(sizeof(data_t)));
+    int a =  ((sizeof(table))/(sizeof(data_t)));
     printf("%d",a);
 }
