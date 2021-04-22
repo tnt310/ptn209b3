@@ -5,17 +5,17 @@
 #include <stdint.h>
 
 /*----------------------------ITOA_USER--------------------------------------*/
-uint8_t* itoa_user(int val, int  base) {
+// uint8_t* itoa_user(int val, int  base) {
 
-	static uint8_t buf[32] = { 0 };  // 32 bits
-	int i = 30;
-	if (val == 0)
-		buf[i--] = '0';
-	for (; val && i; --i, val /= base)
-		buf[i] = "0123456789abcdef"[val % base];
+// 	static uint8_t buf[32] = { 0 };  // 32 bits
+// 	int i = 30;
+// 	if (val == 0)
+// 		buf[i--] = '0';
+// 	for (; val && i; --i, val /= base)
+// 		buf[i] = "0123456789abcdef"[val % base];
 
-	return &buf[i + 1];
-}
+// 	return &buf[i + 1];
+// }
 
 char demo[100];
 

@@ -1,0 +1,4 @@
+sim7600.c:11:9:Init_SIM7600	8	static
+sim7600.c:28:9:Setup_connection	24	static
+sim7600.c:38:9:Subscibe	16	static
+sim7600.c:44:9:Publish	16	static
