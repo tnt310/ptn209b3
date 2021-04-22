@@ -16,11 +16,15 @@ typedef struct
 {
 	char *client_name;
 	char *server_name;
+	char *username;
+	char *password;
 	char *pub_topic;
 	char *sub_topic;
-	uint8_t port;
+	uint_t port;
 	uint16_t keepalive;
 	uint8_t cleansession;
+	uint8_t index_client;
+	uint8_t protocol;
 
 }sim7600_packet_connection_t;
 

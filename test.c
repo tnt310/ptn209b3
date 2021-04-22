@@ -38,7 +38,7 @@ char password[]="VKCG6yboYrYd";
 char client[] = "client";
 char enter[] = "\r\n";
 char sub[] = "subscribe";
-char pub[] = "publish";
+char pub[] = "606ff2e222c1752264934dbb/upstream/telemetry";
 char payload[] = "{CH1_INV1_SEN1:[{time:14:47:45 4.14.21,value:12345}],CH1_INV2_SEN2:[{time:14:47:45 4.14.21,value:12345}]}";
 
 
@@ -70,7 +70,7 @@ int main()
 	//snprintf(aux_str, sizeof(aux_str),"AT+CMQTTTOPIC=%d,%d%s",index,strlen(pub),enter);
 	//snprintf(aux_str, sizeof(aux_str),"AT+CMQTTPAYLOAD=%d,%d%s",index,strlen(payload),enter);
 	//snprintf(aux_str, sizeof(aux_str),"AT+CMQTTPUB=%d,%d,%d%s",index,protocol,strlen(payload)+strlen(pub),enter);
-	
+
 	//snprintf(aux_str, sizeof(aux_str),"AT+CMQTTDISC=%d,%d%s",index,timeout,enter);
 	//snprintf(aux_str, sizeof(aux_str),"AT+CMQTTREL=%d%s",index,enter);
 	//snprintf(aux_str, sizeof(aux_str),"AT+CMQTTSTOP%s",enter);

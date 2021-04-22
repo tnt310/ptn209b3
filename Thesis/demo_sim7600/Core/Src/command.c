@@ -15,6 +15,7 @@
 extern UART_HandleTypeDef huart2;
 extern UART_HandleTypeDef huart1;
 
+char enter[] = "\r\n";
 char aux_str[100];
 volatile uint8_t gotCommandFlag = 0;
 uint8_t commandBuffer[100];
@@ -32,13 +33,7 @@ void UARTIntHandler(void)
 		}
 	gotCommandFlag = 1;
 }
-///*---------------------Send AT command------------------------------------------------------------------*/
-//uint8_t sendATcommand(char* ATcommand, uint32_t timeout)
-//{
-//	HAL_UART_Transmit(&huart2,(uint8_t*)ATcommand,strlen(ATcommand)+1,1000);
-//	HAL_Delay(timeout);
-//	}
-/*---------------------Send AT command------------------------------------------------------------------*/
+/*---------------------Send AT command---------------------------------------------------------------------------------------*/
 uint8_t sendATcommand(char* ATcommand,char *respect_answer_1, uint32_t timeout)
 {
 	uint8_t volatile answer=0;
@@ -63,7 +58,7 @@ uint8_t sendATcommand(char* ATcommand,char *respect_answer_1, uint32_t timeout)
 //	commandBufferIndex = 0;
 	return answer;
 }
-//
+
 ///*---------------------Send AT command with 2 answer------------------------------------------------------------------*/
 //uint8_t sendATcommand_2(char* ATcommand,char *respect_answer_1,char *respect_answer_2,uint32_t timeout)
 //{
@@ -116,25 +111,65 @@ uint8_t sendATcommand(char* ATcommand,char *respect_answer_1, uint32_t timeout)
 //	return answer;
 //}
 ///*---------------------Create AT command------------------------------------------------------------------*/
-//uint8_t CreateATcommand(char demo[100],char *ATcommand, int argc, char *argv[])
-//{
-//	//snprintf(aux_str, sizeof(aux_str),"AT+CMQTTCONNECT=%d,\"%s:%d\",%d,%d,\"%s\",\"%s\"",state,server,port,keepalive,1,username,password);
-//	//sprintf(api,"%s%c",GET,(char) 26);
-//	memset(demo,0,100);
-//	strcat(demo,ATcommand);
-//	strcat(demo,"=");
-//	for (uint8_t i = 0; i< argc; i++)
-//	{
-//		//strcat(demo,itoa_user(argv[i]));
-//	}
-//	strcat(demo,"\r\n");
-//
-//}
-////AT+CMQTTSUB=0,9,1,1
-////	 AT+CMQTTACCQ=0,"SIMCom_client01",1<CR><LF>
-////	AT+CMQTTCONNECT=0,"tcp://m14.cloudmqtt.com:19613",180,1,"yktdxpqb","VKCG6yboYrYd"<CR><LF>
-//
-///*---------------------Create AT command------------------------------------------------------------------*/
+uint8_t createATcommand(char aux_str[100],char *ATcommand)
+{
+	memset(aux_str,0,100);
+	switch(ATcommand)
+	{
+		case AT+NETOPEN:
+			snprintf(aux_str, sizeof(aux_str),"AT+NETOPEN%s",enter);
+		break;
+
+		case AT+IPADDR:
+			snprintf(aux_str, sizeof(aux_str),"AT+IPADDR%s",enter);
+		break;
+
+		case AT+CMQTTSTART:
+			snprintf(aux_str, sizeof(aux_str),"AT+CMQTTSTART%s",enter);
+		break;
+
+		case AT+CMQTTACCQ:
+			snprintf(aux_str, sizeof(aux_str),"AT+CMQTTACCQ=%d,\"%s\",%d%s",index_client,client,protocol,enter);
+		break;
+
+		case AT+CMQTTCONNECT:
+			snprintf(aux_str, sizeof(aux_str),"AT+CMQTTCONNECT=%d,\"%s:%d\",%d,%d,\"%s\",\"%s\"%s",index_client,server,port,keepalive,1,username,password,enter);
+		break;
+
+		case AT+CMQTTSUBTOPIC:
+			snprintf(aux_str, sizeof(aux_str),"AT+CMQTTSUBTOPIC=%d,%d,%d,%d%s",index_client,strlen(sub),protocol,cleansession,enter);
+		break;
+
+		case AT+CMQTTTOPIC:
+			snprintf(aux_str, sizeof(aux_str),"AT+CMQTTTOPIC=%d,%d%s",index_client,strlen(pub),enter);
+		break;
+
+		case AT+CMQTTPAYLOAD:
+		snprintf(aux_str, sizeof(aux_str),"AT+CMQTTPAYLOAD=%d,%d%s",index_client,strlen(payload),enter);
+		break;
+
+		case AT+CMQTTPUB:
+		snprintf(aux_str, sizeof(aux_str),"AT+CMQTTPUB=%d,%d,%d%s",index_client,protocol,strlen(payload)+strlen(pub),enter);
+		break;
+
+		case AT+CMQTTDISC:
+		snprintf(aux_str, sizeof(aux_str),"AT+CMQTTDISC=%d,%d%s",index_client,timeout,enter);
+		break;
+
+		case AT+CMQTTREL:
+		snprintf(aux_str, sizeof(aux_str),"AT+CMQTTREL=%d%s",index_client,enter);
+		break;
+
+		case AT+CMQTTSTOP:
+		snprintf(aux_str, sizeof(aux_str),"AT+CMQTTSTOP%s",enter);
+		break;
+
+		case AT+NETCLOSE:
+		snprintf(aux_str, sizeof(aux_str),"AT+NETCLOSE%s",enter);
+		break;
+	}
+}
+///*---------------------Create Json------------------------------------------------------------------*/
 //uint8_t createJson(char demo[100],char *name_dev, uint16_t val, uint8_t time[6])
 //{
 //	memset(demo,0,100);
@@ -170,3 +205,9 @@ uint8_t sendATcommand(char* ATcommand,char *respect_answer_1, uint32_t timeout)
 //
 //	return &buf[i + 1];
 //}
+///*---------------------Send AT command------------------------------------------------------------------*/
+//uint8_t sendATcommand(char* ATcommand, uint32_t timeout)
+//{
+//	HAL_UART_Transmit(&huart2,(uint8_t*)ATcommand,strlen(ATcommand)+1,1000);
+//	HAL_Delay(timeout);
+//	}
