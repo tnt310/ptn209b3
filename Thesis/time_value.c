@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdint.h>
 
 int channel = 1;
 static int i = 0;
@@ -8,6 +9,7 @@ char dev[10];
 char publish_buffer[1000];
 char chan[5] ="CH1";
 char buffer[50];
+char demo[50];
 char publih_buffer[200];
 int main_time[6] = {15,11,25,26,6,21};
 /*------------------------------------------	------------------------------------*/
@@ -80,30 +82,46 @@ int createJson(char demo[100],char channel[5],char name_reg[10],char name_dev[10
     strcat(demo,"}]");
 
 	}
+uint8_t CreateATcommand(int argc, char *argv[])
+{
+	//snprintf(aux_str, sizeof(aux_str),"AT+CMQTTCONNECT=%d,\"%s:%d\",%d,%d,\"%s\",\"%s\"",state,server,port,keepalive,1,username,password);
+	//sprintf(api,"%s%c",GET,(char) 26);
+	memset(demo,0,100);
+	strcat(demo,argv[0]);
+	strcat(demo,"=");
+	for (uint8_t i = 1; i< argc; i++)
+	{
+		strcat(demo,itoa_user(argv[i]));
+        strcat(demo,",");
+	}
+	strcat(demo,"\r\n");
+
+}
 /*------------------------------------------------------------------------------*/
 int main()
 {
-
+    CreateATcommand("AT+CSQ",1,2,3);
+    printf("%s",demo);
     //Get_name(reg, dev, chan, table[i].id, table[i].func, table[i].reg_adr);
     //printf("%s\n",reg);
    // printf("%s",dev);
-   strcat(publih_buffer,"{");
-   for (i = 0; i< 4; i++)
-   {
-        createJson(buffer,chan,table[i].name,table[i].name_dev,table[i].reg_adr,main_time);
-        if (i < 3)
-        {
-            strcat(publih_buffer,buffer);
-            strcat(publih_buffer,",");
-        }
-        else
-        {
-            strcat(publih_buffer,"}");
-            printf("\n%s",publih_buffer);
-            memset(publih_buffer,0,sizeof(buffer));
-        }
+//    strcat(publih_buffer,"{");
+//    for (i = 0; i< 4; i++)
+//    {
+//         createJson(buffer,chan,table[i].name,table[i].name_dev,table[i].reg_adr,main_time);
+//         if (i < 3)
+//         {
+//             strcat(publih_buffer,buffer);
+//             strcat(publih_buffer,",");
+//         }
+//         else
+//         {
+//             strcat(publih_buffer,"}");
+//             printf("\n%s",publih_buffer);
+//             memset(publih_buffer,0,sizeof(buffer));
+//         }
        
-   }
+//    }
     return 0;
 }
 // CH1_INV1_VOLT: 	[{time: 10:10:25 26.6.2021, value: 220}],
