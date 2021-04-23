@@ -62,6 +62,10 @@ static void MX_USART2_UART_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 uint8_t answer;
+uint8_t answer_1;
+uint8_t answer_2;
+uint8_t answer_3;
+uint8_t answer_4;
 /* USER CODE END 0 */
 
 /**
@@ -101,12 +105,17 @@ int main(void)
 //	  {
 //		  Update_data();
 //	  }
+  answer = sendATcommand("AT\r\n","OK",2000);
+//  answer_1 = sendATcommand("ATE0\r\n","OK",2000);
+//  answer_2 = sendATcommand("AT&W\r\n","OK",2000);
+//  answer_3 = sendATcommand("AT+NETOPEN\r\n","OK",2000);
+  answer_4 = sendATcommand("AT+IPADDR\r\n","OK",2000);
   /* USER CODE END 2 */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  answer = sendATcommand("AT\r\n","OK",3000);
+
 //	 Update_data();
 //	 HAL_Delay(2000);
     /* USER CODE END WHILE */

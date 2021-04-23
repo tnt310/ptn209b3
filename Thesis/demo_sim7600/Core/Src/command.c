@@ -20,6 +20,9 @@ char aux_str[100];
 volatile uint8_t gotCommandFlag = 0;
 uint8_t commandBuffer[100];
 uint8_t commandBufferIndex = 0;
+char *sub="";
+char *pub="";
+char *payload="";
 
 /***************************************Response from SIM800A**************************************************************/
 void UARTIntHandler(void)
@@ -36,7 +39,7 @@ void UARTIntHandler(void)
 /*---------------------Send AT command---------------------------------------------------------------------------------------*/
 uint8_t sendATcommand(char* ATcommand,char *respect_answer_1, uint32_t timeout)
 {
-	uint8_t volatile answer=0;
+	volatile uint8_t answer = 0;
 	HAL_UART_Transmit(&huart2,(uint8_t*)ATcommand,strlen(ATcommand)+1,1000);
 	uint32_t  tickstart = HAL_GetTick();
 	timeout += (uint32_t)(uwTickFreq); // HERE
@@ -44,8 +47,8 @@ uint8_t sendATcommand(char* ATcommand,char *respect_answer_1, uint32_t timeout)
 	{
 		if (gotCommandFlag == 1)
 		{
-			gotCommandFlag = 0;
-			commandBufferIndex = 0;
+//			gotCommandFlag = 0;
+//			commandBufferIndex = 0;
 			if (strstr(commandBuffer,respect_answer_1) != NULL)
 			{
 				answer = 1;
@@ -54,8 +57,9 @@ uint8_t sendATcommand(char* ATcommand,char *respect_answer_1, uint32_t timeout)
 		}
 	}
 	while((answer == 0) && ((HAL_GetTick() - tickstart) < timeout)); // HERE
-//	gotCommandFlag = 0;
-//	commandBufferIndex = 0;
+	gotCommandFlag = 0;
+	commandBufferIndex = 0;
+	memset(commandBuffer,'\0',100);
 	return answer;
 }
 
@@ -111,60 +115,67 @@ uint8_t sendATcommand(char* ATcommand,char *respect_answer_1, uint32_t timeout)
 //	return answer;
 //}
 ///*---------------------Create AT command------------------------------------------------------------------*/
-uint8_t createATcommand(char aux_str[100],char *ATcommand)
+/*
+ * Brief: Create AT command
+ * aux_str: buffer contains AT command
+ * ATcommand: */
+
+uint8_t createATcommand(char aux_str[100],uint8_t uistate,sim7600_packet_t packet)
 {
 	memset(aux_str,0,100);
-	switch(ATcommand)
+	switch(uistate)
 	{
-		case AT+NETOPEN:
+		case NETOPEN:
 			snprintf(aux_str, sizeof(aux_str),"AT+NETOPEN%s",enter);
 		break;
 
-		case AT+IPADDR:
+		case IPADDR:
 			snprintf(aux_str, sizeof(aux_str),"AT+IPADDR%s",enter);
 		break;
 
-		case AT+CMQTTSTART:
+		case CMQTTSTART:
 			snprintf(aux_str, sizeof(aux_str),"AT+CMQTTSTART%s",enter);
 		break;
 
-		case AT+CMQTTACCQ:
-			snprintf(aux_str, sizeof(aux_str),"AT+CMQTTACCQ=%d,\"%s\",%d%s",index_client,client,protocol,enter);
+		case CMQTTACCQ:
+			snprintf(aux_str, sizeof(aux_str),"AT+CMQTTACCQ=%d,\"%s\",%d%s",packet.index_client,packet.client_name,enter); //maybe not protocol
 		break;
 
-		case AT+CMQTTCONNECT:
-			snprintf(aux_str, sizeof(aux_str),"AT+CMQTTCONNECT=%d,\"%s:%d\",%d,%d,\"%s\",\"%s\"%s",index_client,server,port,keepalive,1,username,password,enter);
+		case CMQTTCONNECT:
+			snprintf(aux_str, sizeof(aux_str),"AT+CMQTTCONNECT=%d,\"%s:%d\",%d,%d,\"%s\",\"%s\"%s",packet.index_client,packet.server_name,
+																								   packet.port,packet.keepalive,packet.cleansession,
+																								   packet.username,packet.password,enter);
 		break;
 
-		case AT+CMQTTSUBTOPIC:
-			snprintf(aux_str, sizeof(aux_str),"AT+CMQTTSUBTOPIC=%d,%d,%d,%d%s",index_client,strlen(sub),protocol,cleansession,enter);
+		case CMQTTSUBTOPIC:
+			snprintf(aux_str, sizeof(aux_str),"AT+CMQTTSUBTOPIC=%d,%d,%d,%d%s",packet.index_client,strlen(sub),packet.protocol,packet.qos,enter);
 		break;
 
-		case AT+CMQTTTOPIC:
-			snprintf(aux_str, sizeof(aux_str),"AT+CMQTTTOPIC=%d,%d%s",index_client,strlen(pub),enter);
+		case CMQTTTOPIC:
+			snprintf(aux_str, sizeof(aux_str),"AT+CMQTTTOPIC=%d,%d%s",packet.index_client,strlen(pub),enter);
 		break;
 
-		case AT+CMQTTPAYLOAD:
-		snprintf(aux_str, sizeof(aux_str),"AT+CMQTTPAYLOAD=%d,%d%s",index_client,strlen(payload),enter);
+		case CMQTTPAYLOAD:
+		snprintf(aux_str, sizeof(aux_str),"AT+CMQTTPAYLOAD=%d,%d%s",packet.index_client,strlen(payload),enter);
 		break;
 
-		case AT+CMQTTPUB:
-		snprintf(aux_str, sizeof(aux_str),"AT+CMQTTPUB=%d,%d,%d%s",index_client,protocol,strlen(payload)+strlen(pub),enter);
+		case CMQTTPUB:
+		snprintf(aux_str, sizeof(aux_str),"AT+CMQTTPUB=%d,%d,%d%s",packet.index_client,packet.qos,strlen(payload)+strlen(pub),enter);
 		break;
 
-		case AT+CMQTTDISC:
-		snprintf(aux_str, sizeof(aux_str),"AT+CMQTTDISC=%d,%d%s",index_client,timeout,enter);
+		case CMQTTDISC:
+		snprintf(aux_str, sizeof(aux_str),"AT+CMQTTDISC=%d,%d%s",packet.index_client,packet.timeout,enter);
 		break;
 
-		case AT+CMQTTREL:
-		snprintf(aux_str, sizeof(aux_str),"AT+CMQTTREL=%d%s",index_client,enter);
+		case CMQTTREL:
+		snprintf(aux_str, sizeof(aux_str),"AT+CMQTTREL=%d%s",packet.index_client,enter);
 		break;
 
-		case AT+CMQTTSTOP:
+		case CMQTTSTOP:
 		snprintf(aux_str, sizeof(aux_str),"AT+CMQTTSTOP%s",enter);
 		break;
 
-		case AT+NETCLOSE:
+		case NETCLOSE:
 		snprintf(aux_str, sizeof(aux_str),"AT+NETCLOSE%s",enter);
 		break;
 	}

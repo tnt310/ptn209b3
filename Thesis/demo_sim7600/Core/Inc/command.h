@@ -8,8 +8,12 @@
 #ifndef INC_COMMAND_H_
 #define INC_COMMAND_H_
 #include "stdint.h"
+typedef enum
+{
+	NETOPEN,IPADDR,CMQTTSTART,CMQTTACCQ,CMQTTCONNECT,CMQTTSUBTOPIC,CMQTTTOPIC,CMQTTPAYLOAD,CMQTTPUB,CMQTTDISC,CMQTTREL,CMQTTSTOP,NETCLOSE
+}sim7600state_t;
 
-uint8_t createATcommand(char demo[100],char *ATcommand);
+uint8_t createATcommand(char aux_str[100],uint8_t uistate,sim7600_packet_t packet);
 uint8_t sendATcommand(char* ATcommand,char *respect_answer_1, uint32_t timeout);
 
 //uint8_t createJson(char demo[50],char name_dev[10], uint16_t val, uint8_t time[6]);
