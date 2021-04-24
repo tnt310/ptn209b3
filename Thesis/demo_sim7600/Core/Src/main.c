@@ -61,13 +61,18 @@ static void MX_USART2_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+sim7600_packet_t sim7600;
 uint8_t answer;
 uint8_t answer_1;
 uint8_t answer_2;
 uint8_t answer_3;
 uint8_t answer_4;
+uint8_t answer_5;
+char *sub = "subscribe";
+char *pub = "606ff2e222c1752264934dbb/upstream/telemetry";
+char *payload = "{CH1_INV1_SEN1:[{time:14:47:45 4.14.21,value:12345}],CH1_INV2_SEN2:[{time:14:47:45 4.14.21,value:12345}]}";
+uint8_t qos = 1;
 /* USER CODE END 0 */
-
 /**
   * @brief  The application entry point.
   * @retval int
@@ -100,21 +105,39 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   __HAL_UART_ENABLE_IT(&huart2, UART_IT_RXNE);
+//  answer_5 = sendATcommand("AT+NECLOSE\r\n","+NETCLOSE: 0",2000);
 //  if (state_on  == 1)
 //	  if (SIM800_Init() == 1)
 //	  {
 //		  Update_data();
 //	  }
-  answer = sendATcommand("AT\r\n","OK",2000);
-//  answer_1 = sendATcommand("ATE0\r\n","OK",2000);
-//  answer_2 = sendATcommand("AT&W\r\n","OK",2000);
-//  answer_3 = sendATcommand("AT+NETOPEN\r\n","OK",2000);
-  answer_4 = sendATcommand("AT+IPADDR\r\n","OK",2000);
+//  answer = sendATcommand("AT\r\n","OK",2000);
+// 	  answer_1 = sendATcommand("ATE0\r\n","OK",2000);
+// 	  answer_2 = sendATcommand("AT&W\r\n","OK",2000);
+// 	 //answer_3 = sendATcommand("AT+NETOPEN\r\n","already opened",2000);
+// 	  answer_3 = sendATcommand_2("AT+NETOPEN\r\n","already opened","+NETOPEN: 0",2000);
+  sendATcommand("AT+NETCLOSE\r\n","OK",2000);
+//  sendATcommand("AT+CMQTTDISC=0,120\r\n","OK",2000);
+//  sendATcommand("AT+CMQTTREL=0\r\n","OK",2000);
+  answer = Init_SIM7600();
+  answer_1 =  Check_NETSIMstate();
+  setupCONNECTION();
+  Subscibe(sub);
+
   /* USER CODE END 2 */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  Publish(pub,payload,1);
+	  HAL_Delay(3000);
+//	  answer = sendATcommand("AT\r\n","OK",2000);
+//	  answer_1 = sendATcommand("ATE0\r\n","OK",2000);
+//	  answer_2 = sendATcommand("AT&W\r\n","OK",2000);
+//	  answer_3 = sendATcommand_2("AT+NETOPEN\r\n","+NETOPEN: 0","opened",2000);
+//	  HAL_Delay(2000);
+//	  answer_4 = sendATcommand("AT+NECLOSE\r\n","+NETCLOSE: 0",2000);
+//	  HAL_Delay(100);
 
 //	 Update_data();
 //	 HAL_Delay(2000);

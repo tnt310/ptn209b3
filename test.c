@@ -40,7 +40,7 @@ char enter[] = "\r\n";
 char sub[] = "subscribe";
 char pub[] = "606ff2e222c1752264934dbb/upstream/telemetry";
 char payload[] = "{CH1_INV1_SEN1:[{time:14:47:45 4.14.21,value:12345}],CH1_INV2_SEN2:[{time:14:47:45 4.14.21,value:12345}]}";
-
+char buffer[] = "+CMQTTCONNECT: 0,3";
 
 // 1. AT+NETOPEN<CR><LF>
 // 2. AT+IPADDR<CR><LF>
@@ -57,8 +57,27 @@ char payload[] = "{CH1_INV1_SEN1:[{time:14:47:45 4.14.21,value:12345}],CH1_INV2_
 // 12. AT+CMQTTREL=0<CR><LF> // release a client
 // 13. AT+CMQTTSTOP<CR><LF> //stop MQTT Service
 // 14. AT+NETCLOSE<CR><LF>
+uint8_t ReturnCode(char str[])
+{
+	char err[2];
+	for (uint8_t i = 0; i< strlen(str); i++)
+	{
+		if (str[i] == ',')
+		{
+			err[0] = str[i+1];
+			err[1] = str[i+2];
+		}
+	}
+	return atoi(err);
+}
+
+
+
 int main()
 {
+	uint8_t code = ReturnCode(buffer);
+	printf("%d", code);
+}
 	//snprintf(aux_str, sizeof(aux_str),"AT+NETOPEN%s",enter);
 	//snprintf(aux_str, sizeof(aux_str),"AT+IPADDR%s",enter);
 	//snprintf(aux_str, sizeof(aux_str),"AT+CMQTTSTART%s",enter);
@@ -75,5 +94,5 @@ int main()
 	//snprintf(aux_str, sizeof(aux_str),"AT+CMQTTREL=%d%s",index,enter);
 	//snprintf(aux_str, sizeof(aux_str),"AT+CMQTTSTOP%s",enter);
 	//snprintf(aux_str, sizeof(aux_str),"AT+NETCLOSE%s",enter);
-	printf("%s",aux_str);
-}
+
+//}

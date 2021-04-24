@@ -1,5 +1,5 @@
-sim7600.c:13:9:Init_SIM7600	8	static
-sim7600.c:29:9:setupCONNECTION	8	static
-sim7600.c:47:9:Subscibe	16	static
-sim7600.c:55:9:Publish	16	static
-sim7600.c:71:9:Handler_err	16	static
+sim7600.c:40:9:Init_SIM7600	16	static
+sim7600.c:55:9:Check_NETSIMstate	16	static
+sim7600.c:72:9:setupCONNECTION	56	static
+sim7600.c:91:9:Subscibe	40	static
+sim7600.c:106:9:Publish	56	static
