@@ -3,13 +3,16 @@
 // and IP address
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <errno.h>
-// #include <netdb.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+#include <stdint.h>
+#include <string.h>
+
+char *str = "HCMUT";
+void f(const char *str, int str_len)
+{
+  printf("%.*s\n", str_len, str);
+}
 
 int main()
-{}
+{
+    f(str,strlen(str));
+}

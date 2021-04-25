@@ -35,7 +35,9 @@ extern const char mqtt_user[] = "yktdxpqb";
 extern const char mqtt_password[] = "VKCG6yboYrYd";
 extern const uint16_t u16_mqtt_port = 	19613;
 const char topic[] = "606ff2e222c1752264934dbb/upstream/telemetry";
-const char sub[]="606ff2e222c1752264934dbb/upstream/attributes";
+//const char sub[]="606ff2e222c1752264934dbb/upstream/attributes";
+const char sub[]="606ff2e222c1752264934dbb/downlink";
+
 
 void netmqttTask(void *arg);
 
@@ -48,8 +50,8 @@ static void mqtt_incoming_data_cb(void *arg, const u8_t *data, u16_t len,u8_t fl
 	//printf("\r\n Incoming publish payload with length %d, flags %u\n", len,(unsigned int) flags);
 	if (flags & MQTT_DATA_FLAG_LAST) {
 		/* Last fragment of payload received (or whole part if payload fits receive bufferSee MQTT_VAR_HEADER_BUFFER_LEN)  */
-		//printf("\r\n mqtt_incoming_data_cb: %s\n", (const char *) data);
-		mqtt_modbus_thread_down((char*) data, len);
+		printf("\r\n mqtt_incoming_data_cb: %s\n", (const char *) data);
+		mqtt_modbus_thread_down_v1((char*) data, len);
 		/* Call function or do action depending on reference, in this case inpub_id */
 //		if (inpub_id == 0) {
 //			/* Don't trust the publisher, check zero termination */

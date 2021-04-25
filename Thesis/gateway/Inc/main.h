@@ -136,6 +136,8 @@ typedef struct{
 	uint8_t  NodeID;
 	uint8_t  FunC;
 	int16toint8 RegAdr;
+	//uint16_t RegAdr;
+	//uint16_t RegData;
 	int16toint8 RegData;
 	uint8_t  countflag;
 	char alias[10];

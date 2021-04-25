@@ -14,17 +14,9 @@ typedef struct
 	uint8_t channel;
 	uint8_t id;
 	uint8_t func;
-	int16toint8 regAdr;
+	uint16_t regAdr;
 	char name[10];
 }device_t;
-
-typedef struct{ // STRUCT DATA FROM EEPROM
-    uint8_t id; // id
-    uint8_t func;
-    uint16_t reg_adr; // Adress reg
-    char name[10]; // name of address reg
-    char name_dev[10];
-}data_t;
 
 typedef struct{ // STRUCT DATA FROM EEPROM
     uint8_t id; // id

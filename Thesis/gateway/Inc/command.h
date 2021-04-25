@@ -18,5 +18,4 @@ int
 setAllLight(int argc, char *argv[]);
 void UARTIntHandler(void);
 
-uint16_t cal_sum_dev(void);
 #endif

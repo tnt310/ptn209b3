@@ -8,6 +8,7 @@
 #include "lwip.h"
 #include "socket.h"
 #include "lwip/ip4_addr.h"
+#include "modbus_mqtt_bridge.h"
 
 extern network_param_t netParam;
 extern network_param_t mqttHostParam;
