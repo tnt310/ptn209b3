@@ -110,16 +110,18 @@ uint8_t setupCONNECTION(void)
 	memset(aux_str,0,100);
 	snprintf(aux_str, sizeof(aux_str),"AT+CMQTTCONNECT=%d,\"tcp://%s:%d\",%d,%d,\"%s\",\"%s\"%s",index,server,port,keepalive,cleansession,username,password,enter);
 	connect4 = sendATcommand_2(aux_str,"+CMQTTCONNECT: 0,0","+CMQTTCONNECT: 0,19",3000);
+
+	return connect4;
 //AT+CMQTTSTART<CR><LF>
 //AT+CMQTTACCQ=0,"SIMCom_client01",1<CR><LF>
 //AT+CMQTTCONNECT=0,"tcp://m14.cloudmqtt.com:19613",180,1,"yktdxpqb","VKCG6yboYrYd"<CR><LF>
 }
 /*------------------------------------SUBSCIBE --------------------------------------------------------*/
 // CMQTTSUBTOPIC : 2
-uint8_t Subscibe(char *sub_topic)
+uint8_t Subscibe(char *sub_topic, uint8_t qos)
 {
 	memset(aux_str,0,100);
-	snprintf(aux_str, sizeof(aux_str),"AT+CMQTTSUB=%d,%d,%d,%d%s",index,strlen(sub_topic),0,1,enter);
+	snprintf(aux_str, sizeof(aux_str),"AT+CMQTTSUB=%d,%d,%d,%d%s",index,strlen(sub_topic),qos,enter);
 	connect8 = sendATcommand(aux_str,">",2000);
 	sendATcommand(sub_topic,"OK",2000);
 //	AT+CMQTTSUBTOPIC=0,9,0,1<CR><LF> // subscribed  AT+CMQTTSUB=0,9,0,1
@@ -135,27 +137,35 @@ uint8_t Subscibe(char *sub_topic)
 //	AT+CMQTTPUB=0,1,60<CR><LF>  //Publish topic and message
 uint8_t Publish(char *pub_topic, char *payload, uint8_t qos)
 {
+	uint8_t state = 0;
 	memset(aux_str,0,100);
 	snprintf(aux_str, sizeof(aux_str),"AT+CMQTTTOPIC=%d,%d%s",index,strlen(pub_topic),enter);
-	connect5 = sendATcommand(aux_str,">",2000);
-    sendATcommand(pub_topic,"OK",2000);
+	sendATcommand(aux_str,">",2000);
+	state = sendATcommand(pub_topic,"OK",2000);
 
-    memset(aux_str,0,100);
-    snprintf(aux_str, sizeof(aux_str),"AT+CMQTTPAYLOAD=%d,%d%s",index,strlen(payload),enter);
-    connect6 = sendATcommand(aux_str,">",2000);
-    sendATcommand(payload,"OK",2000);
+	memset(aux_str,0,100);
+	snprintf(aux_str, sizeof(aux_str),"AT+CMQTTPAYLOAD=%d,%d%s",index,strlen(payload),enter);
+	connect6 = sendATcommand(aux_str,">",2000);
+	state = sendATcommand(payload,"OK",2000);
 
-    memset(aux_str,0,100);
-    snprintf(aux_str, sizeof(aux_str),"AT+CMQTTPUB=%d,%d,%d%s",index,qos, strlen(payload)+strlen(pub_topic), enter);
-    connect7 = sendATcommand(aux_str,"+CMQTTPUB: 0,0",2000);
+	memset(aux_str,0,100);
+	snprintf(aux_str, sizeof(aux_str),"AT+CMQTTPUB=%d,%d,%d%s",index,qos, strlen(payload)+strlen(pub_topic), enter);
+	connect7 = sendATcommand(aux_str,"+CMQTTPUB: 0,0",2000);
+}
+uint8_t reconnect(void)
+{
+	uint8_t state = 0;
+	sendATcommand(sendATcommand("AT\r\n","OK",2000));
+	sendATcommand(sendATcommand("AT\r\n","OK",2000));
+	Init_SIM7600();
+	Check_NETSIMstate();
+	for (uint8_t i = 0; i< 2; i++)
+	{
+		if (i < 2 && setupCONNECTION() == 1)
+			break;
 	}
-//uint8_t reconnect(void)
-//{
-//	sendATcommand(sendATcommand("AT\r\n","OK",2000));
-//	sendATcommand(sendATcommand("AT\r\n","OK",2000));
-	//Init_SIM7600();
-	//Check_NETSIMstate();
-//	}
+	return state;
+}
 /*------DISCONNECTED---------------------------------------------------------------------------------------*/
 //* CMQTTDISC : 6
 //* CMQTTREL : 7

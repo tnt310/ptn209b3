@@ -121,8 +121,11 @@ int main(void)
 //  sendATcommand("AT+CMQTTREL=0\r\n","OK",2000);
   answer = Init_SIM7600();
   answer_1 =  Check_NETSIMstate();
-  setupCONNECTION();
-  Subscibe(sub);
+  answer_2 = setupCONNECTION();
+  if (answer_2 == 1)
+	  Subscibe(sub);
+  else
+	  reconnect();
 
   /* USER CODE END 2 */
   /* Infinite loop */

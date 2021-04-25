@@ -21,6 +21,7 @@ uint8_t commandBuffer[100];
 uint8_t commandBufferIndex = 0;
 uint8_t connect9;
 err_t err;
+uint8_t code;
 /***************************************Response from SIM7600**************************************************************/
 void UARTIntHandler(void)
 {
@@ -31,14 +32,12 @@ void UARTIntHandler(void)
 			commandBuffer[commandBufferIndex] = receivedChar;
 			commandBufferIndex++;
 		}
-//	if (strcat(commandBuffer,"+CMQTTRXTOPIC") != NULL){
-//		connect9 = 1;}
 	gotCommandFlag = 1;
 }
 /*---------------------Send AT command---------------------------------------------------------------------------------------*/
 uint8_t sendATcommand(char* ATcommand,char *respect_answer_1, uint32_t timeout)
 {
-	uint8_t status;
+//	uint8_t status;
 	volatile uint8_t answer = 0;
 	HAL_UART_Transmit(&huart2,(uint8_t*)ATcommand,strlen(ATcommand)+1,1000);
 	uint32_t  tickstart = HAL_GetTick();
@@ -53,8 +52,8 @@ uint8_t sendATcommand(char* ATcommand,char *respect_answer_1, uint32_t timeout)
 			}
 			else
 			{
-				status = ReturnCode(commandBuffer);
-				Handler_Err(status);
+				code = ReturnCode(commandBuffer);
+				Handler_Err(code);
 			}
 		}
 	}
