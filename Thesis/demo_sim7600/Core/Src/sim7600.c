@@ -13,6 +13,8 @@ char *client = "mqtt";
 char *server = "m14.cloudmqtt.com";
 char *username = "yktdxpqb";
 char *password = "VKCG6yboYrYd";
+uint8_t main_time[6];
+char payload[100];
 extern data1_t table1[] =   // CHANNEL 1
 {
 		2,	3,	0,  "CH1_SEN2_TEMP",	"number",		"Temperature",
@@ -60,6 +62,8 @@ uint8_t connect5;
 uint8_t connect6;
 uint8_t connect7;
 uint8_t connect8;
+uint8_t connect10;
+uint16_t sum;
 /*------------------------------------INIT MODULE --------------------------------------------------------*/
 /**AT+CPIN?<CR><LF>  kiểm tra SIM
  * AT+CREG?<CR><LF>  kiểm tra đăng ký mạng
@@ -121,9 +125,11 @@ uint8_t setupCONNECTION(void)
 uint8_t Subscibe(char *sub_topic, uint8_t qos)
 {
 	memset(aux_str,0,100);
-	snprintf(aux_str, sizeof(aux_str),"AT+CMQTTSUB=%d,%d,%d,%d%s",index,strlen(sub_topic),qos,enter);
-	connect8 = sendATcommand(aux_str,">",2000);
-	sendATcommand(sub_topic,"OK",2000);
+	snprintf(aux_str, sizeof(aux_str),"AT+CMQTTSUB=%d,%d,%d%s",index,strlen(sub_topic),qos,enter);
+	connect10 = sendATcommand(aux_str,">",2000);
+	if(sendATcommand(sub_topic,"+CMQTTSUB: 0,0",2000) == 1)
+		return 1;
+	return 0;
 //	AT+CMQTTSUBTOPIC=0,9,0,1<CR><LF> // subscribed  AT+CMQTTSUB=0,9,0,1
 
 }
@@ -135,28 +141,34 @@ uint8_t Subscibe(char *sub_topic, uint8_t qos)
 //	AT+CMQTTTOPIC=0,21<CR><LF>  //Set the topic for the PUBLISH message
 //	AT+CMQTTPAYLOAD=0,38<CR><LF>//Set the payload for the PUBLISH message
 //	AT+CMQTTPUB=0,1,60<CR><LF>  //Publish topic and message
-uint8_t Publish(char *pub_topic, char *payload, uint8_t qos)
+uint8_t Publish(char *pub_topic, uint8_t qos)
 {
-	uint8_t state = 0;
-	memset(aux_str,0,100);
-	snprintf(aux_str, sizeof(aux_str),"AT+CMQTTTOPIC=%d,%d%s",index,strlen(pub_topic),enter);
-	sendATcommand(aux_str,">",2000);
-	state = sendATcommand(pub_topic,"OK",2000);
+	sum = cal_sum_dev;
+	for (uint8_t i = 0; i< 25; i++)
+	{
+		memset(aux_str,0,100);
+		snprintf(aux_str, sizeof(aux_str),"AT+CMQTTTOPIC=%d,%d%s",index,strlen(pub_topic),enter);
+		connect8 = sendATcommand(aux_str,">",2000);
+		sendATcommand(pub_topic,"OK",2000);
 
-	memset(aux_str,0,100);
-	snprintf(aux_str, sizeof(aux_str),"AT+CMQTTPAYLOAD=%d,%d%s",index,strlen(payload),enter);
-	connect6 = sendATcommand(aux_str,">",2000);
-	state = sendATcommand(payload,"OK",2000);
+		memset(aux_str,0,100);
+		memset(payload,0,100);
+		Get_Time(main_time);
+		createJson_v1(payload,table1[i].name_dev,100, main_time); //---------------------------// HERE
+		snprintf(aux_str, sizeof(aux_str),"AT+CMQTTPAYLOAD=%d,%d%s",index,strlen(payload),enter);
+		connect6 = sendATcommand(aux_str,">",2000);
+		sendATcommand(payload,"OK",2000);
 
-	memset(aux_str,0,100);
-	snprintf(aux_str, sizeof(aux_str),"AT+CMQTTPUB=%d,%d,%d%s",index,qos, strlen(payload)+strlen(pub_topic), enter);
-	connect7 = sendATcommand(aux_str,"+CMQTTPUB: 0,0",2000);
+		memset(aux_str,0,100);
+		snprintf(aux_str, sizeof(aux_str),"AT+CMQTTPUB=%d,%d,%d%s",index,qos, strlen(payload)+strlen(pub_topic), enter);
+		connect7 = sendATcommand(aux_str,"+CMQTTPUB: 0,0",2000);
+	}
 }
 uint8_t reconnect(void)
 {
 	uint8_t state = 0;
-	sendATcommand(sendATcommand("AT\r\n","OK",2000));
-	sendATcommand(sendATcommand("AT\r\n","OK",2000));
+	sendATcommand("AT\r\n","OK",2000);
+	sendATcommand("AT\r\n","OK",2000);
 	Init_SIM7600();
 	Check_NETSIMstate();
 	for (uint8_t i = 0; i< 2; i++)
@@ -169,3 +181,7 @@ uint8_t reconnect(void)
 /*------DISCONNECTED---------------------------------------------------------------------------------------*/
 //* CMQTTDISC : 6
 //* CMQTTREL : 7
+uint16_t cal_sum_dev()
+{
+	return sizeof(table1)/sizeof(data1_t);
+	}

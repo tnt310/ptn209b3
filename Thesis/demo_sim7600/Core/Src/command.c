@@ -236,5 +236,68 @@ uint8_t sendATcommand_2(char* ATcommand,char *respect_answer_1,char *respect_ans
  * return mqtt error code
  *
  * */
+uint8_t createJson_v1(char demo[50],char name_dev[10], uint16_t val, uint8_t time[6])
+{
+	memset(demo,0,100);
+	strcat(demo,name_dev);
+	strcat(demo,":");
+    strcat(demo,"[{time:");
+    strcat(demo,itoa_user(time[0], 10)); // Hour
+    strcat(demo,":");
+    strcat(demo,itoa_user(time[1], 10)); // Minute
+    strcat(demo,":");
+    strcat(demo,itoa_user(time[2], 10)); //Second
+    strcat(demo," ");
+    strcat(demo,itoa_user(time[3], 10));// Month
+    strcat(demo,".");
+    strcat(demo,itoa_user(time[4], 10)); // Day
+    strcat(demo,".");
+    strcat(demo,itoa_user(time[5], 10)); //Year
+    strcat(demo,",");
+    strcat(demo,"value");
+    strcat(demo,":");
+    strcat(demo,itoa_user(val, 10));
+    strcat(demo,"}]");
 
+	}
+uint8_t createJson_provision(char buffer[],char *name,char *type, char *alias)
+{
+    memset(buffer,0,sizeof(buffer));
+    strcat(buffer,"{");
+    strcat(buffer,name);
+    strcat(buffer,":");
+    strcat(buffer, "{\"type\":");
+    strcat(buffer,"\"");
+    strcat(buffer,type);
+    strcat(buffer,"\"");
+    strcat(buffer, ",\"description\":");
+    strcat(buffer,"\"");
+    strcat(buffer,alias);
+    strcat(buffer,"\"");
+    strcat(buffer,"}");
+}
+uint8_t Get_Time(uint8_t time[6])
+{
+	time[0] = 10;
+	time[1] = 10;
+	time[2] = 10;
+	time[3] = 4;
+	time[4] = 25;
+	time[5] = 21;
+	}
+/*Function*/
+/**
+ * @brief
+ * @param
+ * @retval None
+ */
+uint8_t* itoa_user(uint32_t val, uint8_t base) {
+	static uint8_t buf[32] = { 0 };  // 32 bits
+	int i = 30;
+	if (val == 0)
+		buf[i--] = '0';
+	for (; val && i; --i, val /= base)
+		buf[i] = "0123456789abcdef"[val % base];
 
+	return &buf[i + 1];
+}

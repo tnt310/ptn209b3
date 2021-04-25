@@ -45,7 +45,7 @@ uint8_t setupCONNECTION(void);
 uint8_t Setup_connection(char *server_name, char *port , uint16_t keep_alive);
 uint8_t Subscibe(char *sub_topic, uint8_t qos);
 uint8_t unSubscibe(char *sub_topic);
-uint8_t Publish(char *pub_topic, char *payload, uint8_t qos);
+uint8_t Publish(char *pub_topic, uint8_t qos);
 uint8_t Disconnected(uint8_t index);
-
+uint16_t cal_sum_dev();
 #endif /* INC_SIM7600_H_ */
