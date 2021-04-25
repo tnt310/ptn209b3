@@ -200,8 +200,7 @@ uint8_t mqtt_modbus_thread_down(char *pJsonMQTTBuffer,
 	for (i = 1; i < r; i++) {
 		if (jsoneq(pJsonMQTTBuffer, &t[i], "NodeID") == 0) {
 			/* We may use strndup() to fetch string value */
-			printf("\r\n - NodeID: %.*s\n", t[i + 1].end - t[i + 1].start,
-					pJsonMQTTBuffer + t[i + 1].start);
+			printf("\r\n - NodeID: %.*s\n", t[i + 1].end - t[i + 1].start,pJsonMQTTBuffer + t[i + 1].start);
 			xQueueMbMqtt.NodeID = atoi(pJsonMQTTBuffer + t[i + 1].start);
 
 			printf("\r\n nodeid: %d", atoi(pJsonMQTTBuffer + t[i + 1].start));
@@ -246,8 +245,7 @@ uint8_t mqtt_modbus_thread_down(char *pJsonMQTTBuffer,
 			i++;
 		} else if (jsoneq(pJsonMQTTBuffer, &t[i], "PortID") == 0) {
 			/* We may additionally check if the value is either "true" or "false" */
-			printf("- PortID: %.*s\n", t[i + 1].end - t[i + 1].start,
-					pJsonMQTTBuffer + t[i + 1].start);
+			printf("- PortID: %.*s\n", t[i + 1].end - t[i + 1].start,pJsonMQTTBuffer + t[i + 1].start);
 			xQueueMbMqtt.PortID = atoi(pJsonMQTTBuffer + t[i + 1].start);
 
 			i++;
@@ -286,18 +284,19 @@ uint8_t mqtt_modbus_thread_down_v1(char *pJsonMQTTBuffer,uint16_t pJsonMQTTBuffe
 		printf("Object expected\n");
 		return 1;
 	}
+	char NodeID[20];
     dev = cal_sum_dev();
 	/* Loop over all keys of the root object */
 	for (i = 1; i < r; i++) {
 		if (jsoneq(pJsonMQTTBuffer, &t[i], "name") == 0) {   //"name": CH1_INV1_REL3
 			/* We may use strndup() to fetch string value */
 			printf("\r\n - name: %.*s\n", t[i + 1].end - t[i + 1].start,pJsonMQTTBuffer + t[i + 1].start);
-			//xQueueMbMqtt.NodeID = atoi(pJsonMQTTBuffer + t[i + 1].start);
-			//printf("%s",(pJsonMQTTBuffer + t[i + 1].start));
+			char *name = strndup(pJsonMQTTBuffer + t[i + 1].start,t[i + 1].end - t[i + 1].start); // ------- HERE
 			for (uint8_t j = 0; j < dev; j++)
 			{
-				if (strstr(table1[j].name_dev,(pJsonMQTTBuffer + t[i + 1].start)) != NULL)
+				if (strstr(table1[j].name_dev,name) != NULL)
 				{
+					state = 1;
 					xQueueMbMqtt.NodeID = table1[j].id;
 					xQueueMbMqtt.FunC = table1[j].func;
 					xQueueMbMqtt.RegAdr.i8data[0] = (uint8_t)table1[j].reg_adr; // Low Byte
@@ -309,8 +308,16 @@ uint8_t mqtt_modbus_thread_down_v1(char *pJsonMQTTBuffer,uint16_t pJsonMQTTBuffe
 		}
 		else if (jsoneq(pJsonMQTTBuffer, &t[i], "value") == 0) {
 			/* We may additionally check if the value is either "true" or "false" */
+			uint16_t value = 0;
 			printf("\r\n - value: %.*s\n", t[i + 1].end - t[i + 1].start,pJsonMQTTBuffer + t[i + 1].start);
-			uint16_t value = atoi(pJsonMQTTBuffer + t[i + 1].start);
+			char *val_str = strndup(pJsonMQTTBuffer + t[i + 1].start,t[i + 1].end - t[i + 1].start); // ------- HERE
+			if (strcmp(val_str,"true") != NULL)
+				value = 1;
+			else if (strcmp(val_str,"false") != NULL)
+				value = 0;
+			else
+				value = atoi(pJsonMQTTBuffer + t[i + 1].start);
+
 			xQueueMbMqtt.RegData.i8data[0] = (uint8_t)value;
 			xQueueMbMqtt.RegData.i8data[1] = (uint8_t)(value >> 8);
 			i++;
