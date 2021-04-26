@@ -65,16 +65,16 @@ void mqtt_modbus_thread_up(mqtt_client_t *client, char *pub_topic) {
 
 	uint8_t main_time[6];
 	BaseType_t Err = pdFALSE;
-	xQueueMbMqtt_t xQueueMbMQtt;
+	xQueueMbMqtt_t xQueueMbMqtt;
 	portCHAR publish_buffer[MAX_JSON_LEN];
 	portCHAR publish_provision[100];
 	err_t err;
 	while (1) {
-		Err = xQueueReceive(xQueueUplinkHandle, &xQueueMbMQtt,portDEFAULT_WAIT_TIME*3);
+		Err = xQueueReceive(xQueueUplinkHandle, &xQueueMbMqtt,portDEFAULT_WAIT_TIME*3);
 		if (Err == pdPASS) {
-			if (xQueueMbMQtt.gotflagProvision == 1)
+			if (xQueueMbMqtt.gotflagProvision == 1)
 				{
-					uint16_t SUM = xQueueMbMQtt.sum_dev ;
+					uint16_t SUM = xQueueMbMqtt.sum_dev ;
 					err_t err;
 					for (uint16_t i = 0 ; i < SUM; i = i + 1)
 					{
@@ -86,15 +86,19 @@ void mqtt_modbus_thread_up(mqtt_client_t *client, char *pub_topic) {
 						}
 						osDelay(100);
 					}
-					xQueueMbMQtt.mutex = 1;
-					xQueueMbMQtt.gotflagProvision = 0;
+					xQueueMbMqtt.mutex = 1;
+					xQueueMbMqtt.gotflagProvision = 0;
+					BaseType_t er = pdFALSE;
+					er = xQueueSend(xQueueDownlinkHandle, &xQueueMbMqtt,portDEFAULT_WAIT_TIME);
+					if (er == pdPASS) {
+					}
 				} // END OF SENDING PROVISION
 			dem ++;
 			memset(buffer,0,100);
 			/*Create Json and publish to mqtt */
 			Get_Time(main_time);
 			//createJson(buffer,chan,table[xQueueMbMQtt.countflag].name,table[xQueueMbMQtt.countflag].name_dev, xQueueMbMQtt.RegData.i16data, main_time);
-			createJson_v1(buffer,table1[xQueueMbMQtt.countflag].name_dev, xQueueMbMQtt.RegData.i16data, main_time);
+			createJson_v1(buffer,table1[xQueueMbMqtt.countflag].name_dev, xQueueMbMqtt.RegData.i16data, main_time);
 			if (dem < 4)
 				{
 					strcat(buffer,",");
@@ -204,8 +208,8 @@ uint8_t mqtt_modbus_thread_down_v1(char *pJsonMQTTBuffer,uint16_t pJsonMQTTBuffe
 				{
 					xQueueMbMqtt.NodeID = table1[j].id;
 					xQueueMbMqtt.FunC = table1[j].func;
-					xQueueMbMqtt.RegAdr.i8data[0] = (uint8_t)(table1[j].reg_adr); // Low Byte
-					xQueueMbMqtt.RegAdr.i8data[1] = (uint8_t)(table1[j].reg_adr>>8);// High Byte
+					//xQueueMbMqtt.RegAdr.i8data[0] = (uint8_t)(table1[j].reg_adr); // Low Byte
+					//xQueueMbMqtt.RegAdr.i8data[1] = (uint8_t)(table1[j].reg_adr>>8);// High Byte
 					xQueueMbMqtt.PortID = table1[j].port;
 
 					node = xQueueMbMqtt.NodeID;

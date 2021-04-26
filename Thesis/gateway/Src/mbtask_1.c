@@ -178,12 +178,10 @@ void ModbusTestTask(void const *argument) {
 			while (xQueueMbMqtt.mutex == 1)
 			{
 				SUM_DEV0 =  ((sizeof(table1))/(sizeof(data1_t)));
-				device.channel = table1.port;
+				device.channel = table1[count].port;
 				device.id = table1[count].id;
-		//		printf("%x\n",&table1[count]);
-		//		test = table1[count].id;
 				device.func = table1[count].func;
-				device.regAdr.i16data = table1[count].reg_adr;
+				device.regAdr = table1[count].reg_adr;
 				switch(device.channel)
 				{
 				case 0:
