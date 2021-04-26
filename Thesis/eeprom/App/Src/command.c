@@ -13,7 +13,7 @@ tCmdLineEntry g_psCmdTable[] = {
 		{ "get", Cmd_get," : Get the specific param in the next arg" },
 		{ "setserial", Cmd_set_serial," : Set the specific terminal" },
 		{ "setch1config", Cmd_set_ch1_conf," : Set the channel 1 configuration" },
-		{ "setch1param", Cmd_set_ch1_param," : Set the channel 1 parameter" },
+		{ "setparam", Cmd_set_ch1_param," : Set the channel 1 parameter" },
 		{ "delete",Cmd_delete_device," : Delete device" },
 		{ "save",Cmd_save," : save" },
 		{ "reset",Cmd_reset," : reset" },
@@ -66,14 +66,14 @@ int Cmd_save(int argc, char *argv[])
 	v_epr_save(PARAM_LOAD_ALL);
 	char *reponse = "OK\r\n";
 	HAL_UART_Transmit(&huart2, reponse, 4, 1000);
-	}
+}
 
 int Cmd_reset(int argc, char *argv[])
 {
 	NVIC_SystemReset();
 	char *reponse = "OK\r\n";
 	HAL_UART_Transmit(&huart2, reponse, 4, 1000);
-	}
+}
 /*--------------------------------------------------------SET DATA ----------------------------------------------------------------------*/
 int Cmd_set(int argc, char *argv[]) {
 
@@ -271,20 +271,17 @@ int Cmd_set_ch1_conf(int argc, char *argv[])
 int Cmd_set_ch1_param(int argc, char *argv[])
 {
     stt = u_mem_get(NODE_CHANNEL_1_BASE);
-	#define NODE_CHANNEL_1_ADR      NODE_CHANNEL_1_BASE + 1 + (4 * stt)
-	if ((strcmp(*(argv + 0), "setch1param") == 0)) {
-		u_mem_set(NODE_CHANNEL_1_ADR , atoi(*(argv + 1))); 		 // ID
-		u_mem_set((NODE_CHANNEL_1_ADR  + 1), atoi(*(argv + 2))); // FUNC
-		uint16_t temp = atoi(*(argv + 3)); // REGADR
-		u_mem_set((NODE_CHANNEL_1_ADR  + 2), (uint8_t)temp);
-		u_mem_set((NODE_CHANNEL_1_ADR  + 3), (uint8_t)(temp >>8));
+	#define NODE_CHANNEL_1_ADR      NODE_CHANNEL_1_BASE + 1 + (5 * stt)
+	if ((strcmp(*(argv + 0), "setparam") == 0)) {
+		u_mem_set(NODE_CHANNEL_1_ADR , atoi(*(argv + 1))); 		 // CHANNEL
+		u_mem_set(NODE_CHANNEL_1_ADR + 1 , atoi(*(argv + 2))); 	// ID
+		u_mem_set((NODE_CHANNEL_1_ADR  + 2), atoi(*(argv + 3))); // FUNC
+		uint16_t temp = atoi(*(argv + 4)); // REGADR
+		u_mem_set((NODE_CHANNEL_1_ADR  + 3), (uint8_t)temp);
+		u_mem_set((NODE_CHANNEL_1_ADR  + 4), (uint8_t)(temp >>8));
 	}
 	stt ++;
 	PARAM[NODE_CHANNEL_1_BASE] = stt;
-//	int16toint8 RegAdr;
-//	RegAdr.i8data[0] = PARAM[NODE_CHANNEL_1_ADR + 2];
-//	RegAdr.i8data[1] = PARAM[NODE_CHANNEL_1_ADR + 3];
-//	DBG("Device %d REGADR    %d \r\n",stt,RegAdr.i16data);
 	char *reponse = "\r\nOK\r\n";
 	HAL_UART_Transmit(&huart2, reponse, 4, 1000);
 }
@@ -292,10 +289,10 @@ int Cmd_set_ch1_param(int argc, char *argv[])
 
 int Cmd_delete_device(int argc, char *argv[])
 {
-	uint8_t code = atoi(*(argv + 1)); // which channel ?
+	uint8_t channel = atoi(*(argv + 1)); // which channel ?
 	uint8_t temp_id = atoi(*(argv + 2)); // which id ?
 	uint16_t temp_reg = atoi(*(argv + 3)); // which addr of id?
-	switch (code)
+	switch (channel)
 	{
 		case DELETE_ALL: //  DELETE ALL DEVICE OF 3 CHANNEL
 			for (uint16_t i = 0; i< 300; i++)
@@ -314,15 +311,15 @@ int Cmd_delete_device(int argc, char *argv[])
 			break;
 
 		default:	// DELETE DEVICE AT SPECIFIC ADDRESS
-			for (uint16_t i = 0; i< 50; i = i + 4)  // COMPARE ID
+			for (uint16_t i = 0; i< 50; i = i + 5)  // COMPARE ID
 				{
 					if (PARAM[NODE_CHANNEL_1_BASE + 1 + i] == temp_id)
 						{
-							RegAdr.i8data[0] = PARAM[NODE_CHANNEL_1_BASE + 1 + i + 2];
-							RegAdr.i8data[1] = PARAM[NODE_CHANNEL_1_BASE + 1 + i + 3];
+							RegAdr.i8data[0] = PARAM[NODE_CHANNEL_1_BASE + 1 + i + 3];
+							RegAdr.i8data[1] = PARAM[NODE_CHANNEL_1_BASE + 1 + i + 4];
 							if (RegAdr.i16data == temp_reg)
 							{
-								for (uint8_t j = 0; j <4; j++) // DELETE MEMORY
+								for (uint8_t j = 0; j <5; j++) // DELETE MEMORY
 								{
 									u_mem_set(NODE_CHANNEL_1_BASE + 1 + i + j, 0);
 								}
@@ -330,7 +327,7 @@ int Cmd_delete_device(int argc, char *argv[])
 								{
 									if ((NODE_CHANNEL_1_BASE + 1 + i + z) < 100)
 									{
-										PARAM[NODE_CHANNEL_1_BASE + 1 + i + z] = PARAM[NODE_CHANNEL_1_BASE + 1 + i + 4 + z];
+										PARAM[NODE_CHANNEL_1_BASE + 1 + i + z] = PARAM[NODE_CHANNEL_1_BASE + 1 + i + 5 + z];
 									}
 								}
 							}
