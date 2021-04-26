@@ -40,8 +40,6 @@ static uint8_t dem = 0;  // count
 static uint8_t count_provision = 0;
 uint16_t dev;
 extern data1_t table1[];
-uint8_t node,func,low,high,port;
-char name[20];
 /* Start implementation ----------------------*/
 
 static int jsoneq(const char *json, jsmntok_t *tok, const char *s) {
@@ -201,10 +199,8 @@ uint8_t mqtt_modbus_thread_down_v1(char *pJsonMQTTBuffer,uint16_t pJsonMQTTBuffe
 		if (jsoneq(pJsonMQTTBuffer, &t[i], "name") == 0) {
 			/* We may use strndup() to fetch string value */
 			printf("\r\n - name: %.*s\n", t[i + 1].end - t[i + 1].start,pJsonMQTTBuffer + t[i + 1].start);
-			printf("\r\n - SL : %d\r\n",t[i + 1].end - t[i + 1].start);
-			printf("\r\n START: %s\r\n",pJsonMQTTBuffer + t[i + 1].start);
+			char name[20];
 			strncpy(name, pJsonMQTTBuffer + t[i + 1].start, t[i + 1].end - t[i + 1].start);
-			printf("\r\n - NAME: %s\n",name);
 			for (uint16_t j = 0; j < cal_sum_dev(); j++)
 			{
 				if (strstr(table1[j].name_dev, name) != NULL)
@@ -215,19 +211,13 @@ uint8_t mqtt_modbus_thread_down_v1(char *pJsonMQTTBuffer,uint16_t pJsonMQTTBuffe
 					xQueueMbMqtt.RegAdr.i8data[0] = (uint8_t)(table1[j].reg_adr); // Low Byte
 					xQueueMbMqtt.RegAdr.i8data[1] = (uint8_t)(table1[j].reg_adr>>8);// High Byte
 					xQueueMbMqtt.PortID = table1[j].port;
-
-					node = xQueueMbMqtt.NodeID;
-					func = xQueueMbMqtt.FunC;
-					port = xQueueMbMqtt.PortID;
-					low = xQueueMbMqtt.RegAdr.i8data[0];
-					high = xQueueMbMqtt.RegAdr.i8data[1];
 				}
 			}
 			i++;
 		}
 		else if (jsoneq(pJsonMQTTBuffer, &t[i], "value") == 0) {
 			/* We may additionally check if the value is either "true" or "false" */
-			uint16_t value = 0;
+			uint16_t value;
 			printf("\r\n - value: %.*s\n", t[i + 1].end - t[i + 1].start,pJsonMQTTBuffer + t[i + 1].start);
 			value = atoi(pJsonMQTTBuffer + t[i + 1].start);
 			xQueueMbMqtt.RegData.i8data[0] = (uint8_t)value;

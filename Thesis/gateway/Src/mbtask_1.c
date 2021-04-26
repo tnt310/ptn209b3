@@ -113,7 +113,12 @@ extern data1_t table1[] =   // CHANNEL 1
 		0,	10,	6,	7,	"CH1_INV3_FAN",		"number",		"Fan",
 		0,	10,	6,	6,	"CH1_NODE1_REL1",	"boolean",		"Light",
 		0,	10,	6,	5,	"CH1_NODE1_REL2",	"boolean",		"Light",
-		0,	10,	6,	4,	"CH1_NODE1_REL3",	"boolean",		"Light"
+		0,	10,	6,	4,	"CH1_NODE1_REL3",	"boolean",		"Light",
+		0,	10,	6,	3,	"CH1_INV1_FAN",		"number",		"Fan",
+		0,	10,	6,	2,	"CH1_INV3_FAN",		"number",		"Fan",
+		0,	10,	6,	1,	"CH1_NODE1_REL1",	"boolean",		"Light",
+		0,	10,	6,	10,	"CH1_NODE1_REL2",	"boolean",		"Light",
+		0,	10,	6,	9,	"CH1_NODE1_REL3",	"boolean",		"Light"
 };
 
 /**************************************************************************************-*/
