@@ -3,8 +3,9 @@
 #include <stdint.h>
 
 
-char eep[] = {0,10,6,1,0,12,'C','H','1','_','I','N','V','3','_','F','A','N',1,3,'F','A','N',
-              0,10,6,6,8,14,'C','H','1','_','N','O','D','E','1','_','R','E','L','1',1,5,'L','I','G','H','T'};
+char eep[] = {//0,10,6,1,0,12,'C','H','1','_','I','N','V','3','_','F','A','N',1,3,'F','A','N',
+              //0,10,6,2,0,14,'C','H','1','_','N','O','D','E','1','_','R','E','L','1',1,5,'L','I','G','H','T'
+               0,10,6,2,0,15,'C','H','1','_','N','O','D','E','1','2','_','R','E','L','1',1,8,'H','U','M','I','D','I','T','Y'};
 
 typedef union
 {
@@ -26,7 +27,7 @@ uint8_t convert()
 {
     for (int i = 0; i < 1; i++)
     {
-        table[i].port = eep[i];
+        table[i].port = eep[i + 0];
         table[i].id = eep[i + 1];
         table[i].func = eep[i + 2];
         table[i].reg.i8data[1] = eep[i + 3];
@@ -38,6 +39,7 @@ uint8_t convert()
             table[i].type = "boolean";}
         strncpy(table[i].name_dev, &eep[i + 8 + eep[i+5]] ,eep[i + 7 + eep[i+5]]);
     }
+   // eep[i + 8 + eep[i+5] + eep[i+7+eep[i+5]]];
 }
 int main()
 {
