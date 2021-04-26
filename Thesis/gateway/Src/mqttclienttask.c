@@ -37,6 +37,7 @@ extern const uint16_t u16_mqtt_port = 	19613;
 const char topic[] = "606ff2e222c1752264934dbb/upstream/telemetry";
 //const char sub[]="606ff2e222c1752264934dbb/upstream/attributes";
 const char sub[]="606ff2e222c1752264934dbb/downlink";
+const char pro[]="606ff2e222c1752264934dbb/downlink/provision";
 
 
 void netmqttTask(void *arg);
@@ -104,7 +105,7 @@ void mqtt_connection_cb(mqtt_client_t *client, void *arg,mqtt_connection_status_
 		/* Subscribe to a topic named "subtopic" with QoS level 1, call mqtt_sub_request_cb with result */
 		err = mqtt_subscribe(client, sub_topic, 1, mqtt_sub_request_cb, arg);
 		if (err != ERR_OK) {
-			printf("\r\nmqtt_subscribe return: %d\n", err);
+			printf("\r\nmqtt_subscribe telemetry return: %d\n", err);
 		}
 	} else {
 		printf("\r\nmqtt_connection_cb: Disconnected, reason: %d\n", status);

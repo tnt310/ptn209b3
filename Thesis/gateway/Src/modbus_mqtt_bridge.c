@@ -72,7 +72,7 @@ void mqtt_modbus_thread_up(mqtt_client_t *client, char *pub_topic) {
 	while (1) {
 		Err = xQueueReceive(xQueueUplinkHandle, &xQueueMbMqtt,portDEFAULT_WAIT_TIME*3);
 		if (Err == pdPASS) {
-			if (xQueueMbMqtt.gotflagProvision == 1)
+			if (xQueueMbMqtt.gotflagProvision == 1 && xQueueMbMqtt.sum_dev != 0)
 				{
 					uint16_t SUM = xQueueMbMqtt.sum_dev ;
 					err_t err;
@@ -120,7 +120,6 @@ void mqtt_modbus_thread_up(mqtt_client_t *client, char *pub_topic) {
 					}
 				}
 			}
-
 		//	err = mqtt_publish(client, pub_topic, publish_buffer,strlen(publish_buffer), QOS_0, 0,mqtt_bridge_pub_request_cb,NULL);
 
 //			if (err != ERR_OK) {
