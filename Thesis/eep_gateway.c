@@ -45,15 +45,12 @@ int main()
 {
     
     convert();
+    for (uint8_t i = 0; i< sl; i++)
+    {
+        printf("%d\t%d\t%d\t%d\t%s\t%s\t%s\n",table[i].port,table[i].id,table[i].func,table[i].reg.i16data,
+                                    table[i].name_reg,table[i].type,table[i].name_dev);
 
-    printf("%d\t%d\t%d\t%d\t%s\t%s\t%s\n",table[0].port,table[0].id,table[0].func,table[0].reg.i16data,
-                                    table[0].name_reg,table[0].type,table[0].name_dev);
-
-    printf("%d\t%d\t%d\t%d\t%s\t%s\t%s\n",table[1].port,table[1].id,table[1].func,table[1].reg.i16data,
-                                    table[1].name_reg,table[1].type,table[1].name_dev);
-
-        printf("%d\t%d\t%d\t%d\t%s\t%s\t%s",table[2].port,table[2].id,table[2].func,table[2].reg.i16data,
-                                    table[2].name_reg,table[2].type,table[2].name_dev);
+    }
 }
 
 
