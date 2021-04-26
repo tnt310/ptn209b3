@@ -38,9 +38,10 @@ uint8_t mqtt_couter_err = 0;
 char buffer[100];
 static uint8_t dem = 0;  // count
 static uint8_t count_provision = 0;
-uint8_t dev,state;
+uint16_t dev;
 extern data1_t table1[];
 uint8_t node,func,low,high,port;
+char name[20];
 /* Start implementation ----------------------*/
 
 static int jsoneq(const char *json, jsmntok_t *tok, const char *s) {
@@ -197,18 +198,22 @@ uint8_t mqtt_modbus_thread_down_v1(char *pJsonMQTTBuffer,uint16_t pJsonMQTTBuffe
     dev = cal_sum_dev();
 	/* Loop over all keys of the root object */
 	for (i = 1; i < r; i++) {
-		if (jsoneq(pJsonMQTTBuffer, &t[i], "name") == 0) {   //"name": CH1_INV1_REL3
+		if (jsoneq(pJsonMQTTBuffer, &t[i], "name") == 0) {
 			/* We may use strndup() to fetch string value */
 			printf("\r\n - name: %.*s\n", t[i + 1].end - t[i + 1].start,pJsonMQTTBuffer + t[i + 1].start);
-			char *name = strndup(pJsonMQTTBuffer + t[i + 1].start,t[i + 1].end - t[i + 1].start); // ------- HERE
-			for (uint8_t j = 0; j < dev; j++)
+			printf("\r\n - SL : %d\r\n",t[i + 1].end - t[i + 1].start);
+			printf("\r\n START: %s\r\n",pJsonMQTTBuffer + t[i + 1].start);
+			strncpy(name, pJsonMQTTBuffer + t[i + 1].start, t[i + 1].end - t[i + 1].start);
+			printf("\r\n - NAME: %s\n",name);
+			for (uint16_t j = 0; j < cal_sum_dev(); j++)
 			{
-				if (strstr(table1[j].name_dev,name) != NULL)
+				if (strstr(table1[j].name_dev, name) != NULL)
 				{
+					printf("\r\n - name_dev: %s\n",table1[j].name_dev);
 					xQueueMbMqtt.NodeID = table1[j].id;
 					xQueueMbMqtt.FunC = table1[j].func;
-					//xQueueMbMqtt.RegAdr.i8data[0] = (uint8_t)(table1[j].reg_adr); // Low Byte
-					//xQueueMbMqtt.RegAdr.i8data[1] = (uint8_t)(table1[j].reg_adr>>8);// High Byte
+					xQueueMbMqtt.RegAdr.i8data[0] = (uint8_t)(table1[j].reg_adr); // Low Byte
+					xQueueMbMqtt.RegAdr.i8data[1] = (uint8_t)(table1[j].reg_adr>>8);// High Byte
 					xQueueMbMqtt.PortID = table1[j].port;
 
 					node = xQueueMbMqtt.NodeID;

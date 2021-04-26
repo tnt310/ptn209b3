@@ -30,3 +30,18 @@ AT+CRESET<CR><LF> // reset module
 AT+CPIN?<CR><LF> // kiểm tra SIM
 AT+CREG?<CR><LF> // kiểm tra đăng ký mạng
 AT+CSQ<CR><LF> // kiểm tra chất lượng mạng
+
+HAL_Delay(uint32_t Delay)
+{
+  uint32_t tickstart = HAL_GetTick();
+  uint32_t wait = Delay;
+  /* Add a freq to guarantee minimum wait */
+  if (wait < HAL_MAX_DELAY)
+  {
+    wait += (uint32_t)(uwTickFreq);
+  }
+
+  while((HAL_GetTick() - tickstart) < wait)
+  {
+  }
+}
