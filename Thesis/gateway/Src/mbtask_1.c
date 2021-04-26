@@ -56,6 +56,16 @@ extern data1_t table1[] =   // CHANNEL 1
 		0,	2,	3,	4,	"CH1_INV1_CURR",	"number",		"Current",
 		0,	2,	3,	5,	"CH1_INV1_VOLT",	"number",		"Voltage",
 		0,	2,  3, 	6,	"CH1_INV1_POWR",	"number",		"Power",
+		0,	10,	6,	8,	"CH1_INV1_FAN",		"number",		"Fan",
+		0,	10,	6,	7,	"CH1_INV3_FAN",		"number",		"Fan",
+		0,	10,	6,	6,	"CH1_NODE1_REL1",	"boolean",		"Light",
+		0,	10,	6,	5,	"CH1_NODE1_REL2",	"boolean",		"Light",
+		0,	10,	6,	4,	"CH1_NODE1_REL3",	"boolean",		"Light",
+		0,	10,	6,	3,	"CH1_INV1_FAN",		"number",		"Fan",
+		0,	10,	6,	2,	"CH1_INV3_FAN",		"number",		"Fan",
+		0,	10,	6,	1,	"CH1_NODE1_REL1",	"boolean",		"Light",
+		0,	10,	6,	10,	"CH1_NODE1_REL2",	"boolean",		"Light",
+		0,	10,	6,	9,	"CH1_NODE1_REL3",	"boolean",		"Light"
 //		0,	2, 	3,	7,	"CH1_INV1_RPOWR",	"number",		"React Power",
 //		0,	2,	3,	8,	"CH1_SEN1_HUMD",	"number",		"Humidity",
 //		0,	2,	3,	9,	"CH1_INV1_POWR",	"number",		"Power",
@@ -109,16 +119,6 @@ extern data1_t table1[] =   // CHANNEL 1
 //		0,	8, 	3,	17,	"CH3_INV1_RPOWR",	"number",		"React Power",
 //		0,	8,	3,	18,	"CH3_SEN1_HUMD",	"number",		"Humidity",
 //		0,	8,	3,	19,	"CH3_INV1_POWR",	"number",		"Power",
-		0,	10,	6,	8,	"CH1_INV1_FAN",		"number",		"Fan",
-		0,	10,	6,	7,	"CH1_INV3_FAN",		"number",		"Fan",
-		0,	10,	6,	6,	"CH1_NODE1_REL1",	"boolean",		"Light",
-		0,	10,	6,	5,	"CH1_NODE1_REL2",	"boolean",		"Light",
-		0,	10,	6,	4,	"CH1_NODE1_REL3",	"boolean",		"Light",
-		0,	10,	6,	3,	"CH1_INV1_FAN",		"number",		"Fan",
-		0,	10,	6,	2,	"CH1_INV3_FAN",		"number",		"Fan",
-		0,	10,	6,	1,	"CH1_NODE1_REL1",	"boolean",		"Light",
-		0,	10,	6,	10,	"CH1_NODE1_REL2",	"boolean",		"Light",
-		0,	10,	6,	9,	"CH1_NODE1_REL3",	"boolean",		"Light"
 };
 
 /**************************************************************************************-*/
