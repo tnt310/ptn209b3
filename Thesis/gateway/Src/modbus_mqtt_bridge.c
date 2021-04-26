@@ -40,6 +40,7 @@ static uint8_t dem = 0;  // count
 static uint8_t count_provision = 0;
 uint8_t dev,state;
 extern data1_t table1[];
+uint8_t node,func,low,high,port;
 /* Start implementation ----------------------*/
 
 static int jsoneq(const char *json, jsmntok_t *tok, const char *s) {
@@ -85,6 +86,7 @@ void mqtt_modbus_thread_up(mqtt_client_t *client, char *pub_topic) {
 						}
 						osDelay(100);
 					}
+					xQueueMbMQtt.mutex = 1;
 					xQueueMbMQtt.gotflagProvision = 0;
 				} // END OF SENDING PROVISION
 			dem ++;
@@ -169,7 +171,71 @@ void mqtt_modbus_thread_up(mqtt_client_t *client, char *pub_topic) {
 	}
 }
 //	how to got mqtt intance??
+/*----------------------------------------------------------------------------------------------------------------------------*/
+uint8_t mqtt_modbus_thread_down_v1(char *pJsonMQTTBuffer,uint16_t pJsonMQTTBufferLen) {
+	/*Parsing json by using clone source :) */
+	int i;
+	int r;
+	jsmn_parser p;
+	jsmntok_t t[JSON_MAX_LEN]; /* We expect no more than JSON_MAX_LEN tokens */
+	jsmn_init(&p);
+	xQueueMbMqtt_t xQueueMbMqtt;
+	r = jsmn_parse(&p, pJsonMQTTBuffer, pJsonMQTTBufferLen, t,sizeof(t) / sizeof(t[0]));
+	if (r < 0) {
+		printf("Failed to parse JSON: %d\n", r);
+		return 1;
+	}
 
+	/* Assume the top-level element is an object */
+	if (r < 1 || t[0].type != JSMN_OBJECT) {
+		printf("Object expected\n");
+		return 1;
+	}
+    dev = cal_sum_dev();
+	/* Loop over all keys of the root object */
+	for (i = 1; i < r; i++) {
+		if (jsoneq(pJsonMQTTBuffer, &t[i], "name") == 0) {   //"name": CH1_INV1_REL3
+			/* We may use strndup() to fetch string value */
+			printf("\r\n - name: %.*s\n", t[i + 1].end - t[i + 1].start,pJsonMQTTBuffer + t[i + 1].start);
+			char *name = strndup(pJsonMQTTBuffer + t[i + 1].start,t[i + 1].end - t[i + 1].start); // ------- HERE
+			for (uint8_t j = 0; j < dev; j++)
+			{
+				if (strstr(table1[j].name_dev,name) != NULL)
+				{
+					xQueueMbMqtt.NodeID = table1[j].id;
+					xQueueMbMqtt.FunC = table1[j].func;
+					xQueueMbMqtt.RegAdr.i8data[0] = (uint8_t)(table1[j].reg_adr); // Low Byte
+					xQueueMbMqtt.RegAdr.i8data[1] = (uint8_t)(table1[j].reg_adr>>8);// High Byte
+					xQueueMbMqtt.PortID = table1[j].port;
+
+					node = xQueueMbMqtt.NodeID;
+					func = xQueueMbMqtt.FunC;
+					port = xQueueMbMqtt.PortID;
+					low = xQueueMbMqtt.RegAdr.i8data[0];
+					high = xQueueMbMqtt.RegAdr.i8data[1];
+				}
+			}
+			i++;
+		}
+		else if (jsoneq(pJsonMQTTBuffer, &t[i], "value") == 0) {
+			/* We may additionally check if the value is either "true" or "false" */
+			uint16_t value = 0;
+			printf("\r\n - value: %.*s\n", t[i + 1].end - t[i + 1].start,pJsonMQTTBuffer + t[i + 1].start);
+			value = atoi(pJsonMQTTBuffer + t[i + 1].start);
+			xQueueMbMqtt.RegData.i8data[0] = (uint8_t)value;
+			xQueueMbMqtt.RegData.i8data[1] = (uint8_t)(value >> 8);
+			i++;
+		}
+	}
+	BaseType_t Err = pdFALSE;
+	Err = xQueueSend(xQueueDownlinkHandle, &xQueueMbMqtt,portDEFAULT_WAIT_TIME);
+	if (Err == pdPASS) {
+	} else {
+		printf("\r\n Modbus_MQTT Downlink queued: False \r\n");
+	}
+
+}
+/*----------------------------------------------------------------------------------------------------------------------------*/
 /**@ Brief: Parse and transfer from mqtt server to modbus device
  * @ Todo:
  * 		Parse json object from server
@@ -253,76 +319,6 @@ uint8_t mqtt_modbus_thread_down(char *pJsonMQTTBuffer,
 
 	}
 
-	BaseType_t Err = pdFALSE;
-	Err = xQueueSend(xQueueDownlinkHandle, &xQueueMbMqtt,portDEFAULT_WAIT_TIME);
-	if (Err == pdPASS) {
-		printf("\r\n Modbus_MQTT Downlink queued: OK \r\n");
-
-	} else {
-		printf("\r\n Modbus_MQTT Downlink queued: False \r\n");
-	}
-
-}
-
-/*------------------------------------------------------------------------------------------------------------*/
-uint8_t mqtt_modbus_thread_down_v1(char *pJsonMQTTBuffer,uint16_t pJsonMQTTBufferLen) {
-	/*Parsing json by using clone source :) */
-	int i;
-	int r;
-	jsmn_parser p;
-	jsmntok_t t[JSON_MAX_LEN]; /* We expect no more than JSON_MAX_LEN tokens */
-	jsmn_init(&p);
-	xQueueMbMqtt_t xQueueMbMqtt;
-	r = jsmn_parse(&p, pJsonMQTTBuffer, pJsonMQTTBufferLen, t,sizeof(t) / sizeof(t[0]));
-	if (r < 0) {
-		printf("Failed to parse JSON: %d\n", r);
-		return 1;
-	}
-
-	/* Assume the top-level element is an object */
-	if (r < 1 || t[0].type != JSMN_OBJECT) {
-		printf("Object expected\n");
-		return 1;
-	}
-	char NodeID[20];
-    dev = cal_sum_dev();
-	/* Loop over all keys of the root object */
-	for (i = 1; i < r; i++) {
-		if (jsoneq(pJsonMQTTBuffer, &t[i], "name") == 0) {   //"name": CH1_INV1_REL3
-			/* We may use strndup() to fetch string value */
-			printf("\r\n - name: %.*s\n", t[i + 1].end - t[i + 1].start,pJsonMQTTBuffer + t[i + 1].start);
-			char *name = strndup(pJsonMQTTBuffer + t[i + 1].start,t[i + 1].end - t[i + 1].start); // ------- HERE
-			for (uint8_t j = 0; j < dev; j++)
-			{
-				if (strstr(table1[j].name_dev,name) != NULL)
-				{
-					state = 1;
-					xQueueMbMqtt.NodeID = table1[j].id;
-					xQueueMbMqtt.FunC = table1[j].func;
-					xQueueMbMqtt.RegAdr.i8data[0] = (uint8_t)table1[j].reg_adr; // Low Byte
-					xQueueMbMqtt.RegAdr.i8data[1] = (uint8_t)(table1[j].reg_adr >>8);// High Byte
-					xQueueMbMqtt.PortID = 0;
-				}
-			}
-			i++;
-		}
-		else if (jsoneq(pJsonMQTTBuffer, &t[i], "value") == 0) {
-			/* We may additionally check if the value is either "true" or "false" */
-			uint16_t value = 0;
-			printf("\r\n - value: %.*s\n", t[i + 1].end - t[i + 1].start,pJsonMQTTBuffer + t[i + 1].start);
-			char *val_str = strndup(pJsonMQTTBuffer + t[i + 1].start,t[i + 1].end - t[i + 1].start); // ------- HERE
-			if (strcmp(val_str,"true") != NULL)
-				value = 1;
-			else if (strcmp(val_str,"false") != NULL)
-				value = 0;
-			else
-				value = atoi(pJsonMQTTBuffer + t[i + 1].start);
-
-			xQueueMbMqtt.RegData.i8data[0] = (uint8_t)value;
-			xQueueMbMqtt.RegData.i8data[1] = (uint8_t)(value >> 8);
-			i++;
-		}
-	}
 	BaseType_t Err = pdFALSE;
 	Err = xQueueSend(xQueueDownlinkHandle, &xQueueMbMqtt,portDEFAULT_WAIT_TIME);
 	if (Err == pdPASS) {

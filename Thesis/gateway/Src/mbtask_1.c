@@ -49,71 +49,71 @@ extern osMessageQId xQueueMessageHandle;
 /********************************************************************************-*/
 extern data1_t table1[] =   // CHANNEL 1
 {
-		2,	3,	0,  "CH1_SEN2_TEMP",	"number",		"Temperature",
-		2, 	3,  1, 	"CH1_SEN2_HUMD", 	"number",		"Humidity",
-		2,	3,	2,	"CH1_INV2_POWR",	"number",		"Power",
-		2,	3,	3,	"CH1_SEN1_LUME",	"number",		"Lumen",
-		2,	3,	4,	"CH1_INV1_CURR",	"number",		"Current",
-		2,	3,	5,	"CH1_INV1_VOLT",	"number",		"Voltage",
-		2,  3, 	6,	"CH1_INV1_POWR",	"number",		"Power",
-		2, 	3,	7,	"CH1_INV1_RPOWR",	"number",		"React Power",
-		2,	3,	8,	"CH1_SEN1_HUMD",	"number",		"Humidity",
-		2,	3,	9,	"CH1_INV1_POWR",	"number",		"Power",
-		2,	3,	10, "CH1_SEN2_TEMP",	"number",		"Temperature",
-		2, 	3,  11, "CH1_SEN2_HUMD",	"number", 		"Humidity",
-		2,	3,	12,	"CH1_INV2_POWR",	"number", 		"Power",
-		2,	3,	13,	"CH1_SEN1_LUME",	"number",		"Lumen",
-		2,	3,	14,	"CH1_INV1_CURR",	"number",		"Current",
-		2,	3,	15,	"CH1_INV1_VOLT",	"number",		"Voltage",
-		2,  3, 	16,	"CH1_INV1_POWR",	"number",		"Power",
-		2, 	3,	17,	"CH1_INV1_RPOWR",	"number",		"React Power",
-		2,	3,	18,	"CH1_SEN1_HUMD",	"number",		"Humidity",
-		2,	3,	19,	"CH1_INV1_POWR",	"number",		"Power",
-		6,	3,	0,  "CH2_SEN2_TEMP",	"number",		"Temperature",
-		6, 	3,  1, 	"CH2_SEN2_HUMD",	"number", 		"Humidity",
-		6,	3,	2,	"CH2_INV2_POWR",	"number", 		"Power",
-		6,	3,	3,	"CH2_SEN1_LUME",	"number",		"Lumen",
-		6,	3,	4,	"CH2_INV1_CURR",	"number",		"Current",
-		6,	3,	5,	"CH2_INV1_VOLT",	"number",		"Voltage",
-		6,  3, 	6,	"CH2_INV1_POWR",	"number",		"Power",
-		6, 	3,	7,	"CH2_INV1_RPOWR",	"number",		"React Power",
-		6,	3,	8,	"CH2_SEN1_HUMD",	"number",		"Humidity",
-		6,	3,	9,	"CH2_INV1_POWR",	"number",		"Power",
-		6,	3,	10,  "CH2_SEN2_TEMP",	"number",		"Temperature",
-		6, 	3,  11, "CH2_SEN2_HUMD",	"number", 		"Humidity",
-		6,	3,	12,	"CH2_INV2_POWR",	"number", 		"Power",
-		6,	3,	13,	"CH2_SEN1_LUME",	"number",		"Lumen",
-		6,	3,	14,	"CH2_INV1_CURR",	"number",		"Current",
-		6,	3,	15,	"CH2_INV1_VOLT",	"number",		"Voltage",
-		6,  3, 	16,	"CH2_INV1_POWR",	"number",		"Power",
-		6, 	3,	17,	"CH2_INV1_RPOWR",	"number",		"React Power",
-		6,	3,	18,	"CH2_SEN1_HUMD",	"number",		"Humidity",
-		6,	3,	19,	"CH2_INV1_POWR",	"number",		"Power",
-		8,	3,	0,  "CH3_SEN2_TEMP",	"number",		"Temperature",
-		8, 	3,  1, 	"CH3_SEN2_HUMD",	"number", 		"Humidity",
-		8,	3,	2,	"CH3_INV2_POWR",	"number", 		"Power",
-		8,	3,	3,	"CH3_SEN1_LUME",	"number",		"Lumen",
-		8,	3,	4,	"CH3_INV1_CURR",	"number",		"Current",
-		8,	3,	5,	"CH3_INV1_VOLT",	"number",		"Voltage",
-		8,  3, 	6,	"CH3_INV1_POWR",	"number",		"Power",
-		8, 	3,	7,	"CH3_INV1_RPOWR",	"number",		"React Power",
-		8,	3,	8,	"CH3_SEN1_HUMD",	"number",		"Humidity",
-		8,	3,	9,	"CH3_INV1_POWR",	"number",		"Power",
-		8,	3,	10,  "CH3_SEN2_TEMP",	"number",		"Temperature",
-		8, 	3,  11, "CH3_SEN2_HUMD",	"number", 		"Humidity",
-		8,	3,	12,	"CH3_INV2_POWR",	"number", 		"Power",
-		8,	3,	13,	"CH3_SEN1_LUME",	"number",		"Lumen",
-		8,	3,	14,	"CH3_INV1_CURR",	"number",		"Current",
-		8,	3,	15,	"CH3_INV1_VOLT",	"number",		"Voltage",
-		8,  3, 	16,	"CH3_INV1_POWR",	"number",		"Power",
-		8, 	3,	17,	"CH3_INV1_RPOWR",	"number",		"React Power",
-		8,	3,	18,	"CH3_SEN1_HUMD",	"number",		"Humidity",
-		8,	3,	19,	"CH3_INV1_POWR",	"number",		"Power",
-		10,	6,	8,	"CH1_INV1_FAN",		"number",		"Fan",
-		10,	6,	7,	"CH1_INV3_FAN",		"number",		"Fan",
-		10,	6,	6,	"CH1_NODE1_REL1",	"boolean",		"Light",
-		10,	6,	5,	"CH1_NODE1_REL2",	"boolean",		"Light",
-		10,	6,	4,	"CH1_NODE1_REL3",	"boolean",		"Light"
+		0,	2,	3,	0,  "CH1_SEN2_TEMP",	"number",		"Temperature",
+		0,	2, 	3,  1, 	"CH1_SEN2_HUMD", 	"number",		"Humidity",
+		0,	2,	3,	2,	"CH1_INV2_POWR",	"number",		"Power",
+		0,	2,	3,	3,	"CH1_SEN1_LUME",	"number",		"Lumen",
+		0,	2,	3,	4,	"CH1_INV1_CURR",	"number",		"Current",
+		0,	2,	3,	5,	"CH1_INV1_VOLT",	"number",		"Voltage",
+		0,	2,  3, 	6,	"CH1_INV1_POWR",	"number",		"Power",
+		0,	2, 	3,	7,	"CH1_INV1_RPOWR",	"number",		"React Power",
+		0,	2,	3,	8,	"CH1_SEN1_HUMD",	"number",		"Humidity",
+		0,	2,	3,	9,	"CH1_INV1_POWR",	"number",		"Power",
+		0,	2,	3,	10, "CH1_SEN2_TEMP",	"number",		"Temperature",
+		0,	2, 	3,  11, "CH1_SEN2_HUMD",	"number", 		"Humidity",
+		0,	2,	3,	12,	"CH1_INV2_POWR",	"number", 		"Power",
+		0,	2,	3,	13,	"CH1_SEN1_LUME",	"number",		"Lumen",
+		0,	2,	3,	14,	"CH1_INV1_CURR",	"number",		"Current",
+		0,	2,	3,	15,	"CH1_INV1_VOLT",	"number",		"Voltage",
+		0,	2,  3, 	16,	"CH1_INV1_POWR",	"number",		"Power",
+		0,	2, 	3,	17,	"CH1_INV1_RPOWR",	"number",		"React Power",
+		0,	2,	3,	18,	"CH1_SEN1_HUMD",	"number",		"Humidity",
+		0,	2,	3,	19,	"CH1_INV1_POWR",	"number",		"Power",
+		0,	6,	3,	0,  "CH2_SEN2_TEMP",	"number",		"Temperature",
+		0,	6, 	3,  1, 	"CH2_SEN2_HUMD",	"number", 		"Humidity",
+		0,	6,	3,	2,	"CH2_INV2_POWR",	"number", 		"Power",
+		0,	6,	3,	3,	"CH2_SEN1_LUME",	"number",		"Lumen",
+		0,	6,	3,	4,	"CH2_INV1_CURR",	"number",		"Current",
+		0,	6,	3,	5,	"CH2_INV1_VOLT",	"number",		"Voltage",
+		0,	6,  3, 	6,	"CH2_INV1_POWR",	"number",		"Power",
+		0,	6, 	3,	7,	"CH2_INV1_RPOWR",	"number",		"React Power",
+		0,	6,	3,	8,	"CH2_SEN1_HUMD",	"number",		"Humidity",
+		0,	6,	3,	9,	"CH2_INV1_POWR",	"number",		"Power",
+		0,	6,	3,	10,  "CH2_SEN2_TEMP",	"number",		"Temperature",
+		0,	6, 	3,  11, "CH2_SEN2_HUMD",	"number", 		"Humidity",
+		0,	6,	3,	12,	"CH2_INV2_POWR",	"number", 		"Power",
+		0,	6,	3,	13,	"CH2_SEN1_LUME",	"number",		"Lumen",
+		0,	6,	3,	14,	"CH2_INV1_CURR",	"number",		"Current",
+		0,	6,	3,	15,	"CH2_INV1_VOLT",	"number",		"Voltage",
+		0,	6,  3, 	16,	"CH2_INV1_POWR",	"number",		"Power",
+		0,	6, 	3,	17,	"CH2_INV1_RPOWR",	"number",		"React Power",
+		0,	6,	3,	18,	"CH2_SEN1_HUMD",	"number",		"Humidity",
+		0,	6,	3,	19,	"CH2_INV1_POWR",	"number",		"Power",
+		0,	8,	3,	0,  "CH3_SEN2_TEMP",	"number",		"Temperature",
+		0,	8, 	3,  1, 	"CH3_SEN2_HUMD",	"number", 		"Humidity",
+		0,	8,	3,	2,	"CH3_INV2_POWR",	"number", 		"Power",
+		0,	8,	3,	3,	"CH3_SEN1_LUME",	"number",		"Lumen",
+		0,	8,	3,	4,	"CH3_INV1_CURR",	"number",		"Current",
+		0,	8,	3,	5,	"CH3_INV1_VOLT",	"number",		"Voltage",
+		0,	8,  3, 	6,	"CH3_INV1_POWR",	"number",		"Power",
+		0,	8, 	3,	7,	"CH3_INV1_RPOWR",	"number",		"React Power",
+		0,	8,	3,	8,	"CH3_SEN1_HUMD",	"number",		"Humidity",
+		0,	8,	3,	9,	"CH3_INV1_POWR",	"number",		"Power",
+		0,	8,	3,	10,  "CH3_SEN2_TEMP",	"number",		"Temperature",
+		0,	8, 	3,  11, "CH3_SEN2_HUMD",	"number", 		"Humidity",
+		0,	8,	3,	12,	"CH3_INV2_POWR",	"number", 		"Power",
+		0,	8,	3,	13,	"CH3_SEN1_LUME",	"number",		"Lumen",
+		0,	8,	3,	14,	"CH3_INV1_CURR",	"number",		"Current",
+		0,	8,	3,	15,	"CH3_INV1_VOLT",	"number",		"Voltage",
+		0,	8,  3, 	16,	"CH3_INV1_POWR",	"number",		"Power",
+		0,	8, 	3,	17,	"CH3_INV1_RPOWR",	"number",		"React Power",
+		0,	8,	3,	18,	"CH3_SEN1_HUMD",	"number",		"Humidity",
+		0,	8,	3,	19,	"CH3_INV1_POWR",	"number",		"Power",
+		0,	10,	6,	8,	"CH1_INV1_FAN",		"number",		"Fan",
+		0,	10,	6,	7,	"CH1_INV3_FAN",		"number",		"Fan",
+		0,	10,	6,	6,	"CH1_NODE1_REL1",	"boolean",		"Light",
+		0,	10,	6,	5,	"CH1_NODE1_REL2",	"boolean",		"Light",
+		0,	10,	6,	4,	"CH1_NODE1_REL3",	"boolean",		"Light"
 };
 
 /**************************************************************************************-*/
@@ -172,28 +172,35 @@ void ModbusTestTask(void const *argument) {
 	#define MB_DEFAULT_TEST_TIMEOUT  1
 	device_t device;
 	while (1) {
-//		SUM_DEV0 =  ((sizeof(table1))/(sizeof(data1_t)));
-//		device.channel = 0;
-//		device.id = table1[count].id;
-////		printf("%x\n",&table1[count]);
-////		test = table1[count].id;
-//		device.func = table1[count].func;
-//		device.regAdr.i16data = table1[count].reg_adr;
-//		switch(device.channel)
-//		{
-//		case 0:
-//			switch(device.func)
-//			{
-//			case MB_FUNC_READ_HOLDING_REGISTER:
-//				eMBMasterReqReadHoldingRegister(device.channel, device.id, device.regAdr.i16data,MB_DEFAULT_TEST_NREG, MB_DEFAULT_TEST_TIMEOUT);
-//				break;
-//			}
-//		break;
-//		}
-//		count ++;
-//		if (count > (SUM_DEV0 - 1))
-//			count = 0;
-//		osDelay(500);
+		Err = xQueueReceive(xQueueDownlinkHandle, &xQueueMbMqtt,portDEFAULT_WAIT_TIME);
+		if (Err == pdPASS)
+		{
+			while (xQueueMbMqtt.mutex == 1)
+			{
+				SUM_DEV0 =  ((sizeof(table1))/(sizeof(data1_t)));
+				device.channel = table1.port;
+				device.id = table1[count].id;
+		//		printf("%x\n",&table1[count]);
+		//		test = table1[count].id;
+				device.func = table1[count].func;
+				device.regAdr.i16data = table1[count].reg_adr;
+				switch(device.channel)
+				{
+				case 0:
+					switch(device.func)
+					{
+					case MB_FUNC_READ_HOLDING_REGISTER:
+						eMBMasterReqReadHoldingRegister(device.channel, device.id, device.regAdr.i16data,MB_DEFAULT_TEST_NREG, MB_DEFAULT_TEST_TIMEOUT);
+						break;
+					}
+				break;
+				}
+				count ++;
+				if (count > (SUM_DEV0 - 1))
+					count = 0;
+				osDelay(500);
+			}
+		}
 	}
 }
 

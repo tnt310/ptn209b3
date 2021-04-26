@@ -19,11 +19,12 @@ typedef struct
 }device_t;
 
 typedef struct{ // STRUCT DATA FROM EEPROM
+	uint8_t port;
     uint8_t id; // id
     uint8_t func; // function code
     uint16_t reg_adr; // Adress reg
     char *name_dev;// name of address device
-    char *type;
+    char *type; // number or boolean
     char *name; // name of address reg
 }data1_t;
 

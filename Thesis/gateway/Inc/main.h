@@ -142,6 +142,7 @@ typedef struct{
 	uint8_t  countflag;
 	char alias[10];
 	uint8_t gotflagProvision;
+	uint8_t mutex;
 	uint16_t sum_dev;
 
 }xQueueMbMqtt_t;

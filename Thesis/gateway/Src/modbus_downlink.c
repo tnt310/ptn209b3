@@ -82,7 +82,7 @@ eMBErrorCode eMBMasterRegHoldingCB_v1(UCHAR ucPort, UCHAR * pucRegBuffer, USHORT
 	xQueueMbMqtt.PortID = ucPort;
 	xQueueMbMqtt.NodeID = ucMBMasterGetDestAddress(ucPort);
 	/* if mode is read, the master will write the received date to buffer. */
-	//usAddress--;
+	usAddress--;
 	xQueueMbMqtt.RegAdr.i8data[0] = (uint8_t)usAddress;
 	xQueueMbMqtt.RegAdr.i8data[1] = (uint8_t)(usAddress >>8);
 	if ((usAddress >= REG_HOLDING_START)&& ((uint8_t)usAddress + usNRegs <= REG_HOLDING_START + REG_HOLDING_NREGS)) {

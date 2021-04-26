@@ -75,16 +75,67 @@ void UARTIntHandler(void) {
 	}
 
 }
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-	if (huart->Instance == USART1) {
+/*------------------------UPDATE NETWORK-----------------------------------------------------------------------------------*/
+int Cmd_update_network(int argc, char *argv[])
+{
+	ip4_addr_t ip,netmask,gateway,mqtt;
+	if (ipaddr_aton(*(argv + 1), &ip)) {
+		netParam.ip.idata = ip.addr;
+		printf("\r\n New IP: %d %d %d %d", netParam.ip.cdata[0],
+				netParam.ip.cdata[1], netParam.ip.cdata[2],
+				netParam.ip.cdata[3]);
 	}
+	if (ipaddr_aton(*(argv + 2), &netmask)) {
+		netParam.netmask.idata = netmask.addr;
+		printf("\r\n New netmask: %d %d %d %d", netParam.netmask.cdata[0],
+				netParam.netmask.cdata[1],netParam.netmask.cdata[2],
+				netParam.netmask.cdata[3]);
+	}
+	if (ipaddr_aton(*(argv + 3), &gateway)) {
+		netParam.gateway.idata = gateway.addr;
+		printf("\r\n New gateway: %d %d %d %d", netParam.gateway.cdata[0],
+				netParam.gateway.cdata[1],netParam.gateway.cdata[2],
+				netParam.gateway.cdata[3]);
+	}
+	if (ipaddr_aton(*(argv + 4), &mqtt)) {
+		mqttHostParam.ip.idata = mqtt.addr;
+		printf("\r\n New Broker IP: %d %d %d %d", mqttHostParam.ip.cdata[0],
+				mqttHostParam.ip.cdata[1], mqttHostParam.ip.cdata[2],
+				mqttHostParam.ip.cdata[3]);
+	}
+	}
+/*************************SET IP FROM URL*************************************************************-*/
+int Cmd_set_url(int argc, char *argv[])
+{
 }
+/*************************SEND PROVISION REQUEST*************************************************************-*/
+int Cmd_send_provision(int argc, char *argv[])
+{
+	printf("\nCmd_send_provision\r\n");
+	printf("------------------\r\n");
+	xQueueMbMqtt_t xQueueMbMqtt;
+	BaseType_t Err = pdFALSE;
+	#define portDEFAULT_WAIT_TIME 1000
+	xQueueMbMqtt.gotflagProvision = 1;
+	uint16_t sum_dev =  cal_sum_dev();
+	xQueueMbMqtt.sum_dev = sum_dev;
+	Err = xQueueSend(xQueueUplinkHandle, &xQueueMbMqtt,portDEFAULT_WAIT_TIME);
+		if (Err == pdPASS) {
+			xQueueMbMqtt.gotflagProvision = 0;
+			}
+		else {
+		printf("\r\n Modbus_MQTT Up queued: False \r\n");
+		}
+}
+
+/*--------------SAVE------------------------------------------------------------------------------*/
 int Cmd_save(int argc, char *argv[]) {
 
 	uint32_t handle = 1;
 	xQueueSend(xQueueResetHandle,&handle,portMAX_DELAY);
 
 }
+/*-----------------------------------------------------------------------------------------------*/
 int Cmd_set_mqttip(int argc, char *argv[]) {
 	printf("\nCmd_set_mqttip\r\n");
 	printf("------------------\r\n");
@@ -183,57 +234,3 @@ int Cmd_set_localip(int argc, char *argv[]) {
 	printf("\r\n------------------\r\n");
 	return 0;
 }
-/*----UPDATE NETWORK-----------------------------------------------------------------------------------*/
-int Cmd_update_network(int argc, char *argv[])
-{
-	ip4_addr_t ip,netmask,gateway,mqtt;
-	if (ipaddr_aton(*(argv + 1), &ip)) {
-		netParam.ip.idata = ip.addr;
-		printf("\r\n New IP: %d %d %d %d", netParam.ip.cdata[0],
-				netParam.ip.cdata[1], netParam.ip.cdata[2],
-				netParam.ip.cdata[3]);
-	}
-	if (ipaddr_aton(*(argv + 2), &netmask)) {
-		netParam.netmask.idata = netmask.addr;
-		printf("\r\n New netmask: %d %d %d %d", netParam.netmask.cdata[0],
-				netParam.netmask.cdata[1],netParam.netmask.cdata[2],
-				netParam.netmask.cdata[3]);
-	}
-	if (ipaddr_aton(*(argv + 3), &gateway)) {
-		netParam.gateway.idata = gateway.addr;
-		printf("\r\n New gateway: %d %d %d %d", netParam.gateway.cdata[0],
-				netParam.gateway.cdata[1],netParam.gateway.cdata[2],
-				netParam.gateway.cdata[3]);
-	}
-	if (ipaddr_aton(*(argv + 4), &mqtt)) {
-		mqttHostParam.ip.idata = mqtt.addr;
-		printf("\r\n New Broker IP: %d %d %d %d", mqttHostParam.ip.cdata[0],
-				mqttHostParam.ip.cdata[1], mqttHostParam.ip.cdata[2],
-				mqttHostParam.ip.cdata[3]);
-	}
-	}
-/*************************SET IP FROM URL*************************************************************-*/
-int Cmd_set_url(int argc, char *argv[])
-{
-}
-/*************************SEND PROVISION REQUEST*************************************************************-*/
-int Cmd_send_provision(int argc, char *argv[])
-{
-	printf("\nCmd_send_provision\r\n");
-	printf("------------------\r\n");
-	xQueueMbMqtt_t xQueueMbMqtt;
-	BaseType_t Err = pdFALSE;
-	#define portDEFAULT_WAIT_TIME 1000
-	xQueueMbMqtt.gotflagProvision = 1;
-	uint16_t sum_dev =  cal_sum_dev();
-	xQueueMbMqtt.sum_dev = sum_dev;
-	Err = xQueueSend(xQueueUplinkHandle, &xQueueMbMqtt,portDEFAULT_WAIT_TIME);
-		if (Err == pdPASS) {
-			xQueueMbMqtt.gotflagProvision = 0;
-			}
-		else {
-		printf("\r\n Modbus_MQTT Up queued: False \r\n");
-			}
-
-
-	}
