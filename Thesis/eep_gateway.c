@@ -3,8 +3,8 @@
 #include <stdint.h>
 
 
-char eep[] = {0,10,6,1,0,12,'C','H','1','_','I','N','V','3','_','F','A','N',1,3,'F','A','N',
-               0,10,6,2,0,14,'C','H','1','_','N','O','D','E','1','_','R','E','L','1',1,5,'L','I','G','H','T',
+char eep[1000] = {0,10,6,1,0,12,'C','H','1','_','I','N','V','3','_','F','A','N',1,3,'F','A','N',
+                0,10,6,2,0,14,'C','H','1','_','N','O','D','E','1','_','R','E','L','1',1,5,'L','I','G','H','T',
                0,10,6,2,0,15,'C','H','1','_','N','O','D','E','1','2','_','R','E','L','1',1,8,'H','U','M','I','D','I','T','Y'};
 typedef union        //  state = state + 6 + eep[state+5] + eep[state + 7 + eep[state+5]];
 {
@@ -21,7 +21,7 @@ typedef struct{ // STRUCT DATA FROM EEPROM
     char name_reg[20];
 } data_t;
 static uint8_t state = 0;
-uint8_t sl =3;
+uint8_t sl = 3;
 data_t table[];
 uint8_t convert()
 {
@@ -52,13 +52,3 @@ int main()
 
     }
 }
-
-
-
-// data_t table[] =   // CHANNEL 1
-// {
-// 	0,	10,	6,	7,	"CH1_INV3_FAN",		"number",		"Fan",
-// 	0,	10,	6,	6,	"CH1_NODE1_REL1",	"boolean",		"Light",
-// 	0,	10,	6,	5,	"CH1_NODE1_REL2",	"boolean",		"Light",
-// 	0,	10,	6,	4,	"CH1_NODE1_REL3",	"boolean",		"Light"
-// };

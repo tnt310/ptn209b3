@@ -96,6 +96,8 @@ eMBErrorCode eMBMasterRegHoldingCB_v1(UCHAR ucPort, UCHAR * pucRegBuffer, USHORT
 				xQueueMbMqtt.RegData.i8data[0] = *(pucRegBuffer + 1);
 				iRegIndex++;
 				usNRegs--;
+				printf("\r\n  data: %d ",xQueueMbMqtt.RegData.i16data);
+				printf("\r\n*****************\r\n");
 			}
 			break;
 		}

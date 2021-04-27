@@ -13,10 +13,10 @@
 
 
 /* Public function prototype ----------------*/
-uint8_t mqtt_modbus_thread_down(char *pJsonMQTTBuffer, uint16_t ui16BufferLen);
+uint8_t mqtt_modbus_thread_down_provision(char *pJsonMQTTBuffer,uint16_t pJsonMQTTBufferLen);
 void mqtt_modbus_thread_up(mqtt_client_t *arg, char *pub_topic);
 
-uint8_t mqtt_modbus_thread_down_v1(char *pJsonMQTTBuffer, uint16_t ui16BufferLen);
+uint8_t mqtt_modbus_thread_down_command(char *pJsonMQTTBuffer,uint16_t pJsonMQTTBufferLen);
 
 uint16_t cal_sum_dev();
 

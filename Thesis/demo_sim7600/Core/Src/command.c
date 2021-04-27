@@ -22,6 +22,7 @@ uint8_t commandBufferIndex = 0;
 uint8_t connect9;
 err_t err;
 uint8_t code;
+volatile uint8_t answer = 0;
 /***************************************Response from SIM7600**************************************************************/
 void UARTIntHandler(void)
 {
@@ -38,7 +39,7 @@ void UARTIntHandler(void)
 uint8_t sendATcommand(char* ATcommand,char *respect_answer_1, uint32_t timeout)
 {
 //	uint8_t status;
-	volatile uint8_t answer = 0;
+//	volatile uint8_t answer = 0;
 	HAL_UART_Transmit(&huart2,(uint8_t*)ATcommand,strlen(ATcommand)+1,1000);
 	uint32_t  tickstart = HAL_GetTick();
 	timeout += (uint32_t)(uwTickFreq); // HERE
