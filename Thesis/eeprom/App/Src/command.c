@@ -280,12 +280,12 @@ int Cmd_set_ch1_param(int argc, char *argv[]) // 0,10,6,1,0,12,'C','H','1','_','
 		uint16_t temp = atoi(*(argv + 4)); // REGADR
 		u_mem_set((NODE_CHANNEL_1_ADR  + 3), (uint8_t)temp);
 		u_mem_set((NODE_CHANNEL_1_ADR  + 4), (uint8_t)(temp >>8));
-		u_memset((NODE_CHANNEL_1_ADR  + 5), atoi(*(argv + 5))); //SL1
-		strncpy(name,(argv + 6),atoi(*(argv + 5)));
-		for (uint8_t i = 0; i< atoi(*(argv + 5); i++)
-		{
-				u_memset((NODE_CHANNEL_1_ADR  + 6 + i), name[i]);
-		}
+	//	u_memset((NODE_CHANNEL_1_ADR  + 5), atoi(*(argv + 5))); //SL1
+		//strncpy(name,(argv + 6),atoi(*(argv + 5)));
+//		for (uint8_t i = 0; i< atoi(*(argv + 5); i++)
+//		{
+//				u_memset((NODE_CHANNEL_1_ADR  + 6 + i), name[i]);
+//		}
 	}
 	stt ++;
 	PARAM[NODE_CHANNEL_1_BASE] = stt;

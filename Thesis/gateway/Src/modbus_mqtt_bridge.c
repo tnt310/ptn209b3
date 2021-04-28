@@ -85,7 +85,7 @@ void mqtt_modbus_thread_up(mqtt_client_t *client, char *pub_topic) {
 						}
 						osDelay(100);
 					}
-					xQueueMbMqtt.mutex = 1;
+					//xQueueMbMqtt.mutex = 1;
 					xQueueMbMqtt.gotflagProvision = 0;
 					BaseType_t er = pdFALSE;
 					er = xQueueSend(xQueueDownlinkHandle, &xQueueMbMqtt,portDEFAULT_WAIT_TIME);
@@ -206,6 +206,11 @@ uint8_t mqtt_modbus_thread_down_provision(char *pJsonMQTTBuffer,uint16_t pJsonMQ
 				if (strstr(table1[j].name_dev, name) != NULL)
 				{
 					printf("\r\n - name_dev: %s\n",table1[j].name_dev);
+					printf("\r\n device created successfully %s\n");
+				}
+				else
+				{
+					printf("\r\n device not created with %s\n", table1[j].name_dev);
 				}
 			}
 			i++;
@@ -215,10 +220,12 @@ uint8_t mqtt_modbus_thread_down_provision(char *pJsonMQTTBuffer,uint16_t pJsonMQ
 			char value[20];
 			printf("\r\n - value: %.*s\n", t[i + 1].end - t[i + 1].start,pJsonMQTTBuffer + t[i + 1].start);
 			strncpy(value, pJsonMQTTBuffer + t[i + 1].start, t[i + 1].end - t[i + 1].start);
-			i++;
+			//i++;
 		}
 	}
 	memset(pJsonMQTTBuffer,"\0",pJsonMQTTBufferLen);
+	fflush(stdin);
+	//xQueueMbMqtt.mutex = 1;  // set mutex for mdtask;
 	BaseType_t Err = pdFALSE;
 	Err = xQueueSend(xQueueDownlinkHandle, &xQueueMbMqtt,portDEFAULT_WAIT_TIME);
 	if (Err == pdPASS) {
@@ -287,6 +294,8 @@ uint8_t mqtt_modbus_thread_down_command(char *pJsonMQTTBuffer,uint16_t pJsonMQTT
 				//i++;
 			}
 		}
+		memset(pJsonMQTTBuffer,"\0",pJsonMQTTBufferLen);
+		fflush(stdin);
 		BaseType_t Err = pdFALSE;
 		Err = xQueueSend(xQueueDownlinkHandle, &xQueueMbMqtt,portDEFAULT_WAIT_TIME);
 		if (Err == pdPASS) {
