@@ -1,0 +1,15 @@
+
+- Các thay đổi trong schematic và layout
+(eeprom và module sim được vẽ ở trang 03_IO)
+1. Schematic
+
+- MODULE SIM 7670
+- Bỏ 1 port đọc modbus để dành uart 2 cho module SIM
+ + UART2_TX (PD5): SIM_RX
+ + UART2_RX (PD6): SIM_TX
+ + PD4:		 SIM_EN
+ + PD3:	 SIM_STATUS
+ 
+ - EEPROM
+ + Sử dụng I2C3 cho eeprom
+ + Thay chân port3_status (PC9) thành chân PD14 để dành chân PC9 cho I2C3

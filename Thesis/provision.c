@@ -25,7 +25,7 @@ data1_t table1[] =
         2,  4,  6,  11,   "RELAY",       "FAN",       "BOOLEAN",
        
 };
-uint8_t  createJson_provision(char *buffer, char *name,uint8_t channel, uint8_t id, char *type, char *title, char *description)
+uint8_t  createJson_provision(char *buffer, char *name, char *type, char *title, char *description)
 {
         memset(buffer,0,sizeof(buffer));
         strcat(buffer,"\"");
@@ -102,6 +102,13 @@ uint8_t create_name(char buffer[20],uint8_t channel,uint8_t id,uint16_t reg, cha
          }
     }
 }
+uint8_t decode(char *str) // CH1_SEN2_TEMP1
+{
+    for (uint8_t i = 0; i< strlen(str); i++)
+    {
+        
+    }
+}
 int main()
 {
     uint8_t cal = sizeof(table1)/sizeof(data1_t);
@@ -110,7 +117,7 @@ int main()
     for (uint8_t i = 0 ; i < cal; i++)
     {
        create_name(name,table1[i].channel, table1[i].id,table1[i].reg_adr, table1[i].title, table1[i].description);
-       createJson_provision(pub,name,table1[i].channel, table1[i].id, table1[i].type, table1[i].title, table1[i].description);
+       createJson_provision(pub,name,table1[i].type, table1[i].title, table1[i].description);
        printf("%s\n",pub);
     }
 }

@@ -1,0 +1,70 @@
+\t (00:00:02) allegro 17.2 P028 Windows SPB 64-bit Edition
+\t (00:00:02)     Journal start - Sat May 01 20:12:11 2021
+\t (00:00:02)         Host=DESKTOP-RVS7OJS User=ACER Pid=13048 CPUs=4
+\t (00:00:02) CmdLine= c:\cadence\spb_17.2\tools\bin\allegro.exe -mpssession ACER C:\Users\ACER\Desktop\hardware_v2\03_layout\controller.brd
+\t (00:00:02) 
+   (00:00:02) Loading axlcore.cxt 
+   (00:00:02) Searching for nsWare programs v2.78
+   (00:00:02) 	NsWare directory found: E:/Cadence_0/01_working_allegro/pcbenv/nsWare/
+   (00:00:02) 	NsWare programs must reside in this directory!
+   (00:00:02) function AFn_OpenDesign redefined
+   (00:00:02) function PinVia_Overlap_FinishEnterFun redefined
+   (00:00:02) function Find_Point_On_Line_From_Distant redefined
+   (00:00:02) function Find_Point_Quadrature_Line redefined
+   (00:00:02) function Line_Line_Intersect redefined
+   (00:00:02) function _getPinsNet redefined
+   (00:00:02) function _getBranchs redefined
+   (00:00:02) function _getPaths redefined
+   (00:00:02) function _get2PointsPath redefined
+   (00:00:02) function _checkElementList redefined
+   (00:00:02) function _getSurroundPoints redefined
+   (00:00:02) function _getListPointsLPaths redefined
+   (00:00:02) function _checkPathPoint redefined
+   (00:00:02) function _deleteElementList redefined
+   (00:00:02) function _checkElementList redefined
+   (00:00:02) function _deleteElementList redefined
+   (00:00:02) function Find_Point_On_Line_From_Distant redefined
+   (00:00:02) function Find_Point_Quadrature_Line redefined
+   (00:00:02) function Is_Point_On_List redefined
+   (00:00:02) function Line_Line_Intersect redefined
+   (00:00:02) function Line_Line_Distant redefined
+\t (00:00:04) Opening existing design...
+\d (00:00:04) Design opened: C:/Users/ACER/Desktop/hardware_v2/03_layout/controller.brd
+\i (00:00:04) trapsize 135
+\i (00:00:04) trapsize 139
+\i (00:00:04) trapsize 139
+\i (00:00:05) signalintegrity 
+\i (00:00:07) zoom out 1 
+\i (00:00:07) setwindow pcb
+\i (00:00:07) zoom out 3779.2 2004.4
+\i (00:00:07) trapsize 277
+\i (00:00:07) zoom out 1 
+\i (00:00:07) setwindow pcb
+\i (00:00:07) zoom out 3779.1 2004.5
+\i (00:00:07) trapsize 555
+\i (00:00:08) zoom in 1 
+\i (00:00:08) setwindow pcb
+\i (00:00:08) zoom in 3547.8 507.6
+\i (00:00:08) trapsize 277
+\i (00:00:10) zoom out 1 
+\i (00:00:10) setwindow pcb
+\i (00:00:10) zoom out 6127.6 8.3
+\i (00:00:10) trapsize 555
+\i (00:00:12) zoom in 1 
+\i (00:00:12) setwindow pcb
+\i (00:00:12) zoom in -402.2 2826.6
+\i (00:00:12) trapsize 277
+\i (00:00:12) zoom out 1 
+\i (00:00:13) setwindow pcb
+\i (00:00:13) zoom out -52.7 2848.8
+\i (00:00:13) trapsize 555
+\i (00:00:14) zoom in 1 
+\i (00:00:14) setwindow pcb
+\i (00:00:14) zoom in 2660.2 2160.9
+\i (00:00:14) trapsize 277
+\i (00:00:14) zoom in 1 
+\i (00:00:14) setwindow pcb
+\i (00:00:14) zoom in 2660.2 2160.9
+\i (00:00:14) trapsize 139
+\i (00:00:16) exit 
+\t (00:00:18)     Journal end - Sat May 01 20:12:27 2021

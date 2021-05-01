@@ -111,21 +111,20 @@ data1_t table1[] =
         2,  4,  6,  11,   "RELAY",       "FAN",         "BOOLEAN",
 };
 data_t table[];
-
-uint8_t convert_table(data_t t1[], data1_t t2[])
+uint8_t convert_table()
 {
     char name[20];
-    uint8_t sum = sizeof(t2)/sizeof(data1_t);
+    uint8_t sum = sizeof(table1) / sizeof(data1_t);
     printf("%d",sum);
     for (uint8_t i = 0 ; i < sum ; i++)
     {
-        t1[i].channel = t2[i].channel;
-        t1[i].id = t2[i].id;
-        t1[i].func = t2[i].func;
-        t1[i].reg_adr = t2[i].reg_adr;
-        create_name(name,t2[i].channel, t2[i].id,t2[i].reg_adr, t2[i].title, t2[i].description);
-        t1[i].alias = name;
-        printf("%d\t%d\t%d\t%d\t%s\n",t1[i].channel, t1[i].id,t1[i].func,t1[i].reg_adr, t1[i].alias);
+        table[i].channel = table1[i].channel;
+        table[i].id = table1[i].id;
+        table[i].func = table1[i].func;
+        table[i].reg_adr = table1[i].reg_adr;
+        create_name(name,table1[i].channel, table1[i].id,table1[i].reg_adr, table1[i].title, table1[i].description);
+        table[i].alias = name;
+        printf("\r\n%d\t%d\t%d\t%d\t%s\n",table[i].channel, table[i].id,table[i].func,table[i].reg_adr,table[i].alias);
     }
 }
 

@@ -1,0 +1,94 @@
+(---------------------------------------------------------------------)
+(                                                                     )
+(    Allegro Netrev Import Logic                                      )
+(                                                                     )
+(    Drawing          : controller.brd                                )
+(    Software Version : 17.2P019                                      )
+(    Date/Time        : Sat May 01 20:16:25 2021                      )
+(                                                                     )
+(---------------------------------------------------------------------)
+
+
+------ Directives ------------
+
+Ripup etch:                  No
+Ripup delete first segment:  No
+Ripup retain bondwire:       No
+Ripup symbols:               Always
+Missing symbol has error:    No
+DRC update:                  Yes
+Schematic directory:         'C:\USERS\ACER\DESKTOP\HARDWARE_V2\01_SCHEMATIC'
+Design Directory:            'C:/Users/ACER/Desktop/hardware_v2/03_layout'
+Old design name:             'C:/Users/ACER/Desktop/hardware_v2/03_layout/controller.brd'
+New design name:             'C:/Users/ACER/Desktop/hardware_v2/03_layout/controller.brd'
+
+CmdLine: netrev.exe -y 1 -i C:\USERS\ACER\DESKTOP\HARDWARE_V2\01_SCHEMATIC C:\Users\ACER\Desktop\hardware_v2\03_layout\controller.brd C:\Users\ACER\Desktop\hardware_v2\03_layout\controller.brd
+
+------ Preparing to read pst files ------
+
+Starting to read C:/USERS/ACER/DESKTOP/HARDWARE_V2/01_SCHEMATIC/pstchip.dat 
+   Finished reading C:/USERS/ACER/DESKTOP/HARDWARE_V2/01_SCHEMATIC/pstchip.dat (00:00:00.06)
+Starting to read C:/USERS/ACER/DESKTOP/HARDWARE_V2/01_SCHEMATIC/pstxprt.dat 
+   Finished reading C:/USERS/ACER/DESKTOP/HARDWARE_V2/01_SCHEMATIC/pstxprt.dat (00:00:00.00)
+Starting to read C:/USERS/ACER/DESKTOP/HARDWARE_V2/01_SCHEMATIC/pstxnet.dat 
+   Finished reading C:/USERS/ACER/DESKTOP/HARDWARE_V2/01_SCHEMATIC/pstxnet.dat (00:00:00.00)
+
+------ Oversights/Warnings/Errors ------
+
+
+------ Library Paths ------
+MODULEPATH =  . 
+           c:/cadence/spb_17.2/share/local/pcb/modules 
+
+PSMPATH =  . 
+           symbols 
+           .. 
+           ../symbols 
+           c:/cadence/spb_17.2/share/local/pcb/symbols 
+           c:/cadence/spb_17.2/share/pcb/pcb_lib/symbols 
+           c:/cadence/spb_17.2/share/pcb/allegrolib/symbols 
+           E:/0_Working/1_Hardware/0_Lib/1_Footprint/ 
+           E:/0_Working/1_Hardware/10_HI3559/2_Layout/Symbol/ 
+
+PADPATH =  . 
+           symbols 
+           .. 
+           ../symbols 
+           c:/cadence/spb_17.2/share/local/pcb/padstacks 
+           c:/cadence/spb_17.2/share/pcb/pcb_lib/symbols 
+           c:/cadence/spb_17.2/share/pcb/allegrolib/symbols 
+           E:/0_Working/1_Hardware/0_Lib/1_Footprint/ 
+           E:/0_Working/1_Hardware/10_HI3559/2_Layout/Symbol/ 
+
+
+------ Summary Statistics ------
+
+
+netrev run on May 1 20:16:25 2021
+   DESIGN NAME : 'STM32F4_CONTROLLER'
+   PACKAGING ON Mar  2 2016 00:37:24
+
+   COMPILE 'logic'
+   CHECK_PIN_NAMES OFF
+   CROSS_REFERENCE OFF
+   FEEDBACK OFF
+   INCREMENTAL OFF
+   INTERFACE_TYPE PHYSICAL
+   MAX_ERRORS 500
+   MERGE_MINIMUM 5
+   NET_NAME_CHARS '#%&()*+-./:=>?@[]^_`|'
+   NET_NAME_LENGTH 24
+   OVERSIGHTS ON
+   REPLACE_CHECK OFF
+   SINGLE_NODE_NETS ON
+   SPLIT_MINIMUM 0
+   SUPPRESS   20
+   WARNINGS ON
+
+ No error detected
+ No oversight detected
+ No warning detected
+
+cpu time      0:04:11
+elapsed time  0:00:00
+
