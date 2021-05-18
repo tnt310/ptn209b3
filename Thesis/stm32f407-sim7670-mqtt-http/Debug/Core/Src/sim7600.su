@@ -1,0 +1,9 @@
+sim7600.c:35:9:INIT_SIM7600	8	static
+sim7600.c:50:9:SIM7600_NEW_CONNECTION	72	static
+sim7600.c:82:9:RECONNECT	16	static
+sim7600.c:98:9:SUBSCRIBE	40	static
+sim7600.c:113:9:SIM7600_PUBLISH_PACKET	56	static
+sim7600.c:130:6:CALLBACK_COMMAND	16	static
+sim7600.c:134:10:DEVSUM	4	static
+sim7600.c:138:9:GETJSON	32	static
+sim7600.c:144:10:cal_sum_dev	4	static
