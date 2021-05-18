@@ -102,22 +102,28 @@ uint8_t create_name(char buffer[20],uint8_t channel,uint8_t id,uint16_t reg, cha
          }
     }
 }
-uint8_t decode(char *str) // CH1_SEN2_TEMP1
+uint8_t create_topic(char *buffer, char *flow, char *topic, char *api_key)
 {
-    for (uint8_t i = 0; i< strlen(str); i++)
-    {
-        
-    }
+	memset(buffer,0,sizeof(buffer));
+	strcat(buffer,flow);
+	strcat(buffer,"/");
+	strcat(buffer,topic);
+	strcat(buffer,"/");
+	strcat(buffer,api_key);
 }
 int main()
 {
+    static const char *command = "uplink" + "heelo";
+    
     uint8_t cal = sizeof(table1)/sizeof(data1_t);
     char pub[100];
     char name[20];
-    for (uint8_t i = 0 ; i < cal; i++)
-    {
-       create_name(name,table1[i].channel, table1[i].id,table1[i].reg_adr, table1[i].title, table1[i].description);
-       createJson_provision(pub,name,table1[i].type, table1[i].title, table1[i].description);
-       printf("%s\n",pub);
-    }
+    create_topic(pub,"upstream","provision","606ff2e222c1752264934dbb");
+    printf("%s",pub);
+    // for (uint8_t i = 0 ; i < cal; i++)
+    // {
+    //    create_name(name,table1[i].channel, table1[i].id,table1[i].reg_adr, table1[i].title, table1[i].description);
+    //    createJson_provision(pub,name,table1[i].type, table1[i].title, table1[i].description);
+    //    printf("%s\n",pub);
+    // }
 }

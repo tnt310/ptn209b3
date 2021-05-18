@@ -2,38 +2,84 @@
 #include <string.h>
 #include <stdint.h>
 
-int channel = 1;
-static int i = 0;
-char reg[10];
-char dev[10];
-char publish_buffer[1000];
-char chan[5] ="CH1";
-char buffer[50];
-char demo[50];
-char publih_buffer[200];
 int main_time[6] = {15,11,25,26,6,21};
 /*------------------------------------------	------------------------------------*/
-typedef struct{ // STRUCT DATA FROM EEPROM
-    int id; // id
-    int func;
-    unsigned short reg_adr; // Adress reg
-    char name[10]; // name of address reg
-    char name_dev[10];
-}data_t;
-/*------------------------------------------------------------------------------*/
-data_t table[200] =
-{
-	1,	3,	5,	"Temp", "SENSOR2",
-	10, 3,  4,	"Humidity", "SENSOR2",
-	1,	3,	2,	"Lumen", "SENSOR4",
-	//2,	3,	8,	"Current", "INV2",
-	//2,	3,	9,	"Voltage", "INV2",
-	//5, 3, 	5,	"Power", "INV5"
-};
-/*----------------------------ITOA_USER--------------------------------------*/
-int* itoa_user(int val, int  base) {
+typedef struct{
+   uint8_t channel;
+   uint8_t deviceID; // id : 01
+   uint8_t func; // function code
+   uint16_t deviceChannel; // Adress reg (0x10)
+   char *deviceType; // name of device  : INVERTER
+   char *deviceName; // : INVERTER1
+   char *deviceTitle; // name of reg
+   char *valueType; // number or boolean: 100, true, false
+}data1_t;
 
-	static int buf[32] = { 0 };  // 32 bits
+data1_t table1[] =
+{
+		0,	2,	3,	0,   "WEATHERSTATION",		"STATION_01",		"TEMPERATURE",	"NUMBER",   
+		0,	2, 	3,  1, 	 "WEATHERSTATION",		"STATION_02",		"HUMIDITY",	    "NUMBER",
+		0,	2,	3,	2,	 "INVERTER",			"INVERTER_01",		"POWER",	    "NUMBER",
+		0,	2,	3,	3,	 "WEATHERSTATION",		"STATION_03",		"LUMEN",	    "NUMBER",
+		0,	2,	3,	4,	 "METER",	 			"METER_01",			"CURRENT",	    "NUMBER",
+		0,	2,	3,	5,	 "METER",				"METER_02",			"VOLTAGE",	    "NUMBER",
+		0,	2,  3, 	6,	 "INVERTER",			"INVERTER2",		"POWER",	    "NUMBER",
+		0,	2,	3,	7,   "WEATHERSTATION",		"STATION_04",		"TEMPERATURE",	"NUMBER",
+		0,	2, 	3,  8, 	 "WEATHERSTATION",		"STATION_05",		"POWER",	    "NUMBER",
+		0,	2,	3,	10,	 "WEATHERSTATION",		"STATION_06",		"HUMIDITY",	    "NUMBER",
+		0,	2,	3,	9,	 "INVERTER",			"INVERTER_03",		"LUMEN",	    "NUMBER",
+		0,	6,	3,	0,   "WEATHERSTATION",		"STATION_07",		"TEMPERATURE",	"NUMBER",
+		0,	6, 	3,  1, 	 "WEATHERSTATION",		"STATION_08",		"HUMIDITY",	    "NUMBER",
+		0,	6,	3,	2,	 "INVERTER",			"INVERTER_04",		"POWER",	    "NUMBER",
+		0,	6,	3,	3,	 "WEATHERSTATION",		"STATION_09",		"LUMEN",	    "NUMBER",
+		0,	6,	3,	4,	 "METER",	 			"METER_03",			"CURRENT",	    "NUMBER",
+		0,	6,	3,	5,	 "METER",				"METER_04",			"VOLTAGE",	    "NUMBER",
+		0,	6,  3, 	6,	 "INVERTER",			"INVERTER_05",		"POWER",	    "NUMBER",
+		0,	6,	3,	7,   "WEATHERSTATION",		"STATION_10",		"TEMPERATURE",	"NUMBER",
+		0,	6, 	3,  8, 	 "WEATHERSTATION",		"STATION_11",		"HUMIDITY",	    "NUMBER",
+		0,	6,	3,	9,	 "INVERTER",			"INVERTER_06",		"POWER",	    "NUMBER",
+		0,	6,	3,	10,	 "WEATHERSTATION",		"STATION_12",		"LUMEN",	    "NUMBER",
+		0,	6,	6,	0,   "RELAY",				"RELAY_01",			"LIGHT",		"NUMBER",
+		0,	6, 	6,  1, 	 "INVERTER",			"INVERTER_07",		"POWER",	    "NUMBER",
+		0,	6,	6,	2,	 "RELAY",				"RELAY_02",			"POWER",	    "NUMBER",
+
+};
+uint8_t  createJson_provision(char *buffer,char *device_id, char *device_name, char *device_type,uint16_t deviceChannel,
+                                char *deviceTitle,char *valueType)
+{
+        memset(buffer,0,sizeof(buffer));
+        strcat(buffer, "\"data\":[{");
+        strcat(buffer, "\"device_id\":");
+        strcat(buffer,"\"");
+        strcat(buffer,device_id);
+        strcat(buffer,"\"");
+        strcat(buffer, ",\"device_name\":");
+        strcat(buffer,"\"");
+        strcat(buffer,device_name);
+        strcat(buffer,"\"");
+        strcat(buffer, ",\"device_type\":");
+        strcat(buffer,"\"");
+        strcat(buffer,device_type);
+        strcat(buffer,"\"");
+        strcat(buffer, ",\"device_attrs\":[{");
+        strcat(buffer, "\"attr_id\":");  // deviceChannel
+        strcat(buffer,"\"");
+        strcat(buffer,deviceChannel);
+        strcat(buffer,"\"");
+        strcat(buffer, ",\"attr_name\":");  // name of reg
+         strcat(buffer,"\"");
+        strcat(buffer,deviceTitle);
+        strcat(buffer,"\"");
+        strcat(buffer, ",\"attr_type\":");
+        strcat(buffer,"\"");
+        strcat(buffer,valueType);
+        strcat(buffer,"\"");
+        strcat(buffer,"]}");
+        strcat(buffer,"]}");
+}
+/*----------------------------ITOA_USER--------------------------------------*/
+uint8_t* itoa_user(uint32_t val, uint8_t base) {
+	static uint8_t buf[32] = { 0 };  // 32 bits
 	int i = 30;
 	if (val == 0)
 		buf[i--] = '0';
@@ -42,86 +88,83 @@ int* itoa_user(int val, int  base) {
 
 	return &buf[i + 1];
 }
-/*----------------------------GET REG NAME AND DEV NAME--------------------------------------*/
-int Get_name(char name_reg[10],char name_dev[10],char channel[5], unsigned int id, unsigned int func, unsigned short reg)
-{
-	memset(name_reg,0,10);
-    memset(name_dev,0,10);
-	for ( int j = 0; j< 10; j++)
-	{
-		name_reg[j] = table[i].name[j];
-        name_dev[j] = table[i].name_dev[j];
-	}
-}
-/*----------------------------CREATE JSON STRING--------------------------------------------------*/
-int createJson(char demo[100],char channel[5],char name_reg[10],char name_dev[10], int val, int time[6])
-{
-	memset(demo,0,100);
-	strcat(demo,chan);
-	strcat(demo,"_");
-	strcat(demo,name_dev);
-	strcat(demo,"_");
-	strcat(demo,name_reg);
-	strcat(demo,":");
-    strcat(demo,"[{time:");
-    strcat(demo,itoa_user(time[0], 10)); // Hour
-    strcat(demo,":");
-    strcat(demo,itoa_user(time[1], 10)); // Minute
-    strcat(demo,":");
-    strcat(demo,itoa_user(time[2], 10)); //Second
-    strcat(demo," ");
-    strcat(demo,itoa_user(time[3], 10));// Month
-    strcat(demo,".");
-    strcat(demo,itoa_user(time[4], 10)); // Day
-    strcat(demo,".");
-    strcat(demo,itoa_user(time[5], 10)); //Year
-    strcat(demo,",");
-    strcat(demo,"value");
-    strcat(demo,":");
-    strcat(demo,itoa_user(val, 10));
-    strcat(demo,"}]");
-
-	}
-uint8_t CreateATcommand(int argc, char *argv[])
-{
-	//snprintf(aux_str, sizeof(aux_str),"AT+CMQTTCONNECT=%d,\"%s:%d\",%d,%d,\"%s\",\"%s\"",state,server,port,keepalive,1,username,password);
-	//sprintf(api,"%s%c",GET,(char) 26);
-	memset(demo,0,100);
-	strcat(demo,argv[0]);
-	strcat(demo,"=");
-	for (uint8_t i = 1; i< argc; i++)
-	{
-		strcat(demo,itoa_user(argv[i]));
-        strcat(demo,",");
-	}
-	strcat(demo,"\r\n");
-
-}
-/*------------------------------------------------------------------------------*/
 int main()
 {
-    CreateATcommand("AT+CSQ",1,2,3);
-    printf("%s",demo);
-    //Get_name(reg, dev, chan, table[i].id, table[i].func, table[i].reg_adr);
-    //printf("%s\n",reg);
-   // printf("%s",dev);
-//    strcat(publih_buffer,"{");
-//    for (i = 0; i< 4; i++)
-//    {
-//         createJson(buffer,chan,table[i].name,table[i].name_dev,table[i].reg_adr,main_time);
-//         if (i < 3)
-//         {
-//             strcat(publih_buffer,buffer);
-//             strcat(publih_buffer,",");
-//         }
-//         else
-//         {
-//             strcat(publih_buffer,"}");
-//             printf("\n%s",publih_buffer);
-//             memset(publih_buffer,0,sizeof(buffer));
-//         }
-       
-//    }
-    return 0;
+    char buffer[200];
+    char pub[200];
+    createJson_provision(pub,table1[1].deviceID,table1[1].deviceName,table1[1].deviceType,table1[1].deviceChannel,table1[1].deviceTitle,table1[1].valueType);
+    printf("%s",pub);
 }
-// CH1_INV1_VOLT: 	[{time: 10:10:25 26.6.2021, value: 220}],
+
+
+
+uint8_t SDformatJson(char *buffer,uint8_t port,uint8_t deviceID,uint8_t func,uint16_t deviceChannel,char *deviceType,char *deviceTitle,char *deviceName,char *valueType)
+{
+        memset(buffer,0,sizeof(buffer));
+        strcat(buffer,"{");
+        strcat(buffer, "\"port\":");
+        strcat(buffer,"\"");
+        strcat(buffer,itoa_user(port,10));
+        strcat(buffer,"\"");
+        strcat(buffer, ",\"ID\":");
+        strcat(buffer,"\"");
+        strcat(buffer,itoa_user(deviceID,10));
+        strcat(buffer,"\"");
+        strcat(buffer, ",\"FC\":");
+        strcat(buffer,"\"");
+        strcat(buffer,func);
+        strcat(buffer,"\"");
+        strcat(buffer, ",\"DEVICETYPE\":");
+        strcat(buffer,"\"");
+        strcat(buffer,deviceType);
+        strcat(buffer,"\"");
+        strcat(buffer, ",\"DEVICETYPE\":");
+        strcat(buffer,"\"");
+        strcat(buffer,deviceType);
+        strcat(buffer,"\"");
+        strcat(buffer, ",\"DEVICETYPE\":");
+        strcat(buffer,"\"");
+        strcat(buffer,deviceType);
+        strcat(buffer,"\"");
+        strcat(buffer, ",\"DEVICETYPE\":");
+        strcat(buffer,"\"");
+        strcat(buffer,deviceType);
+        strcat(buffer,"\"");
+
+        strcat(buffer,"}");
+}
+
+uint8_t  createJson_provision(char *buffer,uint8_t deviceId, char *device_name, char *device_type,uint16_t deviceChannel,
+                                char *deviceTitle,char *valueType)
+{
+        memset(buffer,0,sizeof(buffer));
+        strcat(buffer,"{");
+        strcat(buffer, "\"data\":[{");
+        strcat(buffer, "\"device_id\":");
+        strcat(buffer,"\"");
+        strcat(buffer,itoa_user(deviceId,10));
+        strcat(buffer,"\"");
+        strcat(buffer, ",\"device_name\":");
+        strcat(buffer,"\"");
+        strcat(buffer,device_name);
+        strcat(buffer,"\"");
+        strcat(buffer, ",\"device_type\":");
+        strcat(buffer,"\"");
+        strcat(buffer,device_type);
+        strcat(buffer,"\"");
+        strcat(buffer, ",\"device_attrs\":[");
+        strcat(buffer,"{");
+        strcat(buffer, "\"attr_id\":");  // deviceChannel
+        strcat(buffer,"\"");
+        strcat(buffer,itoa_user(deviceChannel,10));
+        strcat(buffer,"\"");
+        strcat(buffer, ",\"attr_name\":");  // name of reg
+        strcat(buffer,"\"");
+        strcat(buffer,deviceTitle);
+        strcat(buffer,"\"");
+        strcat(buffer, ",\"attr_type\":");
+        strcat(buffer,"\"");
+        strcat(buffer,valueType);
+        strcat(buffer,"\"");
+        strcat(buffer,"}");
+}

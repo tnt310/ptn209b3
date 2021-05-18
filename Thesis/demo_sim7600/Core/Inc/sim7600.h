@@ -11,41 +11,29 @@
 #include <stdint.h>
 
 
+#define MAX_VALUE 500
 
-typedef struct
-{
-	char *client_name;
-	char *server_name;
-	char *username;
-	char *password;
-	char *pub_topic;
-	char *sub_topic;
-	uint16_t port;
-	uint16_t keepalive;
-	uint8_t cleansession;
-	uint8_t index_client;
-	uint8_t protocol;
-	uint8_t qos;
-	uint16_t timeout;
-
-}sim7600_packet_t;
-typedef struct{ // STRUCT DATA FROM EEPROM
+typedef struct{
+	uint8_t channel;
     uint8_t id; // id
     uint8_t func; // function code
-    uint16_t reg_adr; // Adress reg
-    char *name_dev;// name of address device
-    char *type;
-    char *name; // name of address reg
+    uint16_t reg; // Adress reg
+    char *name;
+    char *description; // name of device
+    char *title; // name of reg
+    char *type; // number or boolean
 }data1_t;
+
 extern data1_t table1[];
-extern sim7600_packet_t sim7600;
-uint8_t Init_SIM7600(void);
-uint8_t Check_NETSIMstate(void);
-uint8_t setupCONNECTION(void);
-uint8_t Setup_connection(char *server_name, char *port , uint16_t keep_alive);
-uint8_t Subscibe(char *sub_topic, uint8_t qos);
-uint8_t unSubscibe(char *sub_topic);
-uint8_t Publish(char *pub_topic, uint8_t qos);
-uint8_t Disconnected(uint8_t index);
-uint16_t cal_sum_dev();
+uint8_t INIT_SIM7600(void);
+uint8_t CHECK_NETSIM(void);
+uint8_t SETUP_CONNECTION(char *server_name,char *username, char *password, char *port);
+uint8_t SUBSCRIBE(char *topic);
+uint8_t PUBLISH_TELEMETRY(char *topic);
+uint8_t PUBLISH_PROVISION(char *topic, char *payload);
+void CALLBACK_COMMAND(char* topic, char* payload, uint8_t lengthofpayload);
+void CALLBACK_PROVISION(char* topic, char* payload, uint8_t length);
+uint8_t RECONNECT(void);
+uint16_t DEVSUM(void);
+
 #endif /* INC_SIM7600_H_ */

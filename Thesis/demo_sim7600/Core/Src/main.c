@@ -56,22 +56,12 @@ static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
-
+char payload[500];
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint8_t state;
-sim7600_packet_t sim7600;
-uint8_t answer;
-uint8_t answer_1;
-uint8_t answer_2;
-uint8_t answer_3;
-uint8_t answer_4;
-uint8_t answer_5;
-char *sub = "subscribe";
-char *pub = "606ff2e222c1752264934dbb/upstream/telemetry";
-uint8_t qos = 1;
+
 /* USER CODE END 0 */
 /**
   * @brief  The application entry point.
@@ -105,17 +95,14 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   __HAL_UART_ENABLE_IT(&huart2, UART_IT_RXNE);
-  sendATcommand("AT+NETCLOSE\r\n","OK",2000);
-  answer = Init_SIM7600();
-  answer_1 =  Check_NETSIMstate();
-  answer_2 = setupCONNECTION();
-  state = Subscibe(sub,0);
+  INIT_SIM7600();
+  SETUP_CONNECTION( "3.226.137.205","yktdxpqb","VKCG6yboYrYd",19613);
   /* USER CODE END 2 */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  Publish(pub,0);
+	  PUBLISH_TELEMETRY("upstream/telemetry/608a78baaa969877dec4e6f4");
 	  HAL_Delay(3000);
     /* USER CODE END WHILE */
 

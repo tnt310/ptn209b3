@@ -1,82 +1,96 @@
 #include <stdio.h>
 #include <string.h>
-
-int channel = 1;
-static int i = 3;
-char reg[10];
-char dev[10];
-char buffer[30];
-char publish_buffer[1000];
-/*------------------------------------------------------------------------------*/
-typedef enum
+#include <stdint.h>
+typedef struct{
+	uint8_t channel;
+    uint8_t id; // id
+    uint8_t func; // function code
+    uint16_t reg; // Adress reg
+	char *IDkey;
+    char *name;
+    char *description; // name of device
+    char *title; // name of reg
+    char *type; // number or boolean
+}data1_t;
+extern data1_t table1[] =
 {
-	CHANNEL_1,
-	CHANNEL_2,
-	CHANNEL_3
-}channel_t;
-/*------------------------------------------------------------------------------*/
-typedef struct{ // STRUCT DATA FROM EEPROM
-    int id; // id
-    int func;
-    int  reg_adr; // Adress reg
-    char name_reg[10]; // name of address reg
-    char name_dev[10];
-} data_t;
-/*------------------------------------------------------------------------------*/
-data_t table[200] =
-{
-	1,	3,	5,	"Temp", "INV",
-	10, 3,  4,	"Humidity", "SENSOR",
-	1,	3,	2,	"Lumen", "SENSOR",
-	2,	3,	8,	"Current", "INV",
-	2,	3,	9,	"Voltage", "INV",
-	5, 3, 	5,	"Power", "INV"
+		0,	2,	3,	0,   "608a78baaa969877dec4e6f4", 	"CH0_SEN2_LUME0",	"SENSOR",		"TEMPERATURE",	"NUMBER",
+		0,	2, 	3,  1, 	 "608a78baaa969877dec4e6f4",	"CH0_INV2_POWR1",	"SENSOR",		"HUMIDITY",	    "NUMBER",
+		0,	2,	3,	2,	 "608a78baaa969877dec4e6f4",	"CH0_INV2_POWR2",	"INVERTER",		"POWER",	    "NUMBER",
+		0,	2,	3,	3,	 "608a78baaa969877dec4e6bb",	"CH0_SEN2_TEMP3",	"SENSOR",		"LUMEN",	    "NUMBER",
+		0,	2,	3,	4,	 "608a78baaa969877dec4e6bb",	"CH0_INV2_RPOWR4",	"METER",	 	"CURRENT",	    "NUMBER",
+		0,	2,	3,	5,	 "608a78baaa969877dec4e6bb",	"CH0_INV2_POWR5",	"METER",		"VOLTAGE",	    "NUMBER",
+		0,	2,  3, 	6,	 "608a78baaa969877dec4e6de",	"CH0_NOD2_RELA6",	"INVERTER",		"POWER",	    "NUMBER",
+		0,	2,	3,	7,   "606ff2e222c1752264934dde",	"CH0_SEN2_LUME7",	"SENSOR",		"TEMPERATURE",	"NUMBER",
+		0,	2, 	3,  8, 	 "606ff2e222c1752264934dde",	"CH0_INV2_POWR8",	"SENSOR",		"HUMIDITY",	    "NUMBER",
+		0,	2,	3,	9,	 "606ff2e222c1752264934dbb",	"CH0_INV2_POWR9",	"INVERTER",		"POWER",	    "NUMBER",
+		0,	2,	3,	10,	 "606ff2e222c1752264934dbb",	"CH0_SEN2_TEMP10",	"SENSOR",		"LUMEN",	    "NUMBER",
 };
-/*------------------------------------------------------------------*/
-int* itoa_user(int  val, unsigned int base) {
-	static unsigned int buf[32] = { 0 };  // 32 bits
-	int i = 30;
-	if (val == 0)
-		buf[i--] = '0';
-	for (; val && i; --i, val /= base)
-		buf[i] = "0123456789abcdef"[val % base];
+uint8_t  createJson_provision(char *buffer,char *id,  char *name, char *type, char *title, char *description)
+{
+        memset(buffer,0,sizeof(buffer));
+        strcat(buffer, "\"id\":");
+        strcat(buffer,"\"");
+        strcat(buffer,id);
+        strcat(buffer,"\"");
+        strcat(buffer,",");
+        strcat(buffer, "\"data\":{");
+        strcat(buffer,"\"");
+        strcat(buffer,name);
+        strcat(buffer,"\"");
+        strcat(buffer, ":{\"type\":");
+        strcat(buffer,"\"");
+        strcat(buffer,type);
+        strcat(buffer,"\"");
+        strcat(buffer, ",\"title\":");
+        strcat(buffer,"\"");
+        strcat(buffer,title);
+        strcat(buffer,"\"");
+        strcat(buffer, ",\"description\":");
+        strcat(buffer,"\"");
+        strcat(buffer,description);
+        strcat(buffer,"\"");
+        strcat(buffer,"}");
+}
 
-	return &buf[i + 1];
-}
-/*----------------------------GET REG NAME AND DEV NAME--------------------------------------*/
-int Get_name(char name_1[10],char name_2[10],unsigned int channel, unsigned int id, unsigned int func, int  reg)
-{
-	memset(name_1,0,10);
-	for ( int j = 0; j< 10; j++)
-	{
-		name_1[j] = table[i].name_reg[j];
-        name_2[j] = table[i].name_dev[j];
-	}
-}
-/*----------------------------CREATE JSON STRING--------------------------------------------------*/
-uint8_t createJson(char demo[30], char channel[10],char name_reg[10],char name_dev[10], uint16_t val)
-{
-	memset(demo,0,30);
-	strcat(demo,"{\"");
-	strcat(demo,channel);
-	strcat(demo,"_");
-	strcat(demo,name_reg);
-	strcat(demo,"_");
-	strcat(demo,name_dev);
-	strcat(demo,"\"");
-	strcat(demo,":");
-	strcat(demo,itoa_user(val, 10));
-	strcat(demo, "}");
-	}
-/*------------------------------------------------------------------------------*/
 int main()
 {
-	channel_t CH;
-	
-    //Get_name(reg,dev,CHANNEL_1,table[i].id,table[i].func,table[i].reg_adr);
-	createJson(buffer,"CH1",table[xQueueMbMQtt.countflag].name,table[xQueueMbMQtt.countflag].name_dev, xQueueMbMQtt.RegData.i16data);
-    //printf("%s\n",reg);
-	printf("%s\n",buffer);
-    //printf("%s",dev);
-	return 0;
+    uint16_t SUM = sizeof(table1)/sizeof(data1_t);
+	char pub[50];
+    for (uint16_t i = 0; i < SUM; i++){
+        char *id_temp = table1[i].IDkey;
+        if 
+    }
+    createJson_provision(pub,table1[0].IDkey, table1[0].name, table1[0].type, table1[0].title, table1[0].description);
+    printf("%s",pub);
 }
+// {
+//     "id": "",
+//     "data": {
+//         "CH1_NODE1_SEN1": {
+//             "type": "number",
+//             "title": "voltage",
+//             "kind": "sensor"
+//         },
+//         "CH1_NODE2_MET1": {
+//             "type": "number",
+//             "title": "power",
+//             "kind": "meter"
+//         },
+//         "CH1_NODE3_REL1": {
+//             "type": "string",
+//             "title": "state",
+//             "kind": "switch"
+//         },
+//         "CH1_NODE4_SEN1": {
+//             "type": "number",
+//             "title": "temperature",
+//             "kind": "sensor"
+//         },
+//         "CH1_NODE5_REG1": {
+//             "type": "boolean",
+//             "title": "register",
+//             "kind": "register"
+//         }
+//     }
+// }

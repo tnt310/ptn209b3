@@ -35,8 +35,14 @@ void UARTIntHandler(void)
 		}
 	gotCommandFlag = 1;
 }
+/*---------------------------------------------------------------------------------------------------------------------------*/
+uint8_t sendATcommand(char* ATcommand, uint32_t timeout)
+{
+	HAL_UART_Transmit(&huart2,(uint8_t*)ATcommand,strlen(ATcommand)+1,1000);
+	HAL_Delay(timeout);
+	}
 /*---------------------Send AT command---------------------------------------------------------------------------------------*/
-uint8_t sendATcommand(char* ATcommand,char *respect_answer_1, uint32_t timeout)
+uint8_t sendATcommand1(char* ATcommand,char *respect_answer_1, uint32_t timeout)
 {
 //	uint8_t status;
 //	volatile uint8_t answer = 0;
@@ -53,8 +59,6 @@ uint8_t sendATcommand(char* ATcommand,char *respect_answer_1, uint32_t timeout)
 			}
 			else
 			{
-				code = ReturnCode(commandBuffer);
-				Handler_Err(code);
 			}
 		}
 	}
@@ -65,121 +69,33 @@ uint8_t sendATcommand(char* ATcommand,char *respect_answer_1, uint32_t timeout)
 	return answer;
 }
 /*---------------------Handler ERROR------------------------------------------------------------------*/
-uint8_t Handler_Err(uint8_t err_state)
-{
-	switch (err_state)
-		{
-		case CPIN: //kiểm tra SIM
-			// alert led or show on desktop app
-			break;
-		case CREG: //kiểm tra đăng ký mạng
-			// alert led or show on desktop app
-			break;
-		case NETOPEN: //mở kết nối mạng
-			break;
-		case CMQTTSTART:
-			break;
-		case CMQTTCONNECT:
-			// check return code to process
-			break;
-		case CMQTTPUB:
-			break;
-		case CMQTTSUB:
-			break;
-		}
-}
 /*-----------------RETURN CODE--------------------------------------------------------------------------------*/
-uint8_t ReturnCode(char str[])
-{
-	char err[2];
-	for (uint8_t i = 0; i< strlen(str); i++)
-	{
-		if (str[i] == ','){
-			err[0] = str[i+1];
-			err[1] = str[i+2];
-		}
-	}
-	return atoi(err);
-}
-/*---------------------createATcommand------------------------------------------------------------------*/
-//uint8_t createATcommand(char aux_str[100],uint8_t uistate,sim7600_packet_t packet)
+//uint8_t ReturnCode(char str[])
 //{
-//	memset(aux_str,0,100);
-//	switch(uistate)
+//	char err[2];
+//	for (uint8_t i = 0; i< strlen(str); i++)
 //	{
-//		case AT_CMQTTACCQ:
-//			snprintf(aux_str, sizeof(aux_str),"AT+CMQTTACCQ=%d,\"%s\",%d%s",packet.index_client,packet.client_name,enter); //maybe not protocol
-//		break;
-//
-//		case AT_CMQTTCONNECT:
-//			snprintf(aux_str, sizeof(aux_str),"AT+CMQTTCONNECT=%d,\"%s:%d\",%d,%d,\"%s\",\"%s\"%s",packet.index_client,packet.server_name,
-//																								   packet.port,packet.keepalive,packet.cleansession,
-//																								   packet.username,packet.password,enter);
-//		break;
-//
-//		case AT_CMQTTSUBTOPIC:
-//			snprintf(aux_str, sizeof(aux_str),"AT+CMQTTSUBTOPIC=%d,%d,%d,%d%s",packet.index_client,strlen(sub),packet.protocol,packet.qos,enter);
-//		break;
-//
-//		case AT_CMQTTTOPIC:
-//			snprintf(aux_str, sizeof(aux_str),"AT+CMQTTTOPIC=%d,%d%s",packet.index_client,strlen(pub),enter);
-//		break;
-//
-//		case AT_CMQTTPAYLOAD:
-//		snprintf(aux_str, sizeof(aux_str),"AT+CMQTTPAYLOAD=%d,%d%s",packet.index_client,strlen(payload),enter);
-//		break;
-//
-//		case AT_CMQTTPUB:
-//		snprintf(aux_str, sizeof(aux_str),"AT+CMQTTPUB=%d,%d,%d%s",packet.index_client,packet.qos,strlen(payload)+strlen(pub),enter);
-//		break;
-//
-//		case AT_CMQTTDISC:
-//		snprintf(aux_str, sizeof(aux_str),"AT+CMQTTDISC=%d,%d%s",packet.index_client,packet.timeout,enter);
-//		break;
-//
-//		case AT_CMQTTREL:
-//		snprintf(aux_str, sizeof(aux_str),"AT+CMQTTREL=%d%s",packet.index_client,enter);
-//		break;
+//		if (str[i] == ','){
+//			err[0] = str[i+1];
+//			err[1] = str[i+2];
+//		}
 //	}
+//	return atoi(err);
 //}
-///*---------------------Create Json------------------------------------------------------------------*/
-//uint8_t createJson(char demo[100],char *name_dev, uint16_t val, uint8_t time[6])
-//{
-//	memset(demo,0,100);
-//	strcat(demo,name_dev);
-//	strcat(demo,":");
-//    strcat(demo,"[{time:");
-//    strcat(demo,itoa_user(time[0], 10)); // Hour
-//    strcat(demo,":");
-//    strcat(demo,itoa_user(time[1], 10)); // Minute
-//    strcat(demo,":");
-//    strcat(demo,itoa_user(time[2], 10)); //Second
-//    strcat(demo," ");
-//    strcat(demo,itoa_user(time[3], 10));// Month
-//    strcat(demo,".");
-//    strcat(demo,itoa_user(time[4], 10)); // Day
-//    strcat(demo,".");
-//    strcat(demo,itoa_user(time[5], 10)); //Year
-//    strcat(demo,",");
-//    strcat(demo,"value");
-//    strcat(demo,":");
-//    strcat(demo,itoa_user(val, 10));
-//    strcat(demo,"}]");
-//
-//	}
+
 ///*-------------------------------------------------------------------------------------*/
-//uint8_t* itoa_user(uint32_t val, uint8_t base) {
-//	static uint8_t buf[32] = { 0 };  // 32 bits
-//	int i = 30;
-//	if (val == 0)
-//		buf[i--] = '0';
-//	for (; val && i; --i, val /= base)
-//		buf[i] = "0123456789abcdef"[val % base];
-//
-//	return &buf[i + 1];
-//}
+uint8_t* itoa_user(uint32_t val, uint8_t base) {
+	static uint8_t buf[32] = { 0 };  // 32 bits
+	int i = 30;
+	if (val == 0)
+		buf[i--] = '0';
+	for (; val && i; --i, val /= base)
+		buf[i] = "0123456789abcdef"[val % base];
+
+	return &buf[i + 1];
+}
 /*---------------------Send AT command with 2 respect_answer------------------------------------------------------------------*/
-uint8_t sendATcommand_2(char* ATcommand,char *respect_answer_1,char *respect_answer_2,uint32_t timeout)
+uint8_t sendATcommand2(char* ATcommand,char *respect_answer_1,char *respect_answer_2,uint32_t timeout)
 {
 	uint8_t status;
 	volatile uint8_t answer = 0;
@@ -206,76 +122,45 @@ uint8_t sendATcommand_2(char* ATcommand,char *respect_answer_1,char *respect_ans
 	memset(commandBuffer,'\0',100);
 	return answer;
 }
-///*---------------------Send AT command with 3 answer------------------------------------------------------------------*/
-//uint8_t sendATcommand_3(char* ATcommand,char *respect_answer_1,char *respect_answer_2,char *respect_answer_3,uint32_t timeout)
-//{
-//	uint8_t volatile answer=0;
-//	HAL_UART_Transmit(&huart1,(uint8_t*)ATcommand,strlen(ATcommand) + 1,1000);
-//	uint32_t  tickstart = HAL_GetTick();
-//	timeout += (uint32_t)(uwTickFreq); // HERE
-//	do
-//	{
-//		if (gotCommandFlag == 1)
-//		{
-//			gotCommandFlag = 0;
-//			commandBufferIndex = 0;
-//			if (strstr(commandBuffer,respect_answer_1) != NULL){
-//				return answer = 1;
-//				memset(commandBuffer,'\0',100);}
-//            if (strstr(commandBuffer, respect_answer_2) != NULL){
-//                return answer = 2;
-//				memset(commandBuffer,'\0',100);}
-//            else if (strstr(commandBuffer, respect_answer_3) != NULL){
-//            	return answer = 3;
-//            	memset(commandBuffer,'\0',100);}
-//		}
-//	}
-//	while((answer == 0) && ((HAL_GetTick() - tickstart) < timeout)); // HERE
-//	return answer;
-//}
 /*
  * return mqtt error code
  *
  * */
-uint8_t createJson_v1(char demo[50],char name_dev[10], uint16_t val, uint8_t time[6])
+uint8_t createJson(char demo[500],char name[10], uint16_t val)
 {
-	memset(demo,0,100);
-	strcat(demo,name_dev);
+
+	memset(demo,0,sizeof(demo));
+	strcat(demo,"{");
+    strcat(demo,"\"");
+    strcat(demo,name);
+    strcat(demo,"\"");
 	strcat(demo,":");
-    strcat(demo,"[{time:");
-    strcat(demo,itoa_user(time[0], 10)); // Hour
-    strcat(demo,":");
-    strcat(demo,itoa_user(time[1], 10)); // Minute
-    strcat(demo,":");
-    strcat(demo,itoa_user(time[2], 10)); //Second
-    strcat(demo," ");
-    strcat(demo,itoa_user(time[3], 10));// Month
-    strcat(demo,".");
-    strcat(demo,itoa_user(time[4], 10)); // Day
-    strcat(demo,".");
-    strcat(demo,itoa_user(time[5], 10)); //Year
-    strcat(demo,",");
-    strcat(demo,"value");
+    strcat(demo,"\"value\"");
     strcat(demo,":");
     strcat(demo,itoa_user(val, 10));
-    strcat(demo,"}]");
+    strcat(demo,"}");
 
 	}
-uint8_t createJson_provision(char buffer[],char *name,char *type, char *alias)
+uint8_t createJson_provision(char buffer[],char *name,char *type, char *title, char *description)
 {
-    memset(buffer,0,sizeof(buffer));
-    strcat(buffer,"{");
-    strcat(buffer,name);
-    strcat(buffer,":");
-    strcat(buffer, "{\"type\":");
-    strcat(buffer,"\"");
-    strcat(buffer,type);
-    strcat(buffer,"\"");
-    strcat(buffer, ",\"description\":");
-    strcat(buffer,"\"");
-    strcat(buffer,alias);
-    strcat(buffer,"\"");
-    strcat(buffer,"}");
+     memset(buffer,0,sizeof(buffer));
+     strcat(buffer,"\"");
+     strcat(buffer,name);
+     strcat(buffer,"\"");
+     strcat(buffer,":");
+     strcat(buffer, "{\"type\":");
+     strcat(buffer,"\"");
+     strcat(buffer,type);
+     strcat(buffer,"\"");
+     strcat(buffer, ",\"title\":");
+     strcat(buffer,"\"");
+     strcat(buffer,title);
+     strcat(buffer,"\"");
+     strcat(buffer, ",\"description\":");
+     strcat(buffer,"\"");
+     strcat(buffer,description);
+     strcat(buffer,"\"");
+     strcat(buffer,"}");
 }
 uint8_t Get_Time(uint8_t time[6])
 {
@@ -286,19 +171,3 @@ uint8_t Get_Time(uint8_t time[6])
 	time[4] = 25;
 	time[5] = 21;
 	}
-/*Function*/
-/**
- * @brief
- * @param
- * @retval None
- */
-uint8_t* itoa_user(uint32_t val, uint8_t base) {
-	static uint8_t buf[32] = { 0 };  // 32 bits
-	int i = 30;
-	if (val == 0)
-		buf[i--] = '0';
-	for (; val && i; --i, val /= base)
-		buf[i] = "0123456789abcdef"[val % base];
-
-	return &buf[i + 1];
-}
