@@ -8,6 +8,7 @@
 #include "sdcard.h"
 #include "stdio.h"
 #include "stdint.h"
+#include <string.h>
 
 FATFS fs;
 FIL fil;
@@ -20,12 +21,27 @@ uint8_t  SD_CREATE_FILE(char *filename)
 	fresult = f_open(&fil,filename, FA_CREATE_ALWAYS|FA_WRITE);
 	fresult = f_close(&fil);
 }
+
 uint8_t  SD_READ_LINE(char *filename)
 {
 	memset(SDbuffer,0, sizeof(SDbuffer));
 	fresult = f_mount(&fs, "/", 1);
 	fresult = f_open(&fil,filename, FA_READ|FA_WRITE);
 	f_gets(SDbuffer,sizeof(SDbuffer), &fil);
+	fresult = f_close(&fil);
+}
+uint8_t  SD_READ_ALL(char *filename)
+{
+	uint16_t read = 0,lines = 0;
+	memset(SDbuffer,0, sizeof(SDbuffer));
+	fresult = f_mount(&fs, "/", 1);
+	fresult = f_open(&fil,filename, FA_READ|FA_WRITE);
+	for (lines = 0; (f_eof(&fil) == 0); lines++)
+	{
+	   f_gets((char*)SDbuffer, sizeof(SDbuffer), &fil);
+	   printf("%s\r",SDbuffer);
+	}
+	printf("%d lines in file\r\n", lines);
 	fresult = f_close(&fil);
 }
 uint8_t  SD_WRITE_LINE(char *filename, const TCHAR* data)
@@ -35,6 +51,7 @@ uint8_t  SD_WRITE_LINE(char *filename, const TCHAR* data)
 	f_puts(data, &fil);
 	f_close(&fil);
 }
+
 uint32_t  SD_GET_FREESPACE(void)
 {
 	FATFS *pfs;

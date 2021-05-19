@@ -16,6 +16,7 @@
 #include "fatfs_sd.h"
 
 extern SPI_HandleTypeDef hspi1;
+//extern SPI_HandleTypeDef hspi3;
 extern volatile uint8_t Timer1, Timer2;                    /* 10ms 마다 감소하는 타이머 */
 
 static volatile DSTATUS Stat = STA_NOINIT;              /* 디스크 상태 Flag*/

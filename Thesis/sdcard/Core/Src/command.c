@@ -10,10 +10,11 @@ UART_HandleTypeDef huart2;
 int Cmd_write_sdcard(int argc, char *argv[]);
 int Cmd_read_sdcard(int argc, char *argv[]);
 int Cmd_create_file(int argc, char *argv[]);
-
+int Cmd_read_all(int argc, char *argv[]);
 tCmdLineEntry g_psCmdTable[] = {
 		{ "wsd", Cmd_write_sdcard," : put data to sdcard" },
 		{ "rsd", Cmd_read_sdcard," : load data from sdcard" },
+		{ "rall", Cmd_read_all," : load data from sdcard" },
 		{ "setsd", Cmd_create_file," : create new file" },
 		{ 0, 0, 0 } };
 
@@ -28,7 +29,6 @@ void UARTIntHandler(void) {
 	uint8_t receivedChar;
 	char *EnterCMD = "\r\n>";
 	receivedChar = (uint8_t) ((huart2).Instance->DR & (uint8_t) 0x00FF);
-
 	HAL_UART_Transmit(&huart2, &receivedChar, 1, 100);
 	__HAL_UART_ENABLE_IT(&huart2, UART_IT_RXNE);
 	if (receivedChar != 13) {
@@ -83,12 +83,17 @@ int Cmd_write_sdcard(int argc, char *argv[])
 	SD_Json(sd_temp,sd.port,sd.deviceID,sd.func,sd.deviceChannel,sd.deviceType,sd.deviceTitle,sd.deviceName,sd.valueType);
 	printf("%s",sd_temp);
 	SD_WRITE_LINE("DEVICE.txt",sd_temp);
-	printf("\r\n------------------\r\n");
 }
-
-
 int Cmd_read_sdcard(int argc, char *argv[])
 {
 	printf("\nCmd_read_sdcard\r\n");
 	printf("------------------\r\n");
+	SD_READ_LINE("DEVICE.txt");
+	printf("%s",SDbuffer);
+}
+int Cmd_read_all(int argc, char *argv[])
+{
+	printf("\nCmd_read_all\r\n");
+	printf("------------------\r\n");
+	SD_READ_ALL("DEVICE.txt");
 }

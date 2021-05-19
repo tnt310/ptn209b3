@@ -1,5 +1,6 @@
-sdcard.c:17:10:SD_CREATE_FILE	16	static
-sdcard.c:23:10:SD_READ_LINE	16	static
-sdcard.c:31:10:SD_WRITE_LINE	16	static
-sdcard.c:38:11:SD_GET_FREESPACE	24	static
-sdcard.c:48:9:SD_Json	48	static
+sdcard.c:18:10:SD_CREATE_FILE	16	static
+sdcard.c:25:10:SD_READ_LINE	16	static
+sdcard.c:33:10:SD_READ_ALL	24	static
+sdcard.c:47:10:SD_WRITE_LINE	16	static
+sdcard.c:55:11:SD_GET_FREESPACE	32	static
+sdcard.c:65:9:SD_Json	48	static

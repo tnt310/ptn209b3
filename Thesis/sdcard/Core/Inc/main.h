@@ -110,6 +110,19 @@ typedef struct{
 
 }xQueueMbMqtt_t;
 
+
+typedef struct{
+	uint8_t port;
+    uint8_t deviceID; // id : 01
+    uint8_t func; // function code
+    uint16_t deviceChannel; // Adress reg (0x10)
+    char *deviceType; // name of device  : INVERTER
+    char *deviceTitle; // name of reg : POWER
+    char *deviceName; // : INVERTER_01
+    char *valueType;  // NUMBER or BOOLEAN
+	//uint8_t deviceStatus;
+}data1_t;
+
 enum {
 	SYS_START,SYS_DEFAULT
 };

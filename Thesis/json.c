@@ -29,7 +29,7 @@ typedef struct{
    char *valueType; // number or boolean: 100, true, false
 }data1_t;
 
-data1_t table1[] =
+data1_t table1[50] =
 {
 		0,	2,	3,	0x00,   "WEATHERSTATION",		"STATION_01",		"TEMPERATURE",	"NUMBER",   
 		0,	2, 	3,  0x01, 	"WEATHERSTATION",		"STATION_01",		"HUMIDITY",	    "NUMBER",
@@ -105,6 +105,8 @@ uint8_t SD_Json(char buffer[200],uint8_t port,uint8_t deviceID,uint8_t func,uint
 }
 int main()
 {
+    uint8_t  dev = sizeof(table1)/sizeof(data1_t);
+    printf("%d\n",dev);
     char buffer[200];
     SD_Json(buffer,0,100,3,1000,"INVERTER","VOLTAGE","INVERTER_01","NUMBER");
     printf("%s",buffer);
