@@ -3,6 +3,11 @@
         "TEST.C": "cpp",
         "string.h": "c",
         "provision.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "telemetry.h": "c",
+        "stdint.h": "c",
+        "stdlib.h": "c",
+        "main.h": "c",
+        "json.h": "c"
     }
 }

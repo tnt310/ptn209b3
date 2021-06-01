@@ -2,7 +2,6 @@
 #include <string.h>
 #include <stdint.h>
 
-int main_time[6] = {15,11,25,26,6,21};
 	char pub[1000];
     char device[200];
     char attribute[200];
@@ -60,7 +59,7 @@ data1_t table1[50] =
 		0,	12,	6,	0x02,	"RELAY",				"RELAY_02",			"LIGHT",	    "NUMBER",
 
 };
-uint8_t Device(char *buffer, uint8_t deviceId, char *device_name, char *device_type)
+uint8_t device(char *buffer, uint8_t deviceId, char *device_name, char *device_type)
 {
         memset(buffer,0,sizeof(buffer));
         strcat(buffer,"{");
@@ -77,9 +76,9 @@ uint8_t Device(char *buffer, uint8_t deviceId, char *device_name, char *device_t
         strcat(buffer,"\"");
         strcat(buffer,device_type);
         strcat(buffer,"\"");
-        strcat(buffer, ",\"device_attrs\":[");
+        strcat(buffer, ",\"device_channel\":[");
 }
-uint8_t Attribute(char *buffer,uint16_t deviceChannel, char *deviceTitle,char *valueType)
+uint8_t channel(char *buffer,uint16_t deviceChannel, char *deviceTitle,char *valueType)
 {
         memset(buffer,0,sizeof(buffer));
         strcat(buffer,"{");
@@ -97,17 +96,34 @@ uint8_t Attribute(char *buffer,uint16_t deviceChannel, char *deviceTitle,char *v
         strcat(buffer,"\"");
         strcat(buffer,"}");
 }
-
-// uint8_t SD_Json(char buffer[200],uint8_t port,uint8_t deviceID,uint8_t func,uint16_t deviceChannel,char *deviceType,char *deviceTitle,char *deviceName,char *valueType)
-// {
-//     memset(buffer,0,200);
-//     sprintf(buffer,"{\"PORT\":%d,\"ID\":%d,\"FC\":%d,\"CHANNEL\":%d,\"DEVICETYPE\":\"%s\",\"DEVICENAME\":\"%s\",\"CHANNELTITLE\":\"%s\",\"VALUETYPE\":\"%s\"}",port,deviceID,func,deviceChannel,deviceType,deviceName,deviceTitle,valueType);
-// }
 int main()
 {
-    uint8_t  dev = sizeof(table1)/sizeof(data1_t);
-    printf("%d\n",dev);
-    char buffer[200];
-    SD_Json(buffer,0,100,3,1000,"INVERTER","VOLTAGE","INVERTER_01","NUMBER");
-    printf("%s",buffer);
+    
 }
+data1_t table1[] =
+{
+		0,	2,	3,	0x00,   "INVERTER",		        "INVERTER_01",		"VOLTAGE",	    "NUMBER",   
+		0,	2, 	3,  0x01, 	"INVERTER",		        "INVERTER_01",		"CURRENT",	    "NUMBER",
+		0,	2,	3,	0x03,	"INVERTER",		        "INVERTER_01",		"POWER",	    "NUMBER",
+
+        0,	3,	3,	0x00,   "WEATHERSTATION",		"STATION_02",		"TEMPERATURE",	"NUMBER",
+		0,	3,	3,	0x01,   "WEATHERSTATION",		"STATION_02",		"HUMIDITY",	    "NUMBER",
+		0,	3, 	3,  0x03, 	"WEATHERSTATION",		"STATION_02",		"LUMEN",	    "NUMBER",
+
+        0,	4,	3,	0x00,   "WEATHERSTATION",		"STATION_03",		"TEMPERATURE",	"NUMBER",
+		0,	4, 	3,  0x01, 	"WEATHERSTATION",		"STATION_03",		"HUMIDITY",	    "NUMBER",
+		0,	4,	3,	0x03,	"WEATHERSTATION",		"STATION_03",		"LUMEN",	    "NUMBER",
+
+		0,	6,	3,	0x05,	 "METER",				"METER_01",			"VOLTAGE",	    "NUMBER",
+        0,	6,	3,	0x04,	 "METER",	 			"METER_01",			"CURRENT",	    "NUMBER",
+		0,	6,	3,	0x05,	 "METER",				"METER_01",			"VOLTAGE",	    "NUMBER",
+
+        0,	8,	3,	0x00,   "WEATHERSTATION",		"STATION_04",		"TEMPERATURE",	"NUMBER",
+		0,	8, 	3,  0x01, 	"WEATHERSTATION",		"STATION_04",		"HUMIDITY",	    "NUMBER",
+		0,	8,	3,	0x03,	"WEATHERSTATION",		"STATION_04",		"LUMEN",	    "NUMBER",
+
+		0,	10,	3,	0x04,	 "METER",				"METER_02",			"VOLTAGE",	    "NUMBER",
+        0,	10,	3,	0x05,	 "METER",	 			"METER_02",			"CURRENT",	    "NUMBER",
+		0,	10,	3,	0x06,	 "METER",				"METER_02",			"VOLTAGE",	    "NUMBER",
+
+};
