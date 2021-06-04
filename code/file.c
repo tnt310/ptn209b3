@@ -98,15 +98,16 @@ data1_t *parse(char *Buffer, uint16_t BufferLen)
 }
 void AddDevice(data1_t *destination, data1_t *data)
 {
+    uint8_t len = 0;
     destination->channel = data->channel;
     destination->deviceID = data->deviceID;
     destination->func = data->func;
+    destination->devicestatus = data->devicestatus;
     destination->deviceChannel = data->deviceChannel;
     destination->deviceType = data->deviceType;
     destination->deviceName = data->deviceName;
     destination->channeltitle = data->channeltitle;
     destination->valueType = data->valueType;
-    destination->devicestatus = data->devicestatus;
     //printf("\nLine : %d\t%d\t%d\t%d\t%s\t%s\t%s\t%s\t%d",destination->channel,destination->deviceID,destination->func, destination->deviceChannel,destination->deviceType, destination->deviceName,destination->channeltitle,destination->valueType, destination->devicestatus);
 }
 void LoadDevice(void)
@@ -122,27 +123,38 @@ void LoadDevice(void)
         k++;
     }
     fclose(file);
-    printf("\nnum of line k =: %d",k);
+    printf("\nnum of line k = %d",k);
     dynamic = (data1_t*)calloc(k,sizeof(data1_t));
     if (dynamic!=NULL){
         file = fopen("DEVICE.TXT","r");
         while(fgets(line,200,file)){
-            j++;
             p = parse((char*)line, strlen(line));
-            AddDevice((dynamic+j-1),p);
-            printf("\nline %d: %d\t%d\t%d\t%d\t%s\t%s\t%s\t%s\t%d",j-1,
-            (dynamic+j-1)->channel,(dynamic+j-1)->deviceID,(dynamic+j-1)->func,
-            (dynamic+j-1)->deviceChannel,(dynamic+j-1)->deviceType,(dynamic+j-1)->deviceName,
-            (dynamic+j-1)->channeltitle,(dynamic+j-1)->valueType,(dynamic+j-1)->devicestatus);
+            AddDevice((dynamic+j),p);
+            // printf("\nline %d: %d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d",j,
+            //         &(dynamic+j)->channel,&(dynamic+j)->deviceID,&(dynamic+j)->func,&(dynamic+j)->devicestatus,
+            //         &(dynamic+j)->deviceChannel,&(dynamic+j)->deviceType,&(dynamic+j)->deviceName,
+            //         &(dynamic+j)->channeltitle,&(dynamic+j)->valueType);
+            printf("\nLine %d: %d\t%d\t%d\t%d\t%d\t%s\t%s\t%s\t%s",j,
+                    (dynamic+j)->channel,(dynamic+j)->deviceID,(dynamic+j)->func,(dynamic+j)->devicestatus,
+                    (dynamic+j)->deviceChannel,(dynamic+j)->deviceType,(dynamic+j)->deviceName,
+                    (dynamic+j)->channeltitle,(dynamic+j)->valueType);
+            j++;
         }
         fclose(file);
     }
-    printf("\n\nDEVICES WERE ADDED TO DYNAMIC ARRAY");
+    printf("\n\n----------------DEVICES ADDRESS WERE ADDED TO DYNAMIC ARRAY--------------------------------");
+        for (uint8_t i = 0; i < k; i++){
+        printf("\nLine %d: %d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d",i,
+                &(dynamic+i)->channel,&(dynamic+i)->deviceID,&(dynamic+i)->func,&(dynamic+i)->devicestatus,
+                &(dynamic+i)->deviceChannel,&(dynamic+i)->deviceType,&(dynamic+i)->deviceName,
+                &(dynamic+i)->channeltitle,&(dynamic+i)->valueType);
+    }
+    printf("\n\n----------------DEVICES VALUE WERE ADDED TO DYNAMIC ARRAY--------------------------------");
     for (uint8_t i = 0; i < k; i++){
-        printf("\nLine %d: %d\t%d\t%d\t%d\t%s\t%s\t%s\t%s\t%d",i,
-        (dynamic+i)->channel,(dynamic+i)->deviceID,(dynamic+i)->func,
-        (dynamic+i)->deviceChannel,(dynamic+i)->deviceType,(dynamic+i)->deviceName,
-        (dynamic+i)->channeltitle,(dynamic+i)->valueType,(dynamic+i)->devicestatus);
+        printf("\nLine %d: %d\t%d\t%d\t%d\t%d\t%s\t%s\t%s\t%s",i,
+                (dynamic+i)->channel,(dynamic+i)->deviceID,(dynamic+i)->func,(dynamic+i)->devicestatus,
+                (dynamic+i)->deviceChannel,(dynamic+i)->deviceType,(dynamic+i)->deviceName,
+                (dynamic+i)->channeltitle,(dynamic+i)->valueType);
     }
     free(dynamic);
 }
