@@ -2,6 +2,7 @@ SOURCE_HEADER=telemetry.h json.h main.h
 SOURCE_TELEMETRY=telemetry.c
 SOURCE_JSON = json.h
 SOURCE_FILE=file.c
+SOURCE_ARRAY=array.c
 SOURCE_MAIN=main.c
 
 CC:= gcc

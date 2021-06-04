@@ -79,45 +79,44 @@ uint8_t topic(char *buffer, char *apikey, char *topic, char *flow_type)
 	memset(buffer,'\0',sizeof(buffer));
 	sprintf(buffer,"%s/%s/%s",flow_type,topic,apikey);
 }
-int main()
-{
-    char head[1000];
-    char tail[500];
-    char id[SUM];
-    static uint8_t count = 0;
-    static uint8_t count_t = 0;
-				    for (uint8_t i = 0; i < SUM; i++)// duyệt từng phần tử trong mảng
-				    {
-				        for (uint8_t j = 0; j < SUM; j++)  // duyệt ID device
-				        {
-				            if (table1[j].deviceID == table1[i].deviceID && table1[i].deviceID != table1[i-1].deviceID){
-				                    count ++;
-				                    if (count == 1){
-				                        if (i > 0){
-				                        for (uint8_t a = 0; a < i; a++){
-				                             if (table1[a].deviceID == table1[j].deviceID){
-				                                goto TEST;
-				                                }
-				                            }
-				                        }
-				                        head_provision(head,table1[j].deviceID,table1[j].deviceName,table1[j].deviceType);
-				                        for (uint8_t z = 0; z < SUM; z++)  // duyệt channel ID
-				                        {
-				                            if (table1[z].deviceID == table1[j].deviceID ){
-				                            	tail_provision(tail,table1[z].deviceChannel,table1[z].deviceTitle,table1[z].valueType, table1[z].func);
-				                                strcat(head,tail);
-				                            }
-				                        }
-				                        head[strlen(head) - 1] = '\0';
-				                        strcat(head,"]}]}");
-				                        printf("\n%s\n",head);
-				                        memset(head,'\0',sizeof(head));
-				                    }
-				            }
-				        }
-				        TEST: count = 0;
-				    }
-}
+// int main()
+// {
+//     char head[1000];
+//     char tail[500];
+//     char id[SUM];
+//     static uint8_t count = 0;
+//     static uint8_t count_t = 0;
+// 				    for (uint8_t i = 0; i < SUM; i++)// duyệt từng phần tử trong mảng
+// 				    {
+// 				        for (uint8_t j = 0; j < SUM; j++)  // duyệt ID device
+// 				        {
+// 				            if (table1[j].deviceID == table1[i].deviceID && table1[i].deviceID != table1[i-1].deviceID){
+// 				                    count ++;
+// 				                    if (count == 1){
+// 				                        if (i > 0){
+// 				                        for (uint8_t a = 0; a < i; a++){
+// 				                             if (table1[a].deviceID == table1[j].deviceID){
+// 				                                goto TEST;
+// 				                                }
+// 				                            }
+// 				                        }
+// 				                        head_provision(head,table1[j].deviceID,table1[j].deviceName,table1[j].deviceType);
+// 				                        for (uint8_t z = 0; z < SUM; z++)  // duyệt channel ID
+// 				                        {
+// 				                            if (table1[z].deviceID == table1[j].deviceID ){
+// 				                            	tail_provision(tail,table1[z].deviceChannel,table1[z].deviceTitle,table1[z].valueType, table1[z].func);
+// 				                                strcat(head,tail);
+// 				                            }
+// 				                        }
+// 				                        head[strlen(head) - 1] = '\0';
+// 				                        strcat(head,"]}]}");
+// 				                        printf("\n%s\n",head);
+// 				                        memset(head,'\0',sizeof(head));
+// 				                    }
+// 				            }
+// 				        }
+// 				        TEST: count = 0;
+// 				    }
+// }
 /*-----------------------------------------------------------------------------------------------*/
-
 

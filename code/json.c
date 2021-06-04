@@ -20,13 +20,9 @@ static int jsoneq(const char *json, jsmntok_t *tok, const char *s) {
 	}
 	return -1;
 }
-/**@ Brief: Get data from modbus dev and forward it to mqtt server
- * @ Todo:
- * 		Parse json object from server
- * */
 /*------------------------------------------------------------------------------------------------------------------------------*/
 
-uint8_t parse(char *Buffer,uint16_t BufferLen){
+uint8_t parse(char *Buffer,uint16_t BufferLen, data1_t *p){
 
 	jsmn_parser p;
 	jsmntok_t t[JSON_MAX_LEN]; /* We expect no more than JSON_MAX_LEN tokens */

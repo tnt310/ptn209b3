@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "telemetry.h": "c",
+        "json.h": "c",
+        "main.h": "c",
+        "algorithm": "c",
+        "xstring": "c",
+        "xutility": "c"
+    }
+}
