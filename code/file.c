@@ -108,7 +108,9 @@ void AddDevice(data1_t *destination, data1_t *data)
     destination->deviceName = data->deviceName;
     destination->channeltitle = data->channeltitle;
     destination->valueType = data->valueType;
-    //printf("\nLine : %d\t%d\t%d\t%d\t%s\t%s\t%s\t%s\t%d",destination->channel,destination->deviceID,destination->func, destination->deviceChannel,destination->deviceType, destination->deviceName,destination->channeltitle,destination->valueType, destination->devicestatus);
+    // printf("\nLine : %d\t%d\t%d\t%d\t%s\t%s\t%s\t%s\t%d",destination->channel,destination->deviceID,
+    //         destination->func,destination->deviceChannel,destination->deviceType, destination->deviceName,
+    //         destination->channeltitle,destination->valueType, destination->devicestatus);
 }
 void LoadDevice(void)
 {
@@ -150,12 +152,12 @@ void LoadDevice(void)
                 &(dynamic+i)->channeltitle,&(dynamic+i)->valueType);
     }
     printf("\n\n----------------DEVICES VALUE WERE ADDED TO DYNAMIC ARRAY--------------------------------");
-    for (uint8_t i = 0; i < k; i++){
-        printf("\nLine %d: %d\t%d\t%d\t%d\t%d\t%s\t%s\t%s\t%s",i,
-                (dynamic+i)->channel,(dynamic+i)->deviceID,(dynamic+i)->func,(dynamic+i)->devicestatus,
-                (dynamic+i)->deviceChannel,(dynamic+i)->deviceType,(dynamic+i)->deviceName,
-                (dynamic+i)->channeltitle,(dynamic+i)->valueType);
-    }
+        for (uint8_t i = 0; i < k; i++){
+            printf("\nLine %d: %d\t%d\t%d\t%d\t%d\t%s\t%s\t%s\t%s",i,
+                    (dynamic+i)->channel,(dynamic+i)->deviceID,(dynamic+i)->func,(dynamic+i)->devicestatus,
+                    (dynamic+i)->deviceChannel,(dynamic+i)->deviceType,(dynamic+i)->deviceName,
+                    (dynamic+i)->channeltitle,(dynamic+i)->valueType);
+        }
     free(dynamic);
 }
 int main()
