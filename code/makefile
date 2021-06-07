@@ -4,7 +4,7 @@ SOURCE_JSON = json.h
 SOURCE_FILE=file.c
 SOURCE_ARRAY=array.c
 SOURCE_MAIN=main.c
-
+SOURCE_BACKUP=backup.c
 CC:= gcc
 CMD=$(CC) $? -o $@
 
@@ -17,4 +17,6 @@ file: $(SOURCE_FILE)
 json: $(SOURCE_JSON)
 	$(CMD)
 main: $(SOURCE_MAIN)
+	$(CMD)
+back: $(SOURCE_BACKUP)
 	$(CMD)
