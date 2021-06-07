@@ -6,5 +6,6 @@
         "algorithm": "c",
         "xstring": "c",
         "xutility": "c"
-    }
+    },
+    "workbench.colorTheme": "Dracula"
 }

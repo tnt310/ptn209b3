@@ -1,5 +1,6 @@
 #include <stdint.h>
 
+#pragma pack(1)  // To force compiler to use 1 byte packaging
 typedef struct{
     uint8_t channel;
     uint8_t deviceID;
