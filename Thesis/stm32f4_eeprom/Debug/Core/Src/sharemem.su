@@ -1,2 +1,0 @@
-sharemem.c:35:10:uiMemGet	16	static
-sharemem.c:46:6:uiMemSet	16	static

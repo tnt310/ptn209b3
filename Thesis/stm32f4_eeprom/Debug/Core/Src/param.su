@@ -1,4 +1,0 @@
-param.c:15:6:v_epr_load	24	static
-param.c:43:6:v_epr_save	24	static
-param.c:83:9:u_mem_get	16	static
-param.c:93:6:u_mem_set	16	static

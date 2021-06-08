@@ -127,8 +127,7 @@ void assign(char *destination, char *source)
 }
 void LoadDevice(void)
 {
-    static data1_t *dynamic;
-    static data1_t *p, temp;
+    data1_t *p, temp;
     FILE *file;
     char line[200];
     static uint8_t k = 0;
@@ -139,7 +138,7 @@ void LoadDevice(void)
     }
     fclose(file);
     printf("\nnum of line k = %d",k);
-    dynamic = (data1_t*)calloc(k,sizeof(data1_t));
+    data1_t *dynamic = calloc(k,sizeof(data1_t));
     if (dynamic!=NULL){
         file = fopen("DEVICE.TXT","r");
         while(fgets(line,200,file)){
@@ -150,10 +149,14 @@ void LoadDevice(void)
             (dynamic+j)->func = p->func;
             (dynamic+j)->devicestatus = p->devicestatus;
             (dynamic+j)->deviceChannel = p->deviceChannel;
-            (dynamic+j)->deviceType = p->deviceType;
-            (dynamic+j)->deviceName = p->deviceName;
-            (dynamic+j)->channeltitle = p->channeltitle;
-            (dynamic+j)->valueType = p->valueType;
+            (dynamic+j)->deviceType = strdup(p->deviceType);
+            (dynamic+j)->deviceName = strdup(p->deviceName);
+            (dynamic+j)->channeltitle = strdup(p->channeltitle);
+            (dynamic+j)->valueType = strdup(p->valueType);
+            // (dynamic+j)->deviceType = p->deviceType;
+            // (dynamic+j)->deviceName = p->deviceName;
+            // (dynamic+j)->channeltitle = p->channeltitle;
+            // (dynamic+j)->valueType = p->valueType;
             // assign((dynamic+j)->deviceType ,(p->deviceType));
             // assign((dynamic+j)->deviceName,(p->deviceName));
             // assign((dynamic+j)->channeltitle ,(p->channeltitle));
@@ -162,7 +165,6 @@ void LoadDevice(void)
             // (dynamic+j)->deviceName = "INVERTER_01";
             // (dynamic+j)->channeltitle = "VOLATGE";
             // (dynamic+j)->valueType = "NUMBER";
-
 
             // printf("\nline %d: %d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d",j,
             //         &(dynamic+j)->channel,&(dynamic+j)->deviceID,&(dynamic+j)->func,&(dynamic+j)->devicestatus,
