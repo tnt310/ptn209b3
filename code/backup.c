@@ -59,7 +59,7 @@ typedef struct backup
 
 void convert(char *destination, char *source)
 {
-    strncpy(destination, source,strlen(source)+1);
+    strcpy(destination, source);
     //printf("destination: %s",destination);
 }
 int main()

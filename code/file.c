@@ -102,7 +102,7 @@ void AddDevice(data1_t *destination, data1_t *data)
     destination->func = data->func;
     destination->devicestatus = data->devicestatus;
     destination->deviceChannel = data->deviceChannel;
-    destination->deviceType = strdup(data->deviceType);
+    destination->deviceType = strdup(data->deviceType); // return NULL means fail
     destination->deviceName = strdup(data->deviceName);
     destination->channeltitle = strdup(data->channeltitle);
     destination->valueType = strdup(data->valueType);
@@ -110,7 +110,7 @@ void AddDevice(data1_t *destination, data1_t *data)
 
 void LoadDevice(void)
 {
-    data1_t *p, temp;
+    data1_t *p;
     FILE *file;
     char line[200];
     static uint8_t k = 0;
