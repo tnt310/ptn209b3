@@ -33,6 +33,16 @@
     // }
     // free(dynamic);
 
+    /*-----------------------------------------------------------*/
+            // (dynamic+j)->channel = p->channel;
+            // (dynamic+j)->deviceID = p->deviceID;
+            // (dynamic+j)->func = p->func;
+            // (dynamic+j)->devicestatus = p->devicestatus;
+            // (dynamic+j)->deviceChannel = p->deviceChannel;
+            // (dynamic+j)->deviceType = strdup(p->deviceType);
+            // (dynamic+j)->deviceName = strdup(p->deviceName);
+            // (dynamic+j)->channeltitle = strdup(p->channeltitle);
+            // (dynamic+j)->valueType = strdup(p->valueType);
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
