@@ -5,8 +5,11 @@ SOURCE_FILE=file.c
 SOURCE_ARRAY=array.c
 SOURCE_MAIN=main.c
 SOURCE_BACKUP=backup.c
+SOURCE_TEST=test.cpp
 CC:= gcc
+CXX:= g++
 CMD=$(CC) $? -o $@
+CPP=$(CXX) $? -o $@
 
 header: $(SOURCE_HEADER)
 	$(CMD)
@@ -20,3 +23,5 @@ main: $(SOURCE_MAIN)
 	$(CMD)
 back: $(SOURCE_BACKUP)
 	$(CMD)
+test: $(SOURCE_TEST)
+	$(CPP)

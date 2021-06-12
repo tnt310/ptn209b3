@@ -27,15 +27,15 @@ data1_t *parse_device(char *Buffer, uint16_t BufferLen)
 	jsmntok_t t[JSON_MAX_LEN]; /* We expect no more than JSON_MAX_LEN tokens */
 	jsmn_init(&p);
 	r = jsmn_parse(&p, Buffer,BufferLen, t,sizeof(t) / sizeof(t[0]));
-	if (r < 0) {
-		printf("Failed to parse JSON: %d\n", r);
-		return 1;
-	}
-	/* Assume the top-level element is an object */
-	if (r < 1 || t[0].type != JSMN_OBJECT) {
-		printf("Object expected\n");
-		return 1;
-	}
+	// if (r < 0) {
+	// 	printf("Failed to parse JSON: %d\n", r);
+	// 	return 1;
+	// }
+	// /* Assume the top-level element is an object */
+	// if (r < 1 || t[0].type != JSMN_OBJECT) {
+	// 	printf("Object expected\n");
+	// 	return 1;
+	// }
 	/* Loop over all keys of the root object */
 	for (i = 1; i < r; i++) {
 		if (jsoneq(Buffer, &t[i], "PORT") == 0) {
@@ -95,19 +95,30 @@ data1_t *parse_device(char *Buffer, uint16_t BufferLen)
 	}
     return ptr;
 }
-void AddDevice(data1_t *destination, data1_t *data)
+void addDevice(data1_t** destination, data1_t *data)
 {
-    destination->channel = data->channel;
-    destination->deviceID = data->deviceID;
-    destination->func = data->func;
-    destination->devicestatus = data->devicestatus;
-    destination->deviceChannel = data->deviceChannel;
-    destination->deviceType = strdup(data->deviceType); // return NULL means fail
-    destination->deviceName = strdup(data->deviceName);
-    destination->channeltitle = strdup(data->channeltitle);
-    destination->valueType = strdup(data->valueType);
+    (*destination)->channel = data->channel;
+    (*destination)->deviceID = data->deviceID;
+    (*destination)->func = data->func;
+    (*destination)->devicestatus = data->devicestatus;
+    (*destination)->deviceChannel = data->deviceChannel;
+    (*destination)->deviceType = strdup(data->deviceType); // return NULL means fail
+    (*destination)->deviceName = strdup(data->deviceName);
+    (*destination)->channeltitle = strdup(data->channeltitle);
+    (*destination)->valueType = strdup(data->valueType);
 }
-
+// void addDevice(data1_t *destination, data1_t *data)
+// {
+//     (destination)->channel = data->channel;
+//     (destination)->deviceID = data->deviceID;
+//     (destination)->func = data->func;
+//     (destination)->devicestatus = data->devicestatus;
+//     (destination)->deviceChannel = data->deviceChannel;
+//     (destination)->deviceType = strdup(data->deviceType); // return NULL means fail
+//     (destination)->deviceName = strdup(data->deviceName);
+//     (destination)->channeltitle = strdup(data->channeltitle);
+//     (destination)->valueType = strdup(data->valueType);
+// }
 void LoadDevice(void)
 {
     data1_t *p;
@@ -126,15 +137,15 @@ void LoadDevice(void)
         file = fopen("DEVICE.TXT","r");
         while(fgets(line,200,file)){
             p = parse_device((char*)line, strlen(line));
-            AddDevice((dynamic+j),p);
-            // printf("\nline %d: %d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d",j,
-            //         &(dynamic+j)->channel,&(dynamic+j)->deviceID,&(dynamic+j)->func,&(dynamic+j)->devicestatus,
-            //         &(dynamic+j)->deviceChannel,&(dynamic+j)->deviceType,&(dynamic+j)->deviceName,
-            //         &(dynamic+j)->channeltitle,&(dynamic+j)->valueType);
-            printf("\nLine %d: %d\t%d\t%d\t%d\t%d\t%s\t%s\t%s\t%s",j,
-                    (dynamic+j)->channel,(dynamic+j)->deviceID,(dynamic+j)->func,(dynamic+j)->devicestatus,
-                    (dynamic+j)->deviceChannel,(dynamic+j)->deviceType,(dynamic+j)->deviceName,
-                    (dynamic+j)->channeltitle,(dynamic+j)->valueType);
+            addDevice((&dynamic)+j,p);
+            printf("\nline %d: %d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d",j,
+                    &(dynamic+j)->channel,&(dynamic+j)->deviceID,&(dynamic+j)->func,&(dynamic+j)->devicestatus,
+                    &(dynamic+j)->deviceChannel,&(dynamic+j)->deviceType,&(dynamic+j)->deviceName,
+                    &(dynamic+j)->channeltitle,&(dynamic+j)->valueType);
+            // printf("\nLine %d: %d\t%d\t%d\t%d\t%d\t%s\t%s\t%s\t%s",j,
+            //         (dynamic+j)->channel,(dynamic+j)->deviceID,(dynamic+j)->func,(dynamic+j)->devicestatus,
+            //         (dynamic+j)->deviceChannel,(dynamic+j)->deviceType,(dynamic+j)->deviceName,
+            //         (dynamic+j)->channeltitle,(dynamic+j)->valueType);
             j++;
         }
         fclose(file);

@@ -46,27 +46,33 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "main.h"
+#include <malloc.h>
 
-typedef struct backup
+char *nhapchuoi(char *s)
 {
-    char *deviceType;
-    char *deviceName;
-    char *channeltitle;
-    char *valueType;
-};
-
-
-void convert(char *destination, char *source)
-{
-    strcpy(destination, source);
-    //printf("destination: %s",destination);
+   char a[1000];
+   printf("NHAP VAO CHUOI:");
+   fgets(a,sizeof(a),stdin);
+   s = strdup(a);
 }
+
 int main()
 {
-    struct backup *data;
-    char *s="INVERTER";
-    convert(data->deviceType,s);
-    printf("%s",data->deviceType);
-
+   char *s;
+   nhapchuoi(s);
+   if (s != NULL){
+      printf("chuoi vua nhap la: %s",s);
+      free(s);
+   }
+   getch();
 }
+
+// int main()
+// {
+//     //char *test = (char*) malloc(1*sizeof(char));
+//     char test[10];
+//     strncpy(test,"testingonly",12);
+//     // test = strdup("testingonly");
+//     printf("%s",test);
+//     //free(test);
+// }

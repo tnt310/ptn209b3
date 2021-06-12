@@ -5,7 +5,9 @@
         "main.h": "c",
         "algorithm": "c",
         "xstring": "c",
-        "xutility": "c"
+        "xutility": "c",
+        "atomic": "c",
+        "string.h": "c"
     },
     "workbench.colorTheme": "Dracula"
 }
