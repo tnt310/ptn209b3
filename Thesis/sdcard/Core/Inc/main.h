@@ -107,21 +107,22 @@ typedef struct{
 	uint8_t gotflagProvision;
 	uint8_t mutex;
 	uint16_t sum_dev;
-
 }xQueueMbMqtt_t;
 
 
-typedef struct{
-	uint8_t port;
-    uint8_t deviceID; // id : 01
-    uint8_t func; // function code
-    uint16_t deviceChannel; // Adress reg (0x10)
-    char *deviceType; // name of device  : INVERTER
-    char *deviceTitle; // name of reg : POWER
-    char *deviceName; // : INVERTER_01
-    char *valueType;  // NUMBER or BOOLEAN
-	//uint8_t deviceStatus;
+typedef struct {
+    uint8_t channel;
+    uint8_t deviceID;
+    uint8_t func;
+    uint8_t devicestatus;
+    uint16_t deviceChannel;
+    char *deviceType;
+    char *deviceName;
+    char *channeltitle;
+    char *valueType;
 }data1_t;
+
+extern data1_t table1[];
 
 enum {
 	SYS_START,SYS_DEFAULT

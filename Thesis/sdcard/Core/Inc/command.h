@@ -7,6 +7,6 @@
 #define MAX_BUFFER_VALUE 200
 
 extern uint32_t gotCommandFlag;
-extern uint8_t commandBuffer[100];
+extern uint8_t commandBuffer[200];
 void UARTIntHandler(void);
 #endif

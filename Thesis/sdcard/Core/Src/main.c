@@ -50,7 +50,7 @@ FRESULT fresult;
 
 /* Private variables ---------------------------------------------------------*/
 SPI_HandleTypeDef hspi1;
-UART_HandleTypeDef huart2;
+UART_HandleTypeDef huart6;
 
 osThreadId defaultTaskHandle;
 /* USER CODE BEGIN PV */
@@ -62,7 +62,7 @@ void SystemClock_Config(void);
 void MX_FREERTOS_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_SPI1_Init(void);
-static void MX_USART2_UART_Init(void);
+static void MX_USART6_UART_Init(void);
 void StartDefaultTask(void const * argument);
 
 /* USER CODE BEGIN PFP */
@@ -71,9 +71,6 @@ void StartDefaultTask(void const * argument);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-//FATFS fs;  // file system
-//FIL fil; // File
-//FRESULT fresult;  // result
 char SDbuffer[200];
 /* USER CODE END 0 */
 
@@ -89,7 +86,9 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+
+
+	HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -106,20 +105,17 @@ int main(void)
   MX_GPIO_Init();
   MX_SPI1_Init();
   MX_FATFS_Init();
-  MX_USART2_UART_Init();
+  MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
 	printf("\r\n ********* Access Controller Board **************** \r\n");
 	printf("\r\n NTT BK \r\n");
 	printf("\r\n System  starting \r\n");
- __HAL_UART_ENABLE_IT(&huart2, UART_IT_RXNE);
-	fresult = f_mount(&fs, "/", 1);
-	fresult = f_open(&fil,"SPI.txt", FA_CREATE_ALWAYS|FA_WRITE);
-	fresult = f_close(&fil);
+ __HAL_UART_ENABLE_IT(&huart6,UART_IT_RXNE);
   MX_FREERTOS_Init();
+
   /* USER CODE END 2 */
   /* Start scheduler */
   osKernelStart();
-
   /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -218,7 +214,7 @@ static void MX_SPI1_Init(void)
   * @param None
   * @retval None
   */
-static void MX_USART2_UART_Init(void)
+static void MX_USART6_UART_Init(void)
 {
 
   /* USER CODE BEGIN USART2_Init 0 */
@@ -228,15 +224,15 @@ static void MX_USART2_UART_Init(void)
   /* USER CODE BEGIN USART2_Init 1 */
 
   /* USER CODE END USART2_Init 1 */
-  huart2.Instance = USART2;
-  huart2.Init.BaudRate = 9600;
-  huart2.Init.WordLength = UART_WORDLENGTH_8B;
-  huart2.Init.StopBits = UART_STOPBITS_1;
-  huart2.Init.Parity = UART_PARITY_NONE;
-  huart2.Init.Mode = UART_MODE_TX_RX;
-  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
-  if (HAL_UART_Init(&huart2) != HAL_OK)
+  huart6.Instance = USART6;
+  huart6.Init.BaudRate = 9600;
+  huart6.Init.WordLength = UART_WORDLENGTH_8B;
+  huart6.Init.StopBits = UART_STOPBITS_1;
+  huart6.Init.Parity = UART_PARITY_NONE;
+  huart6.Init.Mode = UART_MODE_TX_RX;
+  huart6.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart6.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart6) != HAL_OK)
   {
     Error_Handler();
   }
@@ -335,7 +331,7 @@ PUTCHAR_PROTOTYPE
   /* Place your implementation of fputc here */
   /* e.g. write a character to the USART */
 //  USART_SendData(EVAL_COM1, (uint8_t) ch);
-	HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+	HAL_UART_Transmit(&huart6, (uint8_t *)&ch, 1, 0xFFFF);
 
   /* Loop until the end of transmission */
 //  while (USART_GetFlagStatus(EVAL_COM1, USART_FLAG_TC) == RESET)

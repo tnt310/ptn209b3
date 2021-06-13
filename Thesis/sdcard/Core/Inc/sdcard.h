@@ -29,7 +29,8 @@ uint8_t  SD_READ_LINE(char *filename);
 uint8_t  SD_READ_ALL(char *filename);
 uint8_t  SD_WRITE_LINE(char *filename, const TCHAR* data);
 uint32_t SD_GET_FREESPACE(void);
-uint8_t SD_Json(char buffer[200],uint8_t port,uint8_t deviceID,uint8_t func,uint16_t deviceChannel,char *deviceType,char *deviceTitle,char *deviceName,char *valueType);
+uint8_t  SD_LOAD_ALL(char *filename);
+uint8_t SD_Json(char buffer[200],uint8_t port,uint8_t deviceID,uint8_t func,uint16_t deviceChannel,char *deviceType,char *deviceTitle,char *deviceName,char *valueType, uint8_t devicestatus);
 
 
 #endif /* INC_SDCARD_H_ */

@@ -50,7 +50,7 @@ Core/Src/sdcard.o: ../Core/Src/sdcard.c ../Core/Inc/sdcard.h \
  ../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h \
  ../Middlewares/Third_Party/FatFs/src/diskio.h \
  ../Middlewares/Third_Party/FatFs/src/ff.h ../FATFS/Target/user_diskio.h \
- ../Core/Inc/fatfs_sd.h
+ ../Core/Inc/fatfs_sd.h ../Core/Inc/modbus_mqtt_bridge.h
 
 ../Core/Inc/sdcard.h:
 
@@ -165,3 +165,5 @@ Core/Src/sdcard.o: ../Core/Src/sdcard.c ../Core/Inc/sdcard.h \
 ../FATFS/Target/user_diskio.h:
 
 ../Core/Inc/fatfs_sd.h:
+
+../Core/Inc/modbus_mqtt_bridge.h:

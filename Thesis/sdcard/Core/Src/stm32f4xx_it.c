@@ -58,7 +58,7 @@ volatile uint8_t Timer1, Timer2;
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern UART_HandleTypeDef huart2;
+extern UART_HandleTypeDef huart6;
 extern TIM_HandleTypeDef htim1;
 
 /* USER CODE BEGIN EV */
@@ -180,16 +180,16 @@ void TIM1_UP_TIM10_IRQHandler(void)
 /**
   * @brief This function handles USART2 global interrupt.
   */
-void USART2_IRQHandler(void)
+void USART6_IRQHandler(void)
 {
   /* USER CODE BEGIN USART2_IRQn 0 */
 
   /* USER CODE END USART2_IRQn 0 */
 	UARTIntHandler();
 	/* USER CODE END USART1_IRQn 0 */
-	HAL_UART_IRQHandler(&huart2);
+	HAL_UART_IRQHandler(&huart6);
 	/* USER CODE BEGIN USART1_IRQn 1 */
-	__HAL_UART_CLEAR_PEFLAG(&huart2);
+	__HAL_UART_CLEAR_PEFLAG(&huart6);
 	/* USER CODE END USART1_IRQn 1 */
   /* USER CODE BEGIN USART2_IRQn 1 */
 

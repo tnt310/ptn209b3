@@ -6,21 +6,23 @@
 #include "stdlib.h"
 
 char SDbuffer[200];
-UART_HandleTypeDef huart2;
+UART_HandleTypeDef huart6;
 int Cmd_write_sdcard(int argc, char *argv[]);
 int Cmd_read_sdcard(int argc, char *argv[]);
 int Cmd_create_file(int argc, char *argv[]);
 int Cmd_read_all(int argc, char *argv[]);
+int Cmd_load_all(int argc, char *argv[]);
 tCmdLineEntry g_psCmdTable[] = {
 		{ "wsd", Cmd_write_sdcard," : put data to sdcard" },
 		{ "rsd", Cmd_read_sdcard," : load data from sdcard" },
-		{ "rall", Cmd_read_all," : load data from sdcard" },
+		{ "read", Cmd_read_all," : load data from sdcard" },
+		{ "load", Cmd_load_all," : load data from sdcard" },
 		{ "setsd", Cmd_create_file," : create new file" },
 		{ 0, 0, 0 } };
 
 const char * ErrorCode[4] = { "CMDLINE_BAD_CMD", "CMDLINE_TOO_MANY_ARGS","CMDLINE_TOO_FEW_ARGS", "CMDLINE_INVALID_ARG" };
 
-uint8_t commandBuffer[100];
+uint8_t commandBuffer[200];
 uint32_t commandBufferIndex = 0;
 uint32_t gotCommandFlag = 0;
 uint8_t temp[100];
@@ -28,9 +30,9 @@ uint8_t temp[100];
 void UARTIntHandler(void) {
 	uint8_t receivedChar;
 	char *EnterCMD = "\r\n>";
-	receivedChar = (uint8_t) ((huart2).Instance->DR & (uint8_t) 0x00FF);
-	HAL_UART_Transmit(&huart2, &receivedChar, 1, 100);
-	__HAL_UART_ENABLE_IT(&huart2, UART_IT_RXNE);
+	receivedChar = (uint8_t) ((huart6).Instance->DR & (uint8_t) 0x00FF);
+	HAL_UART_Transmit(&huart6, &receivedChar, 1, 100);
+	__HAL_UART_ENABLE_IT(&huart6, UART_IT_RXNE);
 	if (receivedChar != 13) {
 		if ((receivedChar == 8) || (receivedChar == 127)) {
 			if (commandBufferIndex > 0)
@@ -45,7 +47,7 @@ void UARTIntHandler(void) {
 			commandBufferIndex = 0;
 			gotCommandFlag = 1;
 		}
-		HAL_UART_Transmit(&huart2, EnterCMD, 3, 100);
+		HAL_UART_Transmit(&huart6, (uint8_t*)EnterCMD, 3, 100);
 	}
 
 }
@@ -80,7 +82,8 @@ int Cmd_write_sdcard(int argc, char *argv[])
 	sd.deviceName = *(argv+6);
 	sd.deviceTitle= *(argv+7);
 	sd.valueType= *(argv+8);
-	SD_Json(sd_temp,sd.port,sd.deviceID,sd.func,sd.deviceChannel,sd.deviceType,sd.deviceTitle,sd.deviceName,sd.valueType);
+	sd.deviceStatus= atoi(*(argv+9));
+	SD_Json(sd_temp,sd.port,sd.deviceID,sd.func,sd.deviceChannel,sd.deviceType,sd.deviceTitle,sd.deviceName,sd.valueType,sd.deviceStatus);
 	printf("%s",sd_temp);
 	SD_WRITE_LINE("DEVICE.txt",sd_temp);
 }
@@ -95,5 +98,11 @@ int Cmd_read_all(int argc, char *argv[])
 {
 	printf("\nCmd_read_all\r\n");
 	printf("------------------\r\n");
-	SD_READ_ALL("DEVICE.txt");
+	SD_READ_ALL("DEVICE.TXT");
+}
+int Cmd_load_all(int argc, char *argv[])
+{
+	printf("\nCmd_load_all\r\n");
+	printf("------------------\r\n");
+	SD_LOAD_ALL("DEVICE.TXT");
 }

@@ -34,7 +34,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 extern uint32_t gotCommandFlag;
-extern uint8_t commandBuffer[100];
+extern uint8_t commandBuffer[200];
 extern uint32_t commandBufferIndex;
 osMessageQId xQueueControlHandle;
 osMessageQId xQueueMessageHandle;
@@ -46,7 +46,7 @@ osMessageQId xQueueResetHandle;
 /* USER CODE BEGIN PTD */
 osThreadId defaultTaskHandle;
 /* USER CODE END PTD */
-extern UART_HandleTypeDef huart2;
+extern UART_HandleTypeDef huart6;
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 void ResetHandlerTask(void *arg);
@@ -160,21 +160,20 @@ void MX_FREERTOS_Init(void) {
   			uiSysState++;
   			break;
 		case SYS_DEFAULT:
-			if (gotCommandFlag) {
+			if (gotCommandFlag == 1) {
 				gotCommandFlag = 0;
 				ret = CmdLineProcess(commandBuffer);
-				if (ret == CMDLINE_BAD_CMD)
-					HAL_UART_Transmit(&huart2, Badcommand, strlen(Badcommand),100);
+				if (ret == CMDLINE_BAD_CMD){
+					HAL_UART_Transmit(&huart6, Badcommand, strlen(Badcommand),100);
+				}
 			}
-			osDelay(10);
+			//osDelay(10);
 			break;
-
 		}
 		if ((uiSysUpdate == TRUE) && (uiSysState != SYS_DEFAULT)) {
 			xQueueSend(xQueueMessageHandle, &uiSysState, 0);
 			uiSysUpdate = FALSE;
 		}
-  //		osDelay(200);
   	}
     /* USER CODE END StartDefaultTask */
   }
