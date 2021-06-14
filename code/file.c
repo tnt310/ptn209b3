@@ -4,6 +4,8 @@
 #include "main.h"
 #include "telemetry.h"
 #include "json.h"
+#include <errno.h>
+#include <fcntl.h>
 
 /* Shared Variables --------------------------*/
 // data1_t *ptr;
@@ -105,17 +107,29 @@ void parse_device(char *Buffer, uint16_t BufferLen, data1_t **ptr)
 //     (*destination)->channeltitle = strdup((data)->channeltitle);
 //     (*destination)->valueType = strdup((data)->valueType);
 // }
+//  void addDevice(data1_t *destination, data1_t *data)
+// {
+//     (destination)->channel = data->channel;
+//     (destination)->deviceID = data->deviceID;
+//     (destination)->func = data->func;
+//     (destination)->devicestatus = data->devicestatus;
+//     (destination)->deviceChannel = data->deviceChannel;
+//     (destination)->deviceType = strdup(data->deviceType); // return NULL means fail
+//     (destination)->deviceName = strdup(data->deviceName);
+//     (destination)->channeltitle = strdup(data->channeltitle);
+//     (destination)->valueType = strdup(data->valueType);
+// }
  void addDevice(data1_t *destination, data1_t *data)
 {
-    (destination)->channel = data->channel;
-    (destination)->deviceID = data->deviceID;
-    (destination)->func = data->func;
-    (destination)->devicestatus = data->devicestatus;
-    (destination)->deviceChannel = data->deviceChannel;
-    (destination)->deviceType = strdup(data->deviceType); // return NULL means fail
-    (destination)->deviceName = strdup(data->deviceName);
-    (destination)->channeltitle = strdup(data->channeltitle);
-    (destination)->valueType = strdup(data->valueType);
+    (*destination).channel = (*data).channel;
+    (*destination).deviceID = (*data).deviceID;
+    (*destination).func = (*data).func;
+    (*destination).devicestatus = (*data).devicestatus;
+    (*destination).deviceChannel = (*data).deviceChannel;
+    (*destination).deviceType = strdup(data->deviceType); // return NULL means fail
+    (*destination).deviceName = strdup(data->deviceName);
+    (*destination).channeltitle = strdup(data->channeltitle);
+    (*destination).valueType = strdup(data->valueType);
 }
 void LoadDevice(void)
 {
@@ -140,21 +154,21 @@ void LoadDevice(void)
             //         &(dynamic+j)->channel,&(dynamic+j)->deviceID,&(dynamic+j)->func,&(dynamic+j)->devicestatus,
             //         &(dynamic+j)->deviceChannel,&(dynamic+j)->deviceType,&(dynamic+j)->deviceName,
             //         &(dynamic+j)->channeltitle,&(dynamic+j)->valueType);
-            printf("\nLine %d: %d\t%d\t%d\t%d\t%d\t%s\t%s\t%s\t%s",j,
-                    (dynamic+j)->channel,(dynamic+j)->deviceID,(dynamic+j)->func,(dynamic+j)->devicestatus,
-                    (dynamic+j)->deviceChannel,(dynamic+j)->deviceType,(dynamic+j)->deviceName,
-                    (dynamic+j)->channeltitle,(dynamic+j)->valueType);
+            // printf("\nLine %d: %d\t%d\t%d\t%d\t%d\t%s\t%s\t%s\t%s",j,
+            //         (dynamic+j)->channel,(dynamic+j)->deviceID,(dynamic+j)->func,(dynamic+j)->devicestatus,
+            //         (dynamic+j)->deviceChannel,(dynamic+j)->deviceType,(dynamic+j)->deviceName,
+            //         (dynamic+j)->channeltitle,(dynamic+j)->valueType);
             j++;
         }
         fclose(file);
     }
     printf("\n\n----------------DEVICES ADDRESS WERE ADDED TO DYNAMIC ARRAY--------------------------------");
-    //     for (uint8_t i = 0; i < k; i++){
-    //     printf("\nLine %d: %d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d",i,
-    //             &(dynamic+i)->channel,&(dynamic+i)->deviceID,&(dynamic+i)->func,&(dynamic+i)->devicestatus,
-    //             &(dynamic+i)->deviceChannel,&(dynamic+i)->deviceType,&(dynamic+i)->deviceName,
-    //             &(dynamic+i)->channeltitle,&(dynamic+i)->valueType);
-    // }
+        for (uint8_t i = 0; i < k; i++){
+        printf("\nLine %d: %d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d",i,
+                &(dynamic+i)->channel,&(dynamic+i)->deviceID,&(dynamic+i)->func,&(dynamic+i)->devicestatus,
+                &(dynamic+i)->deviceChannel,&(dynamic+i)->deviceType,&(dynamic+i)->deviceName,
+                &(dynamic+i)->channeltitle,&(dynamic+i)->valueType);
+    }
     printf("\n\n----------------DEVICES VALUE WERE ADDED TO DYNAMIC ARRAY--------------------------------");
         for (uint8_t i = 0; i < k; i++){
             printf("\nLine %d: %d\t%d\t%d\t%d\t%d\t%s\t%s\t%s\t%s",i,

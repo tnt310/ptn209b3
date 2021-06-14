@@ -1,7 +1,7 @@
 #include <stdint.h>
 
 #pragma pack(1)  // To force compiler to use 1 byte packaging
-typedef struct {
+typedef struct data1_t {
     uint8_t channel;
     uint8_t deviceID;
     uint8_t func;

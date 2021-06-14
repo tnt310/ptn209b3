@@ -6,6 +6,7 @@ SOURCE_ARRAY=array.c
 SOURCE_MAIN=main.c
 SOURCE_BACKUP=backup.c
 SOURCE_TEST=test.cpp
+SOURCE_DEMO=reference.c
 CC:= gcc
 CXX:= g++
 CMD=$(CC) $? -o $@
@@ -25,3 +26,5 @@ back: $(SOURCE_BACKUP)
 	$(CMD)
 test: $(SOURCE_TEST)
 	$(CPP)
+demo: $(SOURCE_DEMO)
+	$(CMD)
