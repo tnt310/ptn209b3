@@ -125,7 +125,7 @@ typedef struct {
 extern data1_t *dynamic;
 
 enum {
-	SYS_START,SYS_DEFAULT
+	SYS_START,SYS_DEVICE, SYS_DEFAULT
 };
 /* USER CODE END Private defines */
 

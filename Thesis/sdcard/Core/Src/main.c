@@ -27,6 +27,7 @@
 #include "fatfs.h"
 #include "sdcard.h"
 #include <stdio.h>
+#include "command.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -112,7 +113,8 @@ int main(void)
 	printf("\r\n System  starting \r\n");
  __HAL_UART_ENABLE_IT(&huart6,UART_IT_RXNE);
   MX_FREERTOS_Init();
-
+//  Cmd_load_all(NULL, NULL);
+//  Cmd_allocate_device(NULL, NULL);
   /* USER CODE END 2 */
   /* Start scheduler */
   osKernelStart();

@@ -155,7 +155,13 @@ void MX_FREERTOS_Init(void) {
   	for (;;) {
   		switch (uiSysState) {
   		case SYS_START:
-  			//printf("\r\n Task Controller: Implementing...  \r\n");
+  			printf("\r\n Task Controller: Implementing...  \r\n");
+  			uiSysUpdate = TRUE;
+  			uiSysState++;
+  			break;
+  		case SYS_DEVICE:
+  			Cmd_load_all(NULL, NULL);
+  			Cmd_allocate_device(NULL, NULL);
   			uiSysUpdate = TRUE;
   			uiSysState++;
   			break;
