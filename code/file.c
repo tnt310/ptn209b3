@@ -119,13 +119,13 @@ void parse_device(char *Buffer, uint16_t BufferLen, data1_t **ptr)
 //     (destination)->channeltitle = strdup(data->channeltitle);
 //     (destination)->valueType = strdup(data->valueType);
 // }
- void addDevice(data1_t *destination, data1_t *data)
+void addDevice(data1_t *destination, data1_t *data)
 {
-    (*destination).channel = (*data).channel;
-    (*destination).deviceID = (*data).deviceID;
-    (*destination).func = (*data).func;
-    (*destination).devicestatus = (*data).devicestatus;
-    (*destination).deviceChannel = (*data).deviceChannel;
+    (*destination).channel = (data)->channel;
+    (*destination).deviceID = (data)->deviceID;
+    (*destination).func = (data)->func;
+    (*destination).devicestatus = (data)->devicestatus;
+    (*destination).deviceChannel = (data)->deviceChannel;
     (*destination).deviceType = strdup(data->deviceType); // return NULL means fail
     (*destination).deviceName = strdup(data->deviceName);
     (*destination).channeltitle = strdup(data->channeltitle);

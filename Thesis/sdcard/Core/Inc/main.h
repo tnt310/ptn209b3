@@ -122,7 +122,7 @@ typedef struct {
     char *valueType;
 }data1_t;
 
-extern data1_t table1[];
+extern data1_t *dynamic;
 
 enum {
 	SYS_START,SYS_DEFAULT

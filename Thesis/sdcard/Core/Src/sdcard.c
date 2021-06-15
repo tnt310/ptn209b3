@@ -17,10 +17,11 @@
 FATFS fs;
 FIL fil;
 FRESULT fresult;
-static data1_t *ptr;
-
+//static data1_t *ptr;
+//data1_t *dynamic;
+//data1_t device;
 extern char SDbuffer[200];
-extern data1_t table1[];
+
 uint16_t lines = 0;
 uint8_t  SD_CREATE_FILE(char *filename)
 {
@@ -40,38 +41,37 @@ uint8_t  SD_READ_LINE(char *filename)
 /*-----------------------------------------------------------------------------------------*/
 uint8_t  SD_READ_ALL(char *filename)
 {
-	uint16_t lines = 0;
-	memset(SDbuffer,0, sizeof(SDbuffer));
+	uint8_t lines = 0;
 	fresult = f_mount(&fs, "", 1);
 	fresult = f_open(&fil,filename, FA_READ|FA_WRITE);
 	for (lines = 0; (f_eof(&fil) == 0); lines++)
 	{
 	   memset(SDbuffer,0, sizeof(SDbuffer));
 	   f_gets((char*)SDbuffer, sizeof(SDbuffer), &fil);
-	   printf("%s\r",SDbuffer);
+	   printf("\r\n%s",SDbuffer);
 	}
-	printf("%d lines in file\r\n", lines);
 	fresult = f_close(&fil);
+	printf("\r\n%d lines in file", lines);
+
 }
 /*-----------------------------------------------------------------------------------------*/
-uint8_t  SD_LOAD_ALL(char *filename)
-{
-	uint16_t lines = 0;
-	memset(SDbuffer,0, sizeof(SDbuffer));
-	fresult = f_mount(&fs, "", 1);
-	fresult = f_open(&fil,filename, FA_READ|FA_WRITE);
-	for (lines = 0; (f_eof(&fil) == 0); lines++)
-	{
-	   memset(SDbuffer,0, sizeof(SDbuffer));
-	   f_gets((char*)SDbuffer, sizeof(SDbuffer), &fil);
-	   ptr = parse_device(SDbuffer, strlen(SDbuffer));
-	   printf("\r\nLine %d: %d\t%d\t%d\t%d\t%d\t%s\t%s\t%s\t%s",lines,(ptr)->channel,(ptr)->deviceID,(ptr)->func,(ptr)->devicestatus,
-			   (ptr)->deviceChannel,(ptr)->deviceType,(ptr)->deviceName,
-	           (ptr)->channeltitle,(ptr)->valueType);
-	}
-	printf("\r\n%d lines in file\r\n", lines);
-	fresult = f_close(&fil);
-}
+//uint8_t  SD_LOAD_ALL(char *filename)
+//{
+//	dynamic = (data1_t*)calloc(10, sizeof(data1_t));
+//	fresult = f_mount(&fs, "", 1);
+//	fresult = f_open(&fil,filename, FA_READ|FA_WRITE);
+//	for (uint8_t i = 0; (f_eof(&fil) == 0); i++)
+//	{
+//	   memset(SDbuffer,0, sizeof(SDbuffer));
+//	   f_gets((char*)SDbuffer, sizeof(SDbuffer), &fil);
+//	   ptr = parse_device(SDbuffer, strlen(SDbuffer));
+//	   addDevice((dynamic+i), ptr);
+//	   printf("\r\nLine %d: %d\t%d\t%d\t%d\t%d\t%s\t%s\t%s\t%s",i,(ptr)->channel,(ptr)->deviceID,(ptr)->func,
+//			   (ptr)->deviceChannel,(ptr)->devicestatus,(ptr)->deviceType,(ptr)->deviceName,
+//	           (ptr)->channeltitle,(ptr)->valueType);
+//	}
+//	fresult = f_close(&fil);
+//}
 /*-----------------------------------------------------------------------------------------*/
 uint8_t  SD_WRITE_LINE(char *filename, const TCHAR* data)
 {

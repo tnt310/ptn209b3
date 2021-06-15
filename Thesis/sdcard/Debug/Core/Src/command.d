@@ -51,7 +51,7 @@ Core/Src/command.o: ../Core/Src/command.c ../Core/Inc/command.h \
  ../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h \
  ../Middlewares/Third_Party/FatFs/src/diskio.h \
  ../Middlewares/Third_Party/FatFs/src/ff.h ../FATFS/Target/user_diskio.h \
- ../Core/Inc/fatfs_sd.h
+ ../Core/Inc/fatfs_sd.h ../Core/Inc/modbus_mqtt_bridge.h
 
 ../Core/Inc/command.h:
 
@@ -172,3 +172,5 @@ Core/Src/command.o: ../Core/Src/command.c ../Core/Inc/command.h \
 ../FATFS/Target/user_diskio.h:
 
 ../Core/Inc/fatfs_sd.h:
+
+../Core/Inc/modbus_mqtt_bridge.h:

@@ -1,7 +1,6 @@
 "Core/Src/cmdline.o"
 "Core/Src/command.o"
 "Core/Src/fatfs_sd.o"
-"Core/Src/file.o"
 "Core/Src/freertos.o"
 "Core/Src/main.o"
 "Core/Src/modbus_mqtt_bride.o"
