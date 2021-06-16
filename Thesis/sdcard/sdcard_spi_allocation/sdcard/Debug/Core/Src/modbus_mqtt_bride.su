@@ -1,0 +1,8 @@
+json.h:106:19:jsmn_alloc_token	32	static
+json.h:124:13:jsmn_fill_token	24	static
+json.h:135:12:jsmn_parse_primitive	32	static
+json.h:193:12:jsmn_parse_string	40	static
+json.h:268:14:jsmn_parse	56	static
+json.h:459:15:jsmn_init	16	static
+modbus_mqtt_bride.c:25:12:jsoneq	24	static
+modbus_mqtt_bride.c:34:9:parse_device	3352	static
