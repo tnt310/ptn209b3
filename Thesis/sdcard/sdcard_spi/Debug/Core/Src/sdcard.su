@@ -3,4 +3,4 @@ sdcard.c:33:10:SD_READ_LINE	16	static
 sdcard.c:42:10:SD_READ_ALL	24	static
 sdcard.c:76:10:SD_WRITE_LINE	16	static
 sdcard.c:84:11:SD_GET_FREESPACE	32	static
-sdcard.c:94:9:SD_Json	56	static
+sdcard.c:94:9:SD_Json	48	static

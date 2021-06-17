@@ -16,16 +16,22 @@ static data1_t *ptr;
 data1_t *dynamic;
 data1_t device;
 static uint8_t line;
-
+int Cmd_create_file(int argc, char *argv[]);
+int Cmd_delete_channel(int argc, char *argv[]);
+int Cmd_delete_all(int argc, char *argv[]);
+int Cmd_write_sdcard(int argc, char *argv[]);
 int Cmd_read_all(int argc, char *argv[]);
 int Cmd_load_all(int argc, char *argv[]);
-
 int Cmd_allocate_device(int argc, char *argv[]);
-tCmdLineEntry g_psCmdTable[] = {
 
+tCmdLineEntry g_psCmdTable[] = {
+		{ "file", Cmd_create_file," : load data from sdcard" },
+		{ "del", Cmd_delete_channel," : load data from sdcard" },
+		{ "delall", Cmd_delete_all," : load data from sdcard" },
+		{ "w", Cmd_write_sdcard," : load data from sdcard" },
 		{ "read", Cmd_read_all," : load data from sdcard" },
 		{ "load", Cmd_load_all," : load data from sdcard" },
-		{ "device",  Cmd_allocate_device," : load data from sdcard" },
+		{ "table",  Cmd_allocate_device," : load data from sdcard" },
 		{ 0, 0, 0 } };
 
 const char * ErrorCode[4] = { "CMDLINE_BAD_CMD", "CMDLINE_TOO_MANY_ARGS","CMDLINE_TOO_FEW_ARGS", "CMDLINE_INVALID_ARG" };
@@ -61,20 +67,41 @@ void UARTIntHandler(void) {
 }
 int Cmd_create_file(int argc, char *argv[])
 {
-
-	printf("\nCmd_create_file\r\n");
+	printf("\nCmd_delete_channel\r\n");
 	printf("------------------\r\n");
 	char *file = *(argv+1);
-	SD_CREATE_FILE(file);
-}
+	fresult = f_mount(&fs, "", 1);
+	if (fresult != FR_OK)
+		printf("NO MOUNT SDCARD, PLEASE CHECK SD CONNECTION");
+	fresult = f_open(&fil,"file", FA_CREATE_ALWAYS|FA_WRITE);
+	if (fresult != FR_OK)
+		printf("NO CREATE FILE");
+	fresult = f_close(&fil);
+	if (fresult != FR_OK)
+		printf("CREATE FILE FAIL");
+	else printf("CREATE FILE SUCCESSFULLY");
+	}
+int Cmd_delete_channel(int argc, char *argv[])
+{
+	printf("\nCmd_delete_channel\r\n");
+	printf("------------------\r\n");
+	fresult = f_mount(&fs, "", 1);
+	fresult = f_open(&fil,"DEVICE.TXT", FA_WRITE);
+	fresult = f_close(&fil);
+	}
+int Cmd_delete_all(int argc, char *argv[])
+{
+	printf("\nCmd_delete_all\r\n");
+	printf("------------------\r\n");
+	}
 /*
  * 1. port
  * 2. ID
  * 3. function
- * 4. Register
+ * 4. Devicechannel
  * 5. Device Type
  * 6. Device Name
- * 7. Device Title
+ * 7. channelTitle
  * 8. value type */
 int Cmd_write_sdcard(int argc, char *argv[])
 {
@@ -85,23 +112,17 @@ int Cmd_write_sdcard(int argc, char *argv[])
 	sd.port= atoi(*(argv+1));
 	sd.deviceID = atoi(*(argv+2));
 	sd.func = atoi(*(argv+3));
-	sd.deviceChannel= atoi(*(argv+4));
+	sd.deviceChannel= *(argv+4);
 	sd.deviceType= *(argv+5);
 	sd.deviceName = *(argv+6);
 	sd.deviceTitle= *(argv+7);
 	sd.valueType= *(argv+8);
-	sd.deviceStatus= atoi(*(argv+9));
+	sd.deviceStatus= 0;
 	SD_Json(sd_temp,sd.port,sd.deviceID,sd.func,sd.deviceChannel,sd.deviceType,sd.deviceTitle,sd.deviceName,sd.valueType,sd.deviceStatus);
 	printf("%s",sd_temp);
-	SD_WRITE_LINE("DEVICE.txt",sd_temp);
+	//SD_WRITE_LINE("SPI.TXT",sd_temp);
 }
-int Cmd_read_sdcard(int argc, char *argv[])
-{
-	printf("\nCmd_read_sdcard\r\n");
-	printf("------------------\r\n");
-	SD_READ_LINE("DEVICE.txt");
-	printf("%s",SDbuffer);
-}
+
 int Cmd_read_all(int argc, char *argv[])
 {
 	printf("\nCmd_read_all\r\n");

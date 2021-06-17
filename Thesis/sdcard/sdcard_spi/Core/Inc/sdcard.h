@@ -17,7 +17,7 @@ typedef struct{
 	uint8_t port;
     uint8_t deviceID; // id : 01
     uint8_t func; // function code
-    uint16_t deviceChannel; // Adress reg (0x10)
+    char *deviceChannel; // Adress reg (0x10)
     char *deviceType; // name of device  : INVERTER
     char *deviceTitle; // name of reg : POWER
     char *deviceName; // : INVERTER_01
@@ -30,7 +30,7 @@ uint8_t  SD_READ_ALL(char *filename);
 uint8_t  SD_WRITE_LINE(char *filename, const TCHAR* data);
 uint32_t SD_GET_FREESPACE(void);
 uint8_t  SD_LOAD_ALL(char *filename);
-uint8_t SD_Json(char buffer[200],uint8_t port,uint8_t deviceID,uint8_t func,uint16_t deviceChannel,char *deviceType,char *deviceTitle,char *deviceName,char *valueType, uint8_t devicestatus);
+uint8_t SD_Json(char buffer[200],uint8_t port,uint8_t deviceID,uint8_t func,char *deviceChannel,char *deviceType,char *deviceTitle,char *deviceName,char *valueType, uint8_t devicestatus);
 
 
 #endif /* INC_SDCARD_H_ */
