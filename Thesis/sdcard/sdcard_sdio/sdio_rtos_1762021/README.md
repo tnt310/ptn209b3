@@ -1,4 +1,4 @@
-**#STM32-E407 + FREERTOS + SDCARD +SDIO**
+**#STM32-E407 Olimex dev board + FREERTOS + SDCARD +SDIO**
 
 **#Reference**
 
