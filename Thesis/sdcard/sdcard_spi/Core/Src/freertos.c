@@ -155,12 +155,12 @@ void MX_FREERTOS_Init(void) {
   	for (;;) {
   		switch (uiSysState) {
   		case SYS_START:
-  			printf("\r\n SYS_START: Implementing...  \r\n");
+  			printf("\r\n SYS_START: Implementing........\r\n");
   			uiSysUpdate = TRUE;
   			uiSysState++;
   			break;
   		case SYS_DEVICE:
-  			printf("\r\n SYS_DEVICE: Implementing...  \r\n");
+  			printf("\r\n SYS_DEVICE: Implementing........\r\n");
 //  			Cmd_load_all(NULL, NULL);
 //  			Cmd_allocate_device(NULL, NULL);
   			uiSysUpdate = TRUE;

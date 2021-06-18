@@ -1,7 +1,8 @@
-command.c:42:6:UARTIntHandler	16	static
-command.c:66:5:Cmd_delete_channel	16	static
-command.c:74:5:Cmd_delete_all	16	static
-command.c:88:5:Cmd_write_sdcard	280	static
-command.c:108:5:Cmd_read_all	16	static
-command.c:114:5:Cmd_load_all	80	static
-command.c:157:5:Cmd_allocate_device	88	static
+command.c:44:6:UARTIntHandler	16	static
+command.c:68:5:Cmd_create_file	24	static
+command.c:84:5:Cmd_delete_channel	16	static
+command.c:92:5:Cmd_delete_all	16	static
+command.c:106:5:Cmd_write_sdcard	280	static
+command.c:126:5:Cmd_read_all	16	static
+command.c:132:5:Cmd_load_all	80	static
+command.c:175:5:Cmd_allocate_device	88	static

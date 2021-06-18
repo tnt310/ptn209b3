@@ -54,8 +54,8 @@ sdio_rtos.bin \
 all: sdio_rtos.elf secondary-outputs
 
 # Tool invocations
-sdio_rtos.elf: $(OBJS) $(USER_OBJS) E:\stm32IDEworkspace\STM32_E407\sdio_rtos_1762021\STM32F407ZGTX_FLASH.ld
-	arm-none-eabi-gcc -o "sdio_rtos.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"E:\stm32IDEworkspace\STM32_E407\sdio_rtos_1762021\STM32F407ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="sdio_rtos.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+sdio_rtos.elf: $(OBJS) $(USER_OBJS) E:\ptn209\Thesis\sdcard\sdcard_sdio\sdio_rtos_1762021\STM32F407ZGTX_FLASH.ld
+	arm-none-eabi-gcc -o "sdio_rtos.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"E:\ptn209\Thesis\sdcard\sdcard_sdio\sdio_rtos_1762021\STM32F407ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="sdio_rtos.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
