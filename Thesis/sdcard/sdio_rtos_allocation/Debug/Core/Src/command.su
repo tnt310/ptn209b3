@@ -1,0 +1,5 @@
+command.c:40:6:UARTIntHandler	16	static
+command.c:64:5:Cmd_read_all	16	static
+command.c:70:5:Cmd_load_all	16	static
+command.c:113:5:Cmd_allocate_device	16	static
+command.c:132:5:Cmd_set_allocation	24	static
