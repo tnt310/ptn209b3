@@ -47,6 +47,54 @@
 ]
 }
 
+{
+    "data":
+    [
+        {
+            "device_id":"2",
+            "device_name":"METER_01",
+            "device_kind":"METER",
+            "device_channels":
+            [
+                {
+                    "channel_id":"1",
+                    "channel_name":"PRODUCTION",
+                    "channel_type":"NUMBER",
+                    "channel_commands":
+                    {
+                        "READ":[]
+                    }
+                },
+                {
+                    "channel_id":"2",
+                    "channel_name":"POWER",
+                    "channel_type":"NUMBER",
+                    "channel_commands":
+                    {
+                        "READ":[]
+                    }
+                },
+                {
+                    "channel_id":"3",
+                    "channel_name":"IRRADIATION",
+                    "channel_type":"NUMBER",
+                    "channel_commands":
+                    {
+                        "READ":[]
+                    }
+                },
+                {
+                    "channel_id":"4",
+                    "channel_name":"IRRADIANCE",
+                    "channel_type":"NUMBER","channel_commands":{"READ":[]}}]}]}
+
+
+
+
+
+
+
+
 {"PORT":1,"ID":2,"FC":3,"CHANNEL":0x01,"DEVICETYPE":"METER","DEVICENAME":"METER_01","CHANNELTITLE":"PRODUCTION","VALUETYPE":"NUMBER","DEVICESTATUS":0}
 {"PORT":2,"ID":2,"FC":3,"CHANNEL":0x02,"DEVICETYPE":"METER","DEVICENAME":"METER_01","CHANNELTITLE":"POWER","VALUETYPE":"NUMBER","DEVICESTATUS" :0}
 {"PORT":3,"ID":2,"FC":3,"CHANNEL":0x03,"DEVICETYPE":"METER","DEVICENAME":"METER_01","CHANNELTITLE":"IRRADIATION","VALUETYPE":"NUMBER","DEVICESTATUS" :0}
@@ -79,4 +127,4 @@
 {"PORT":0,"ID":6,"FC":3,"CHANNEL":1010,"DEVICETYPE":"WEATHERSTATION","DEVICENAME":"STATION_01","CHANNELTITLE":"PRODUCTION","VALUETYPE":"NUMBER","DEVICESTATUS":0}
 
 
-{"PORT":0,"ID":5,"FC":3,"CHANNEL":"0x03","DEVICETYPE":"WEATHERSTATION","DEVICENAME":"STATION_02","CHANNELTITLE":"AMBIENT_TEMP","VALUETYPE":"NUMBER","DEVICESTATUS" :0}
+{"PORT":0,"ID":5,"FC"
