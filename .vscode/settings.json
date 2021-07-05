@@ -12,7 +12,11 @@
         "fcntl.h": "c",
         "errno.h": "c",
         "stdio.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "iterator": "c"
     },
-    "workbench.colorTheme": "Dracula"
+    "workbench.colorTheme": "Visual Studio Dark",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+    
 }

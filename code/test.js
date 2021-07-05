@@ -88,6 +88,8 @@
                     "channel_name":"IRRADIANCE",
                     "channel_type":"NUMBER","channel_commands":{"READ":[]}}]}]}
 
+                    Cmd_set_channelstatus
+
 
 
 
@@ -127,4 +129,23 @@
 {"PORT":0,"ID":6,"FC":3,"CHANNEL":1010,"DEVICETYPE":"WEATHERSTATION","DEVICENAME":"STATION_01","CHANNELTITLE":"PRODUCTION","VALUETYPE":"NUMBER","DEVICESTATUS":0}
 
 
-{"PORT":0,"ID":5,"FC"
+{"PORT":0,"ID":10,"FC":3,"CHANNEL":"0x0904","DEVICETYPE":"INVERTER","DEVICENAME":"INVERTER_01","CHANNELTITLE":"VOLTAGE","VALUETYPE":"NUMBER","DEVICESTATUS":0}
+
+
+"data": [
+    {
+      "device_id": "10",
+      "command": "read",
+      "channel_id": "100"
+    },
+    {
+      "device_id": "10",
+      "device_channels": [
+        {
+          "channel_id": "100",
+          "command": "write"
+        }
+      ]
+    }
+  ]
+  

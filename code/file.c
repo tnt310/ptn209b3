@@ -183,3 +183,14 @@ int main()
     LoadDevice();
 }
 
+  while (1) {
+    fgets(line, 80, fin);
+    if (feof(fin)) break;
+    if (count != ltd) {
+      fputs(line, fout);
+    }
+    else {
+      fputs("hijklmn(456789)\n", fout);
+    }
+    count++;
+  }
