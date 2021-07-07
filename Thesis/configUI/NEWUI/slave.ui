@@ -123,7 +123,7 @@
            <string>Function</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit">
+         <widget class="QLineEdit" name="no">
           <property name="geometry">
            <rect>
             <x>160</x>
@@ -141,7 +141,7 @@
            <string/>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_2">
+         <widget class="QLineEdit" name="slaveaddress">
           <property name="geometry">
            <rect>
             <x>160</x>
@@ -159,7 +159,7 @@
            <string/>
           </property>
          </widget>
-         <widget class="QComboBox" name="code_2">
+         <widget class="QComboBox" name="function">
           <property name="geometry">
            <rect>
             <x>160</x>
@@ -224,7 +224,7 @@
            <string>Device Channel</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_3">
+         <widget class="QLineEdit" name="devicechannel">
           <property name="geometry">
            <rect>
             <x>160</x>
@@ -302,7 +302,7 @@
            <string>Device Name</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_6">
+         <widget class="QLineEdit" name="devicename">
           <property name="geometry">
            <rect>
             <x>160</x>
@@ -340,7 +340,7 @@
            <string>Channel Title</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_7">
+         <widget class="QLineEdit" name="channeltitle">
           <property name="geometry">
            <rect>
             <x>160</x>
@@ -398,7 +398,7 @@
            <string>Scale</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_9">
+         <widget class="QLineEdit" name="scale">
           <property name="geometry">
            <rect>
             <x>160</x>
@@ -416,7 +416,7 @@
            <string/>
           </property>
          </widget>
-         <widget class="QPushButton" name="connect_2">
+         <widget class="QPushButton" name="save">
           <property name="geometry">
            <rect>
             <x>190</x>
@@ -434,7 +434,7 @@
            <string>SAVE</string>
           </property>
          </widget>
-         <widget class="QComboBox" name="code_3">
+         <widget class="QComboBox" name="datatype">
           <property name="geometry">
            <rect>
             <x>160</x>
@@ -459,7 +459,7 @@
            </property>
           </item>
          </widget>
-         <widget class="QComboBox" name="code_4">
+         <widget class="QComboBox" name="devicetype">
           <property name="geometry">
            <rect>
             <x>160</x>
@@ -489,7 +489,7 @@
            </property>
           </item>
          </widget>
-         <widget class="QComboBox" name="code_5">
+         <widget class="QComboBox" name="valuetype">
           <property name="geometry">
            <rect>
             <x>160</x>

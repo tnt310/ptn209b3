@@ -51,7 +51,7 @@
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <widget class="QPushButton" name="network">
+        <widget class="QPushButton" name="networksetting">
          <property name="geometry">
           <rect>
            <x>50</x>
@@ -70,7 +70,7 @@
           <string>NETWORK SETTING</string>
          </property>
         </widget>
-        <widget class="QPushButton" name="modbus">
+        <widget class="QPushButton" name="gatewaysetting">
          <property name="geometry">
           <rect>
            <x>50</x>
@@ -88,7 +88,7 @@
           <string>GATEWAY SETTING</string>
          </property>
         </widget>
-        <widget class="QPushButton" name="devicelist">
+        <widget class="QPushButton" name="devicesetting">
          <property name="geometry">
           <rect>
            <x>50</x>
@@ -106,7 +106,7 @@
           <string>DEVICE SETTING</string>
          </property>
         </widget>
-        <widget class="QPushButton" name="testtool">
+        <widget class="QPushButton" name="historical">
          <property name="geometry">
           <rect>
            <x>50</x>
@@ -143,7 +143,7 @@
           <enum>Qt::Vertical</enum>
          </property>
         </widget>
-        <widget class="QPushButton" name="testtool_2">
+        <widget class="QPushButton" name="testtool">
          <property name="geometry">
           <rect>
            <x>50</x>
@@ -161,7 +161,7 @@
           <string>TESTTOOL</string>
          </property>
         </widget>
-        <widget class="QPushButton" name="testtool_3">
+        <widget class="QPushButton" name="telemetrycontrol">
          <property name="geometry">
           <rect>
            <x>50</x>
@@ -179,13 +179,13 @@
           <string>TELEMETRY CONTROL</string>
          </property>
         </widget>
-        <zorder>modbus</zorder>
-        <zorder>devicelist</zorder>
-        <zorder>testtool</zorder>
+        <zorder>gatewaysetting</zorder>
+        <zorder>devicesetting</zorder>
+        <zorder>historical</zorder>
         <zorder>line</zorder>
-        <zorder>network</zorder>
-        <zorder>testtool_2</zorder>
-        <zorder>testtool_3</zorder>
+        <zorder>networksetting</zorder>
+        <zorder>testtool</zorder>
+        <zorder>telemetrycontrol</zorder>
        </widget>
        <widget class="QFrame" name="seial_workspace">
         <property name="geometry">
@@ -297,7 +297,7 @@
            <string>PORT</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="connect_2">
+         <widget class="QPushButton" name="connect">
           <property name="geometry">
            <rect>
             <x>150</x>
@@ -315,7 +315,7 @@
            <string>CONNECT</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit">
+         <widget class="QLineEdit" name="broker">
           <property name="geometry">
            <rect>
             <x>120</x>
@@ -333,7 +333,7 @@
            <string>3.226.137.205</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_2">
+         <widget class="QLineEdit" name="username">
           <property name="geometry">
            <rect>
             <x>120</x>
@@ -351,7 +351,7 @@
            <string>yktdxpqb</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_3">
+         <widget class="QLineEdit" name="password">
           <property name="geometry">
            <rect>
             <x>120</x>
@@ -369,7 +369,7 @@
            <string>VKCG6yboYrYd</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit_4">
+         <widget class="QLineEdit" name="port">
           <property name="geometry">
            <rect>
             <x>120</x>

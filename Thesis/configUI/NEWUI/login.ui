@@ -50,7 +50,7 @@
         <property name="title">
          <string>Connect Gateway</string>
         </property>
-        <widget class="QComboBox" name="parity">
+        <widget class="QComboBox" name="com">
          <property name="geometry">
           <rect>
            <x>140</x>
@@ -85,7 +85,7 @@
           <string>COM</string>
          </property>
         </widget>
-        <widget class="QComboBox" name="parity_2">
+        <widget class="QComboBox" name="baudrate">
          <property name="geometry">
           <rect>
            <x>140</x>
@@ -155,7 +155,7 @@
           <string>DATABITS</string>
          </property>
         </widget>
-        <widget class="QComboBox" name="parity_3">
+        <widget class="QComboBox" name="databit">
          <property name="geometry">
           <rect>
            <x>140</x>
@@ -200,7 +200,7 @@
           <string>STOPBIT</string>
          </property>
         </widget>
-        <widget class="QComboBox" name="parity_4">
+        <widget class="QComboBox" name="stopbit">
          <property name="geometry">
           <rect>
            <x>140</x>
@@ -245,7 +245,7 @@
           <string>PARITY</string>
          </property>
         </widget>
-        <widget class="QComboBox" name="parity_5">
+        <widget class="QComboBox" name="parity">
          <property name="geometry">
           <rect>
            <x>140</x>
@@ -270,7 +270,7 @@
           </property>
          </item>
         </widget>
-        <widget class="QPushButton" name="connect">
+        <widget class="QPushButton" name="open">
          <property name="geometry">
           <rect>
            <x>170</x>
