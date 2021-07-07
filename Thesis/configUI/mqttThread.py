@@ -35,13 +35,14 @@ class MqttThread(QMainWindow,TesttoolLogin_frame):
         user = TesttoolLogin_frame.mqtt_user.text()
         password = TesttoolLogin_frame.mqtt_pwd.text()
         port = int(TesttoolLogin_frame.mqtt_port.text())
+        client.username_pw_set(user,password)
+        client.connect(broker,port,60)
+        client.loop_start()
         # broker = '3.226.137.205'
         # user = 'yktdxpqb'
         # password = 'VKCG6yboYrYd'
         # port = 19613
-        client.username_pw_set(user,password)
-        client.connect(broker,port,60)
-        client.loop_start()
+
 
     def disconnect_server(self):
         client.loop_stop(self)
