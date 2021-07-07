@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1256</width>
-    <height>835</height>
+    <width>1178</width>
+    <height>735</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,10 +29,145 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1232</width>
-         <height>760</height>
+         <width>1154</width>
+         <height>660</height>
         </rect>
        </property>
+       <widget class="QFrame" name="list">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>321</width>
+          <height>761</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color:rgb(255, 223, 183)</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <widget class="QPushButton" name="connection">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>170</y>
+           <width>181</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>CONNECTION</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="network">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>240</y>
+           <width>181</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>NETWORK</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="modbus">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>310</y>
+           <width>181</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>MODBUS</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="devicelist">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>380</y>
+           <width>181</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>DEVICE LIST</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="testtool">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>450</y>
+           <width>181</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>TESTTOOL</string>
+         </property>
+        </widget>
+        <widget class="Line" name="line">
+         <property name="geometry">
+          <rect>
+           <x>310</x>
+           <y>0</y>
+           <width>20</width>
+           <height>761</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+        <zorder>connection</zorder>
+        <zorder>modbus</zorder>
+        <zorder>devicelist</zorder>
+        <zorder>testtool</zorder>
+        <zorder>line</zorder>
+        <zorder>network</zorder>
+       </widget>
        <widget class="QFrame" name="seial_workspace">
         <property name="geometry">
          <rect>
@@ -44,12 +179,6 @@
         </property>
         <property name="styleSheet">
          <string notr="true">background-color:rgb(255, 255, 255)</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
         </property>
         <widget class="QPushButton" name="connect">
          <property name="geometry">
@@ -200,7 +329,7 @@
          </item>
          <item>
           <property name="text">
-           <string>4800</string>
+           <string>38400</string>
           </property>
          </item>
         </widget>
@@ -313,141 +442,6 @@
          </property>
         </widget>
        </widget>
-       <widget class="QFrame" name="list">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>321</width>
-          <height>761</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color:rgb(255, 223, 183)</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <widget class="QRadioButton" name="serial">
-         <property name="geometry">
-          <rect>
-           <x>50</x>
-           <y>170</y>
-           <width>151</width>
-           <height>21</height>
-          </rect>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>CONNECTION</string>
-         </property>
-        </widget>
-        <widget class="QRadioButton" name="network">
-         <property name="geometry">
-          <rect>
-           <x>50</x>
-           <y>240</y>
-           <width>111</width>
-           <height>21</height>
-          </rect>
-         </property>
-         <property name="font">
-          <font>
-           <family>Segoe UI</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>NETWORK</string>
-         </property>
-        </widget>
-        <widget class="QRadioButton" name="modbus">
-         <property name="geometry">
-          <rect>
-           <x>50</x>
-           <y>310</y>
-           <width>101</width>
-           <height>21</height>
-          </rect>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>MODBUS</string>
-         </property>
-        </widget>
-        <widget class="QRadioButton" name="device">
-         <property name="geometry">
-          <rect>
-           <x>50</x>
-           <y>380</y>
-           <width>131</width>
-           <height>21</height>
-          </rect>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>DEVICE LIST</string>
-         </property>
-        </widget>
-        <widget class="QRadioButton" name="testtool">
-         <property name="geometry">
-          <rect>
-           <x>50</x>
-           <y>450</y>
-           <width>111</width>
-           <height>21</height>
-          </rect>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>TESTTOOL</string>
-         </property>
-        </widget>
-        <widget class="Line" name="line">
-         <property name="geometry">
-          <rect>
-           <x>310</x>
-           <y>0</y>
-           <width>20</width>
-           <height>761</height>
-          </rect>
-         </property>
-         <property name="font">
-          <font>
-           <weight>50</weight>
-           <bold>false</bold>
-          </font>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-        </widget>
-        <zorder>serial</zorder>
-        <zorder>modbus</zorder>
-        <zorder>device</zorder>
-        <zorder>testtool</zorder>
-        <zorder>line</zorder>
-        <zorder>network</zorder>
-       </widget>
       </widget>
      </widget>
     </item>
@@ -459,7 +453,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1256</width>
+     <width>1178</width>
      <height>26</height>
     </rect>
    </property>
