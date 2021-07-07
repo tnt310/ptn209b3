@@ -4,38 +4,39 @@ from PyQt5 import QtGui, QtWidgets
 from PyQt5 import QtCore, QtWidgets, QtSerialPort, uic
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QApplication,QMainWindow
-from config import Ui_MainWindow
-from network import Network_frame
-from serial import Serial_frame
-from testtool import Testtool_frame
-from testtool_login import TesttoolLogin_frame
-from mqttThread import MqttThread
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+from UI.config import Ui_MainWindow
+from UI.network import Network_frame
+from UI.serial import Serial_frame
+from UI.testtool import Testtool_frame
+from UI.testtool_login import TesttoolLogin_frame
+from mqttThread import  MqttThread
+
 
 class ASWA_MainWindow(QMainWindow, Ui_MainWindow, Network_frame, Serial_frame,Testtool_frame,TesttoolLogin_frame):
     def __init__(self,parent=None):
         super(ASWA_MainWindow, self).__init__(parent)
-        loadUi('config.ui',self)
+        loadUi('UI/config.ui',self)
         self.connection.clicked.connect(self.serialspace)
         self.network.clicked.connect(self.networkspace)
         self.testtool.clicked.connect(self.testtoolworkspace)
 
     def serialspace(self):
-        loadUi('serial.ui',self)
+        loadUi('UI/serial.ui',self)
         self.connection.clicked.connect(self.serialspace)
         self.network.clicked.connect(self.networkspace)
         self.testtool.clicked.connect(self.testtoolworkspace)
 
     def networkspace(self):
-        loadUi('network.ui',self)
+        loadUi('UI/network.ui',self)
         self.connection.clicked.connect(self.serialspace)
         self.network.clicked.connect(self.networkspace)
         self.testtool.clicked.connect(self.testtoolworkspace)
 
     def testtoolworkspace(self):
-        loadUi('testtool_login.ui',self)
+        loadUi('UI/testtool_login.ui',self)
         self.connection.clicked.connect(self.serialspace)
         self.network.clicked.connect(self.networkspace)
         self.testtool.clicked.connect(self.testtoolworkspace)

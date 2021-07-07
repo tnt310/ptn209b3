@@ -1,4 +1,4 @@
-import os 
+import os
 import sys
 from PyQt5.uic import loadUi
 from PyQt5 import QtGui, QtWidgets
@@ -9,8 +9,8 @@ from PyQt5.QtWidgets import QApplication,QFileDialog,QMainWindow,QMessageBox
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-from testtool_login import *
 import paho.mqtt.client as mqttclient
+from UI.testtool_login import TesttoolLogin_frame
 
 def on_connect(client,userdata,flags,rc):
     print("Connected with code : " + str(rc))
@@ -27,7 +27,7 @@ client.on_connect=on_connect
 client.on_message=on_message
 
 class MqttThread(QMainWindow,TesttoolLogin_frame):
-    def __init__(self):
+    def __init__(self,parent=None):
         super(MqttThread, self).__init__(parent)
 
     def connect_server(self):
@@ -35,8 +35,12 @@ class MqttThread(QMainWindow,TesttoolLogin_frame):
         user = TesttoolLogin_frame.mqtt_user.text()
         password = TesttoolLogin_frame.mqtt_pwd.text()
         port = int(TesttoolLogin_frame.mqtt_port.text())
+        # broker = '3.226.137.205'
+        # user = 'yktdxpqb'
+        # password = 'VKCG6yboYrYd'
+        # port = 19613
         client.username_pw_set(user,password)
-        client.connect(broker,self.port,60)
+        client.connect(broker,port,60)
         client.loop_start()
 
     def disconnect_server(self):
