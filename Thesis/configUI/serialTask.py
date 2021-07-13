@@ -1,29 +1,28 @@
 from PyQt5 import QtCore, QtWidgets, QtSerialPort
-from UI.config import Ui_MainWindow
+from PyQt5.QtWidgets import QApplication,QMainWindow
+from NEWUI.login import Ui_logingateway
 
-class SerialThread(QtWidgets.QDialog):
+class MainWindow(QMainWindow):
     def __init__(self, parent=None):
-        super(Dialog, self).__init__(parent)
-        self.portname_comboBox = QtWidgets.QComboBox()
-        self.baudrate_comboBox = QtWidgets.QComboBox()
-
+        super(MainWindow, self).__init__(parent)
+        login = Ui_logingateway()
+        login.setupUi(self)
         for info in QtSerialPort.QSerialPortInfo.availablePorts():
-            self.portname_comboBox.addItem(info.portName())
+            login.comport.addItem(info.portName())
 
-        for baudrate in QtSerialPort.QSerialPortInfo.standardBaudRates():
-            self.baudrate_comboBox.addItem(str(baudrate), baudrate)
+        login.refresh.clicked.connect(self.refresh)
 
-        buttonBox = QtWidgets.QDialogButtonBox()
-        buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
-        buttonBox.accepted.connect(self.accept)
-        buttonBox.rejected.connect(self.reject)
+    def refresh(self):
+        refresh = Ui_logingateway()
+        refresh.setupUi(self)
+        for info in QtSerialPort.QSerialPortInfo.availablePorts():
+            refresh.comport.addItem(info.portName())
 
-        lay = QtWidgets.QFormLayout(self)
-        lay.addRow("Port Name:", self.portname_comboBox)
-        lay.addRow("BaudRate:", self.baudrate_comboBox)
-        lay.addRow(buttonBox)
-        self.setFixedSize(self.sizeHint())
+        refresh.refresh.clicked.connect(self.refresh)
 
-    def get_results(self):
-        return self.portname_comboBox.currentText(), self.baudrate_comboBox.currentData()
+if __name__ == '__main__':
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    w = MainWindow()
+    w.show()
+    sys.exit(app.exec_()) 
