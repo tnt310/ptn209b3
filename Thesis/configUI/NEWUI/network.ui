@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>network_2</class>
- <widget class="QMainWindow" name="network_2">
+ <class>network</class>
+ <widget class="QMainWindow" name="network">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -143,7 +143,7 @@
           <enum>Qt::Vertical</enum>
          </property>
         </widget>
-        <widget class="QPushButton" name="testtool_2">
+        <widget class="QPushButton" name="testtool">
          <property name="geometry">
           <rect>
            <x>50</x>
@@ -184,7 +184,7 @@
         <zorder>historical</zorder>
         <zorder>line</zorder>
         <zorder>networksetting</zorder>
-        <zorder>testtool_2</zorder>
+        <zorder>testtool</zorder>
         <zorder>telemetrycontrol</zorder>
        </widget>
        <widget class="QFrame" name="seial_workspace">

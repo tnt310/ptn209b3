@@ -152,8 +152,6 @@ class Ui_logingateway(object):
         self.open.setText(_translate("logingateway", "OPEN"))
         self.refresh.setText(_translate("logingateway", "REFRESH"))
 
-    def get_comport(self):
-        return self.comport.currentText()
 
 if __name__ == "__main__":
     import sys

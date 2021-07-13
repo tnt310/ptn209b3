@@ -2,14 +2,13 @@ from PyQt5 import QtCore, QtWidgets, QtSerialPort
 from PyQt5.QtWidgets import QApplication,QMainWindow
 from NEWUI.login import Ui_logingateway
 
-class MainWindow(QMainWindow):
+class Serial(Ui_logingateway):
     def __init__(self, parent=None):
-        super(MainWindow, self).__init__(parent)
+        super(Serial, self).__init__(parent)
         login = Ui_logingateway()
         login.setupUi(self)
         for info in QtSerialPort.QSerialPortInfo.availablePorts():
             login.comport.addItem(info.portName())
-
         login.refresh.clicked.connect(self.refresh)
 
     def refresh(self):
@@ -17,12 +16,12 @@ class MainWindow(QMainWindow):
         refresh.setupUi(self)
         for info in QtSerialPort.QSerialPortInfo.availablePorts():
             refresh.comport.addItem(info.portName())
-
         refresh.refresh.clicked.connect(self.refresh)
 
-if __name__ == '__main__':
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    w = MainWindow()
-    w.show()
-    sys.exit(app.exec_()) 
+
+# if __name__ == '__main__':
+#     import sys
+#     app = QtWidgets.QApplication(sys.argv)
+#     w = Serial()
+#     w.show()
+#     sys.exit(app.exec_())
