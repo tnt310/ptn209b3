@@ -740,17 +740,17 @@
           </item>
           <item>
            <property name="text">
-            <string>1 minute</string>
+            <string>01 minute</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>3 minutes</string>
+            <string>03 minutes</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>5 minutes</string>
+            <string>05 minutes</string>
            </property>
           </item>
           <item>
