@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1594</width>
-    <height>765</height>
+    <width>1179</width>
+    <height>734</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,8 +29,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1570</width>
-         <height>690</height>
+         <width>1155</width>
+         <height>659</height>
         </rect>
        </property>
        <widget class="QFrame" name="list">
@@ -192,8 +192,8 @@
          <rect>
           <x>320</x>
           <y>0</y>
-          <width>1251</width>
-          <height>761</height>
+          <width>841</width>
+          <height>721</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -204,7 +204,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1251</width>
+           <width>841</width>
            <height>501</height>
           </rect>
          </property>
@@ -309,10 +309,10 @@
           </property>
          </column>
         </widget>
-        <widget class="QPushButton" name="delete_2">
+        <widget class="QPushButton" name="deletechannel">
          <property name="geometry">
           <rect>
-           <x>660</x>
+           <x>480</x>
            <y>560</y>
            <width>151</width>
            <height>41</height>
@@ -324,13 +324,13 @@
           </font>
          </property>
          <property name="text">
-          <string>DELETE DEVICE</string>
+          <string>DELETE CHANNEL</string>
          </property>
         </widget>
-        <widget class="QPushButton" name="save">
+        <widget class="QPushButton" name="add">
          <property name="geometry">
           <rect>
-           <x>450</x>
+           <x>290</x>
            <y>560</y>
            <width>151</width>
            <height>41</height>
@@ -342,7 +342,7 @@
           </font>
          </property>
          <property name="text">
-          <string>SAVE</string>
+          <string>ADD DEVICE</string>
          </property>
         </widget>
        </widget>
@@ -357,7 +357,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1594</width>
+     <width>1179</width>
      <height>26</height>
     </rect>
    </property>
