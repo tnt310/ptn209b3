@@ -6,77 +6,109 @@ from NEWUI.device import Ui_device
 from NEWUI.network import Ui_network
 from NEWUI.telemetry import Ui_telemetry
 from NEWUI.testtool import Ui_toolLogin
+from NEWUI.dialog import Ui_slavesetting
+from source import Dialog, Serial
 class Gateway(QMainWindow):
     def __init__(self,parent=None):
         super(Gateway, self).__init__(parent)
-        login = Ui_logingateway()
-        login.setupUi(self)
+        self.login = Ui_logingateway()
+        self.login.setupUi(self)
         for info in QtSerialPort.QSerialPortInfo.availablePorts():
-            login.comport.addItem(info.portName())
-        login.refresh.clicked.connect(self.refresh)
-        login.open.clicked.connect(self.open)
+            self.login.comport.addItem(info.portName())
+        self.login.refresh.clicked.connect(self.refresh)
+        self.login.open.clicked.connect(self.open)
 
     def refresh(self):
-        refresh = Ui_logingateway()
-        refresh.setupUi(self)
+        self.fresh = Ui_logingateway()
+        self.fresh.setupUi(self)
         for info in QtSerialPort.QSerialPortInfo.availablePorts():
-            refresh.comport.addItem(info.portName())
-        refresh.refresh.clicked.connect(self.refresh)
-        refresh.open.clicked.connect(self.open)
+            self.fresh.comport.addItem(info.portName())
+        self.fresh.refresh.clicked.connect(self.refresh)
+        self.fresh.open.clicked.connect(self.open)
 
     def open(self):
-        gateway = Ui_gateway()
-        gateway.setupUi(self)
-        gateway.gatewaysetting.clicked.connect(self.gateway_setting)
-        gateway.devicesetting.clicked.connect(self.device_setting)
-        gateway.networksetting.clicked.connect(self.network_setting)
-        gateway.telemetrycontrol.clicked.connect(self.telemetry_control)
-        gateway.testtool.clicked.connect(self.test_tool)
+        self.gateway = Ui_gateway()
+        self.serial = Serial()
+        if self.serial:
+            self.gateway.setupUi(self)
+            self.gateway_setting()
+        else:
+            print("NOT OPEN")
 
     def gateway_setting(self):
-        gateway = Ui_gateway()
-        gateway.setupUi(self)
-        gateway.gatewaysetting.clicked.connect(self.gateway_setting)
-        gateway.devicesetting.clicked.connect(self.device_setting)
-        gateway.networksetting.clicked.connect(self.network_setting)
-        gateway.telemetrycontrol.clicked.connect(self.telemetry_control)
-        gateway.testtool.clicked.connect(self.test_tool)
+        self.gateway.gatewaysetting.clicked.connect(self.gateway_setting)
+        self.gateway.devicesetting.clicked.connect(self.device_setting)
+        self.gateway.networksetting.clicked.connect(self.network_setting)
+        self.gateway.telemetrycontrol.clicked.connect(self.telemetry_control)
+        self.gateway.updateport.clicked.connect(self.update_rs485)
+        self.gateway.updatemqtt.clicked.connect(self.update_mqtt)
+        self.gateway.updatetimeout.clicked.connect(self.update_timeout)
+        self.gateway.updateapikey.clicked.connect(self.update_apikey)
+    def update_rs485(self):
+        baudrate = self.gateway.baudrate.currentData()
+        if self.gateway.databit.currentData() == 8:
+            databit = 0
+        if self.gateway.stopbit.currentData() == 1:
+            stopbit = 0
+        if self.gateway.parity.currentText() == "NONE":
+            parity = 0
+        # str = self.gateway.port.currentText()+' '+ self.gateway.baudrate.currentText()+' '+ self.gateway.databit.currentText()+' '+ self.gateway.stopbit.currentText()+' '+ self.gateway.parity.currentText()
+        string = str(baudrate)+' '+str(databit)+' '+str(stopbit)+' '+str(parity)
+        self.serial.send(string)
+    def update_mqtt(self):
+        str = self.gateway.broker.text()+' '+ self.gateway.username.text()+' '+ self.gateway.password.text()+' '+ self.gateway.mqttport.text()
+        self.serial.send(str)
+
+    def update_timeout(self):
+        self.serial.send(self.gateway.timeout.currentText())
+
+    def update_apikey(self):
+        print("SEND READY")
+        self.serial.send(self.gateway.apikey.text())
 
     def device_setting(self):
-        device = Ui_device()
-        device.setupUi(self)
-        device.gatewaysetting.clicked.connect(self.gateway_setting)
-        device.devicesetting.clicked.connect(self.device_setting)
-        device.networksetting.clicked.connect(self.network_setting)
-        device.telemetrycontrol.clicked.connect(self.telemetry_control)
-        device.testtool.clicked.connect(self.test_tool)
+        self.device = Ui_device()
+        self.device.setupUi(self)
+        self.device.gatewaysetting.clicked.connect(self.gateway_setting)
+        self.device.devicesetting.clicked.connect(self.device_setting)
+        self.device.networksetting.clicked.connect(self.network_setting)
+        self.device.telemetrycontrol.clicked.connect(self.telemetry_control)
+        self.device.testtool.clicked.connect(self.test_tool)
+        self.device.add.clicked.connect(self.addDevice)
 
     def network_setting(self):
-        network = Ui_network()
-        network.setupUi(self)
-        network.gatewaysetting.clicked.connect(self.gateway_setting)
-        network.devicesetting.clicked.connect(self.device_setting)
-        network.networksetting.clicked.connect(self.network_setting)
-        network.telemetrycontrol.clicked.connect(self.telemetry_control)
-        network.testtool.clicked.connect(self.test_tool)
+        self.network = Ui_network()
+        self.network.setupUi(self)
+        self.network.gatewaysetting.clicked.connect(self.gateway_setting)
+        self.network.devicesetting.clicked.connect(self.device_setting)
+        self.network.networksetting.clicked.connect(self.network_setting)
+        self.network.telemetrycontrol.clicked.connect(self.telemetry_control)
+        self.network.testtool.clicked.connect(self.test_tool)
 
     def telemetry_control(self):
-        control = Ui_telemetry()
-        control.setupUi(self)
-        control.gatewaysetting.clicked.connect(self.gateway_setting)
-        control.devicesetting.clicked.connect(self.device_setting)
-        control.networksetting.clicked.connect(self.network_setting)
-        control.telemetrycontrol.clicked.connect(self.telemetry_control)
-        control.testtool.clicked.connect(self.test_tool)
+        self.control = Ui_telemetry()
+        self.control.setupUi(self)
+        self.control.gatewaysetting.clicked.connect(self.gateway_setting)
+        self.control.devicesetting.clicked.connect(self.device_setting)
+        self.control.networksetting.clicked.connect(self.network_setting)
+        self.control.telemetrycontrol.clicked.connect(self.telemetry_control)
+        self.control.testtool.clicked.connect(self.test_tool)
 
     def test_tool(self):
-        test = Ui_toolLogin()
-        test.setupUi(self)
-        test.gatewaysetting.clicked.connect(self.gateway_setting)
-        test.devicesetting.clicked.connect(self.device_setting)
-        test.networksetting.clicked.connect(self.network_setting)
-        test.telemetrycontrol.clicked.connect(self.telemetry_control)
-        test.testtool.clicked.connect(self.test_tool)
+        self.test = Ui_toolLogin()
+        self.test.setupUi(self)
+        self.test.gatewaysetting.clicked.connect(self.gateway_setting)
+        self.test.devicesetting.clicked.connect(self.device_setting)
+        self.test.networksetting.clicked.connect(self.network_setting)
+        self.test.telemetrycontrol.clicked.connect(self.telemetry_control)
+        self.test.testtool.clicked.connect(self.test_tool)
+
+    def addDevice(self):
+        self.dialog = Dialog()
+        if self.dialog.exec_():
+            self.type = dialog.save()
+            print(self.type)
+
 
 
 if __name__ == '__main__':

@@ -645,7 +645,7 @@
            <string>NULL</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="port_2">
+         <widget class="QLineEdit" name="mqttport">
           <property name="geometry">
            <rect>
             <x>110</x>
@@ -663,7 +663,7 @@
            <string>1883</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="username_2">
+         <widget class="QLineEdit" name="id">
           <property name="geometry">
            <rect>
             <x>110</x>
@@ -845,7 +845,7 @@
            <string>APIKEY</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="apikey_2">
+         <widget class="QLineEdit" name="apikey">
           <property name="geometry">
            <rect>
             <x>100</x>

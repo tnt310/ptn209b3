@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>638</width>
-    <height>758</height>
+    <height>713</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,7 @@
          <x>0</x>
          <y>0</y>
          <width>614</width>
-         <height>683</height>
+         <height>689</height>
         </rect>
        </property>
        <widget class="QFrame" name="seial_workspace">
@@ -540,17 +540,6 @@
      </widget>
     </item>
    </layout>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>638</width>
-     <height>26</height>
-    </rect>
-   </property>
   </widget>
  </widget>
  <resources/>
