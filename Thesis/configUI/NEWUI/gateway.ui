@@ -232,12 +232,12 @@
           </property>
           <item>
            <property name="text">
-            <string>PORT 1</string>
+            <string>PORT 0</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>PORT 2</string>
+            <string>PORT 1</string>
            </property>
           </item>
          </widget>

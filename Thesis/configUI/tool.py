@@ -7,7 +7,8 @@ from NEWUI.network import Ui_network
 from NEWUI.telemetry import Ui_telemetry
 from NEWUI.testtool import Ui_toolLogin
 from NEWUI.dialog import Ui_slavesetting
-from source import Dialog, Serial
+from NEWUI.warning import Ui_warning
+from source import Dialog,MqttClient, Serial, WarningDialog
 class Gateway(QMainWindow):
     def __init__(self,parent=None):
         super(Gateway, self).__init__(parent)
@@ -27,12 +28,14 @@ class Gateway(QMainWindow):
         self.fresh.open.clicked.connect(self.open)
 
     def open(self):
-        self.gateway = Ui_gateway()
         self.serial = Serial()
-        if self.serial:
+        if self.serial.openport() == True:
+            self.gateway = Ui_gateway()
             self.gateway_setting()
-        else:
-            print("NOT OPEN")
+        elif self.serial.openport() != True:
+            self.warning = WarningDialog()
+            self.warning.exec_()
+            
 
     def gateway_setting(self):
         self.gateway.setupUi(self)
@@ -47,26 +50,34 @@ class Gateway(QMainWindow):
         self.gateway.updateapikey.clicked.connect(self.update_apikey)
 
     def update_rs485(self):
-        global baud, databit, stopbit, parity
-        baud = self.gateway.baudrate.currentData()
-        # if self.gateway.databit.currentData() == 8:
-        #     databit = '0'
-        # if self.gateway.stopbit.currentData() == 1:
-        #     stopbit = '0'
-        # if self.gateway.parity.currentText() == "NONE":
-        #     parity = '0'
-        print(self.gateway.databit.currentData())
-        # string = str(baud)+ databit + stopbit+ parity
-        # self.serial.send(string)
+        global portname,baud, databit, stopbit, parity
+        baud = int(self.gateway.baudrate.currentText())/1200
+        if self.gateway.port.currentText() == 'PORT 0':
+            portname = 'port0'
+        elif self.gateway.port.currentText() == 'PORT 1':
+            portname = 'port1'
+        if int(self.gateway.databit.currentText()) == 8:
+            databit = '0'
+        elif int(self.gateway.databit.currentText()) == 7:
+            databit = '1'
+        if int(self.gateway.stopbit.currentText()) == 1:
+            stopbit = '0'
+        elif int(self.gateway.stopbit.currentText()) == 2:
+            stopbit = '1'
+        if self.gateway.parity.currentText() == "NONE":
+            parity = '0'
+        port = portname+' '+str(int(baud))+' '+databit+' '+stopbit+' '+parity
+        print(port)
+        self.serial.send(port)
     def update_mqtt(self):
-        str = 'configmqtt'+' '+self.gateway.broker.text()+' '+ self.gateway.username.text()+' '+ self.gateway.password.text()+' '+ self.gateway.mqttport.text()+'\r'
+        str = 'mqtt'+' '+self.gateway.broker.text()+' '+ self.gateway.username.text()+' '+ self.gateway.password.text()+' '+ self.gateway.mqttport.text()+'\r'
         self.serial.send(str)
     def update_timeout(self):
         temp = self.gateway.timeout.currentText().split()
-        str = 'configtimeout'+' '+ temp[0]+'\r'
+        str = 'timeout'+' '+ temp[0]+'\r'
         self.serial.send(str)
     def update_apikey(self):
-        str = 'configapikey'+' '+ self.gateway.apikey.text()+'\r'
+        str = 'apikey'+' '+ self.gateway.apikey.text()+'\r'
         self.serial.send(str)
 
     def device_setting(self):
@@ -95,7 +106,7 @@ class Gateway(QMainWindow):
         self.network.testtool.clicked.connect(self.test_tool)
         self.network.update.clicked.connect(self.update_network)
     def update_network(self):
-        str = 'confignetwork'+' '+self.network.ip.text()+' '+ self.network.netmask.text()+' '+ self.network.gateway.text()+'\r'
+        str = 'network'+' '+self.network.ip.text()+' '+ self.network.netmask.text()+' '+ self.network.gateway.text()+'\r'
         self.serial.send(str)
 
     def telemetry_control(self):
@@ -113,10 +124,10 @@ class Gateway(QMainWindow):
         str = 'sendprovision\r'
         self.serial.send(str)
     def set_telemetry(self):
-        str = 'configtelemetry 1\r'
+        str = 'telemetry 1\r'
         self.serial.send(str)
     def off_telemetry(self):
-        str = 'configtelemetry 0\r'
+        str = 'telemetry 0\r'
         self.serial.send(str)
 
     def test_tool(self):
@@ -127,7 +138,14 @@ class Gateway(QMainWindow):
         self.test.networksetting.clicked.connect(self.network_setting)
         self.test.telemetrycontrol.clicked.connect(self.telemetry_control)
         self.test.testtool.clicked.connect(self.test_tool)
-
+        self.test.connect.clicked.connect(self.toolLogin)
+    def toolLogin(self):
+        self.broker = self.test.broker.text()
+        self.username = self.test.username.text()
+        self.password = self.test.password.text()
+        self.port = int(self.test.port.text())
+        self.client = MqttClient()
+        self.client.connect_server(self.broker,self.username,self.password,self.port)
 
 
 
