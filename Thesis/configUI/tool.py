@@ -29,13 +29,12 @@ class Gateway(QMainWindow):
 
     def open(self):
         self.serial = Serial()
-        if self.serial.openport() == True:
+        if self.serial.openport('COM5',115200) == True:
             self.gateway = Ui_gateway()
             self.gateway_setting()
-        elif self.serial.openport() != True:
+        elif self.serial.openport('COM5',115200) != True:
             self.warning = WarningDialog()
             self.warning.exec_()
-            
 
     def gateway_setting(self):
         self.gateway.setupUi(self)
@@ -66,11 +65,11 @@ class Gateway(QMainWindow):
             stopbit = '1'
         if self.gateway.parity.currentText() == "NONE":
             parity = '0'
-        port = portname+' '+str(int(baud))+' '+databit+' '+stopbit+' '+parity
+        port = portname+' '+str(int(baud))+' '+databit+' '+stopbit+' '+parity+'\r'
         print(port)
         self.serial.send(port)
     def update_mqtt(self):
-        str = 'mqtt'+' '+self.gateway.broker.text()+' '+ self.gateway.username.text()+' '+ self.gateway.password.text()+' '+ self.gateway.mqttport.text()+'\r'
+        str = 'mqtt'+' '+self.gateway.broker.text()+' '+ self.gateway.id.text()+' '+ self.gateway.username.text()+' '+ self.gateway.password.text()+' '+ self.gateway.mqttport.text()+'\r'
         self.serial.send(str)
     def update_timeout(self):
         temp = self.gateway.timeout.currentText().split()
