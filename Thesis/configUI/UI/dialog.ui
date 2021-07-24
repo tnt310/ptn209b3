@@ -424,7 +424,7 @@
      </item>
      <item>
       <property name="text">
-       <string>WEATHER STATION</string>
+       <string>WEATHER_STATION</string>
       </property>
      </item>
     </widget>

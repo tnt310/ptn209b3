@@ -35,7 +35,7 @@ class Dialog(QtWidgets.QDialog):
         self.ui.setupUi(self)
         self.ui.save.clicked.connect(self.save)
     def save(self):
-        return self.ui.port.currentText(),self.ui.slaveAddress.text(),self.ui.function.currentText().split(),\
+        return self.ui.port.currentText().split(),self.ui.slaveAddress.text(),self.ui.function.currentText().split(),\
             self.ui.devicechannel.text(),self.ui.datatype.currentText(),\
             self.ui.devicetype.currentText(),self.ui.devicename.text(),self.ui.channeltitle.text(),\
             self.ui.valuetype.currentText(),self.ui.scale.currentText()

@@ -230,7 +230,7 @@ class Ui_slavesetting(object):
         self.datatype.setItemText(4, _translate("slavesetting", "FLOAT32"))
         self.devicetype.setItemText(0, _translate("slavesetting", "INVERETER"))
         self.devicetype.setItemText(1, _translate("slavesetting", "METER"))
-        self.devicetype.setItemText(2, _translate("slavesetting", "WEATHER STATION"))
+        self.devicetype.setItemText(2, _translate("slavesetting", "WEATHER_STATION"))
         self.valuetype.setItemText(0, _translate("slavesetting", "NUMBER"))
         self.valuetype.setItemText(1, _translate("slavesetting", "BOOLEAN"))
         self.valuetype.setItemText(2, _translate("slavesetting", "STRING"))

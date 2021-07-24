@@ -105,9 +105,17 @@ class Gateway(QMainWindow):
         dialog = Dialog()
         dialog.exec_()
         port,slave,func,channel,datatype,devicetype,devicename,title,valuetype,scale = dialog.save()
-        print(port,slave,func[0],channel,datatype,devicetype,devicename,title,valuetype,scale)
+        print(port[1],slave,int(func[0],16),channel,datatype,devicetype,devicename,title,valuetype,scale)
         # self.database.insert(port,slave,func[0],channel,datatype,devicetype,devicename,title,valuetype,scale)
         # self.loadData()
+        function = str(int(func[0],16))
+        self.updateDevice(port[1],slave,function,channel,datatype,devicetype,devicename,title,valuetype,scale)
+    def updateDevice(self,port,slave,func,channel,datatype,devicetype,devicename,title,valuetype,scale):
+        device = 'device'+' '+ port+' '+ slave+' '+ func+' '+ channel\
+                  +' '+ devicetype+' '+ devicename+' '+ title+' '+ valuetype\
+                  +' '+ datatype+' '+ scale+'\r'
+        print(device)
+        self.serial.send(device)
     def deleteChannel(self):
         row = self.device.table.currentIndex().row()
         print(row+1)
