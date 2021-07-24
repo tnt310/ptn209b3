@@ -1,33 +1,33 @@
-#include <stdio.h>
-#include <math.h>
-
-float ConvertNumberToFloat(unsigned long number, int isDoublePrecision)
-{
-    int mantissaShift = isDoublePrecision ? 52 : 23;
-    unsigned long exponentMask = isDoublePrecision ? 0x7FF0000000000000 : 0x7f800000;
-    int bias = isDoublePrecision ? 1023 : 127;
-    int signShift = isDoublePrecision ? 63 : 31;
-
-    int sign = (number >> signShift) & 0x01;
-    int exponent = ((number & exponentMask) >> mantissaShift) - bias;
-
-    int power = -1;
-    float total = 0.0;
-    for ( int i = 0; i < mantissaShift; i++ )
-    {
-        int calc = (number >> (mantissaShift-i-1)) & 0x01;
-        total += calc * pow(2.0, power);
-        power--;
-    }
-    float value = (sign ? -1 : 1) * pow(2.0, exponent) * (total + 1.0);
-
-    return value;
-}
-
-int main()
-{
-    // Single Precision
-    unsigned int singleValue = 0x40490FDB; // 3.141592...
-    float singlePrecision = (float)ConvertNumberToFloat(singleValue, 0);
-    printf("IEEE754 Single (from 32bit 0x%08X): %.2f\n",singleValue,singlePrecision);
-}
+ // Change a positive integer to a string in C 
+  
+ #include <stdio.h> 
+ #include <stdlib.h>  // for malloc
+ #include <math.h>  // for pow
+  
+ int get_number_of_digits(int n) 
+ { 
+     int i, count; 
+     for (i = 10, count = 0; ; i *= 10, count++) { 
+         if ((int)n / i == 0) { 
+             break; 
+         } 
+     } 
+     return count + 1; 
+ } 
+  
+ int main() 
+ { 
+     int number, no_of_digits, prev = 0, i, j; 
+     char *number_string; 
+  
+     scanf("%d", &number); 
+     no_of_digits = get_number_of_digits(number); 
+  
+     number_string = (char *)malloc(sizeof(char) * (no_of_digits + 1)); // +1 for NULL 
+     for (i = 0, j = pow(10, no_of_digits - 1); i < no_of_digits; i++, j /= 10) { 
+         number_string[i] = (number / j - (prev * 10)) + 48;  // int to ascii
+         prev             = number / j; 
+     } 
+     number_string[i] = '\0'; 
+     printf("Int to String: %s\n", number_string); 
+ }

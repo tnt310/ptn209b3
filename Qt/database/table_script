@@ -1,0 +1,14 @@
+create table DEVICE (
+   DEPT_NO integer not null,
+   DEPT_SLAVE_ADDRESS varchar(255) not null,
+   DEPT_FUNCTION integer not null,
+   DEPT_CHANNEL integer not null,
+   DEPT_DATATYPE varchar(255) not null,
+   DEPT_DEVICETYPE varchar(255) not null,
+   DEPT_DEVICENAME varchar(255) not null,
+   DEPT_CHANNELTITLE varchar(255) not null,
+   DEPT_VALUETYPE varchar(20) not null,
+   DEPT_SCALE integer not null,
+   primary key (DEPT_ID),
+   unique (DEPT_NO)
+);

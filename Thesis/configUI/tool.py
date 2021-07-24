@@ -1,14 +1,17 @@
+import sqlite3
 from PyQt5 import QtCore, QtWidgets, QtSerialPort
+from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QApplication,QMainWindow
-from NEWUI.login import Ui_logingateway
-from NEWUI.gateway import Ui_gateway
-from NEWUI.device import Ui_device
-from NEWUI.network import Ui_network
-from NEWUI.telemetry import Ui_telemetry
-from NEWUI.testtool import Ui_toolLogin
-from NEWUI.dialog import Ui_slavesetting
-from NEWUI.warning import Ui_warning
+from ui.login import Ui_logingateway
+from ui.gateway import Ui_gateway
+from ui.device import Ui_device
+from ui.network import Ui_network
+from ui.telemetry import Ui_telemetry
+from ui.testtool import Ui_toolLogin
+from ui.dialog import Ui_slavesetting
+from ui.warning import Ui_warning
 from source import Dialog,MqttClient, Serial, WarningDialog
+from database.backend import Database
 class Gateway(QMainWindow):
     def __init__(self,parent=None):
         super(Gateway, self).__init__(parent)
@@ -20,21 +23,22 @@ class Gateway(QMainWindow):
         self.login.open.clicked.connect(self.open)
 
     def refresh(self):
-        self.fresh = Ui_logingateway()
-        self.fresh.setupUi(self)
+        self.login.setupUi(self)
         for info in QtSerialPort.QSerialPortInfo.availablePorts():
-            self.fresh.comport.addItem(info.portName())
-        self.fresh.refresh.clicked.connect(self.refresh)
-        self.fresh.open.clicked.connect(self.open)
+            self.login.comport.addItem(info.portName())
+        self.login.refresh.clicked.connect(self.refresh)
+        self.login.open.clicked.connect(self.open)
 
     def open(self):
         self.serial = Serial()
-        if self.serial.openport('COM5',115200) == True:
+        comport = self.login.comport.currentText()
+        baud = int(self.login.baudrate.currentText())
+        if self.serial.openport(comport, baud) == True:
             self.gateway = Ui_gateway()
             self.gateway_setting()
-        elif self.serial.openport('COM5',115200) != True:
+        elif self.serial.openport(comport, baud) != True:
             self.warning = WarningDialog()
-            self.warning.exec_()
+            self.warning.open()
 
     def gateway_setting(self):
         self.gateway.setupUi(self)
@@ -47,6 +51,7 @@ class Gateway(QMainWindow):
         self.gateway.updatemqtt.clicked.connect(self.update_mqtt)
         self.gateway.updatetimeout.clicked.connect(self.update_timeout)
         self.gateway.updateapikey.clicked.connect(self.update_apikey)
+        self.gateway.resetgateway.clicked.connect(self.reset_gateway)
 
     def update_rs485(self):
         global portname,baud, databit, stopbit, parity
@@ -77,23 +82,53 @@ class Gateway(QMainWindow):
         self.serial.send(str)
     def update_apikey(self):
         str = 'apikey'+' '+ self.gateway.apikey.text()+'\r'
+        print(str)
         self.serial.send(str)
-
+    def reset_gateway(self):
+        str = 'save\r'
+        self.serial.send(str)
     def device_setting(self):
         self.device = Ui_device()
         self.device.setupUi(self)
+        self.database = Database("device.db")
+        self.loadData()
         self.device.gatewaysetting.clicked.connect(self.gateway_setting)
         self.device.devicesetting.clicked.connect(self.device_setting)
         self.device.networksetting.clicked.connect(self.network_setting)
         self.device.telemetrycontrol.clicked.connect(self.telemetry_control)
         self.device.testtool.clicked.connect(self.test_tool)
         self.device.add.clicked.connect(self.addDevice)
+        self.device.deletechannel.clicked.connect(self.deleteChannel)
+        self.device.view.clicked.connect(self.loadData)
 
     def addDevice(self):
-        self.dialog = Dialog()
-        if self.dialog.exec_():
-            self.type = dialog.save()
-            print(self.type)
+        dialog = Dialog()
+        dialog.exec_()
+        port,slave,func,channel,datatype,devicetype,devicename,title,valuetype,scale = dialog.save()
+        print(port,slave,func[0],channel,datatype,devicetype,devicename,title,valuetype,scale)
+        # self.database.insert(port,slave,func[0],channel,datatype,devicetype,devicename,title,valuetype,scale)
+        # self.loadData()
+    def deleteChannel(self):
+        row = self.device.table.currentIndex().row()
+        print(row+1)
+        self.device.table.removeRow(row)
+        self.database.delete(row+1)
+    def loadData(self):
+        connection = sqlite3.connect('device.db')
+        cur = connection.cursor()
+        result   = cur.execute('SELECT * FROM device')
+        self.device.table.setRowCount(0)
+        for row_number, row_data in enumerate (result):
+            self.device.table.insertRow(row_number)
+            for colum_number, data in enumerate(row_data):
+                self.device.table.setItem(row_number,colum_number,QtWidgets.QTableWidgetItem(str(data)))
+        connection.close()
+    # def addDevice(self):
+    #     dialog = Dialog()
+    #     dialog.exec_()
+    #     if dialog.is_valid():
+    #         slave,func,channel,datatype,devicetype,devicename,title,valuetype,scale = dialog.save()
+    #         print(slave,func[0],channel,datatype,devicetype,devicename,title,valuetype,scale)
 
     def network_setting(self):
         self.network = Ui_network()
@@ -106,6 +141,7 @@ class Gateway(QMainWindow):
         self.network.update.clicked.connect(self.update_network)
     def update_network(self):
         str = 'network'+' '+self.network.ip.text()+' '+ self.network.netmask.text()+' '+ self.network.gateway.text()+'\r'
+        print(str)
         self.serial.send(str)
 
     def telemetry_control(self):
