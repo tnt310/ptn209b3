@@ -137,7 +137,6 @@ class Gateway(QMainWindow):
     #     if dialog.is_valid():
     #         slave,func,channel,datatype,devicetype,devicename,title,valuetype,scale = dialog.save()
     #         print(slave,func[0],channel,datatype,devicetype,devicename,title,valuetype,scale)
-
     def network_setting(self):
         self.network = Ui_network()
         self.network.setupUi(self)
