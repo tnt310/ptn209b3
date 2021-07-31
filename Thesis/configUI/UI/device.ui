@@ -276,16 +276,6 @@
          </property>
          <column>
           <property name="text">
-           <string>No</string>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-         </column>
-         <column>
-          <property name="text">
            <string>Port</string>
           </property>
          </column>
@@ -312,16 +302,6 @@
          <column>
           <property name="text">
            <string>Device Channel</string>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Data Type</string>
           </property>
           <property name="font">
            <font>
@@ -361,7 +341,7 @@
          </column>
          <column>
           <property name="text">
-           <string>Scale</string>
+           <string>Channel Type</string>
           </property>
           <property name="font">
            <font>
@@ -371,7 +351,17 @@
          </column>
          <column>
           <property name="text">
-           <string>Device Status</string>
+           <string>Value Type</string>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Scale</string>
           </property>
           <property name="font">
            <font>

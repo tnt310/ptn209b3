@@ -33,14 +33,20 @@ class Dialog(QtWidgets.QDialog):
         super(Dialog, self).__init__(parent)
         self.ui = Ui_slavesetting()
         self.ui.setupUi(self)
-        self.ui.save.clicked.connect(self.save)
+        self.ui.save.clicked.connect(self.check_button)
+        # self.ui.save.clicked.connect(self.save)
+
+    def check_button(self):
+        if self.ui.save.isChecked:
+            print('DA NHAN NUT')
+            # self.ui.save.setEnabled(False)
+
     def save(self):
-        return self.ui.port.currentText().split(),self.ui.slaveAddress.text(),self.ui.function.currentText().split(),\
+        return self.ui.port.currentText(),self.ui.slaveAddress.text(),self.ui.function.currentText().split(),\
             self.ui.devicechannel.text(),self.ui.datatype.currentText(),\
             self.ui.devicetype.currentText(),self.ui.devicename.text(),self.ui.channeltitle.text(),\
             self.ui.valuetype.currentText(),self.ui.scale.currentText()
-    def is_valid(self):
-        return True
+
 #--------------------------------------------------------------------------------------#
 class WarningDialog(QtWidgets.QDialog):
     def __init__(self, parent=None):

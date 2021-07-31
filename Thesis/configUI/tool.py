@@ -90,8 +90,6 @@ class Gateway(QMainWindow):
     def device_setting(self):
         self.device = Ui_device()
         self.device.setupUi(self)
-        self.database = Database("device.db")
-        self.loadData()
         self.device.gatewaysetting.clicked.connect(self.gateway_setting)
         self.device.devicesetting.clicked.connect(self.device_setting)
         self.device.networksetting.clicked.connect(self.network_setting)
@@ -100,16 +98,18 @@ class Gateway(QMainWindow):
         self.device.add.clicked.connect(self.addDevice)
         self.device.deletechannel.clicked.connect(self.deleteChannel)
         self.device.view.clicked.connect(self.loadData)
-
+        # self.database.showDatabase()
+        self.database = Database("device.db")
+        self.loadData()
     def addDevice(self):
         dialog = Dialog()
         dialog.exec_()
-        port,slave,func,channel,datatype,devicetype,devicename,title,valuetype,scale = dialog.save()
-        print(port[1],slave,int(func[0],16),channel,datatype,devicetype,devicename,title,valuetype,scale)
-        # self.database.insert(port,slave,func[0],channel,datatype,devicetype,devicename,title,valuetype,scale)
-        # self.loadData()
-        function = str(int(func[0],16))
-        self.updateDevice(port[1],slave,function,channel,datatype,devicetype,devicename,title,valuetype,scale)
+        if dialog.check_button() == True:
+            print('DIEU KIEN TRUE')
+            # port,slave,func,channel,datatype,devicetype,devicename,channeltitle,valuetype,scale = dialog.save()
+            # self.database.insert(port,slave,func[0],channel,datatype,devicetype,devicename,channeltitle,valuetype,scale)
+            # self.loadData()
+
     def updateDevice(self,port,slave,func,channel,datatype,devicetype,devicename,title,valuetype,scale):
         device = 'device'+' '+ port+' '+ slave+' '+ func+' '+ channel\
                   +' '+ devicetype+' '+ devicename+' '+ title+' '+ valuetype\
@@ -118,9 +118,9 @@ class Gateway(QMainWindow):
         self.serial.send(device)
     def deleteChannel(self):
         row = self.device.table.currentIndex().row()
-        print(row+1)
+        print(row)
         self.device.table.removeRow(row)
-        self.database.delete(row+1)
+        self.database.delete(row)
     def loadData(self):
         connection = sqlite3.connect('device.db')
         cur = connection.cursor()
@@ -130,13 +130,7 @@ class Gateway(QMainWindow):
             self.device.table.insertRow(row_number)
             for colum_number, data in enumerate(row_data):
                 self.device.table.setItem(row_number,colum_number,QtWidgets.QTableWidgetItem(str(data)))
-        connection.close()
-    # def addDevice(self):
-    #     dialog = Dialog()
-    #     dialog.exec_()
-    #     if dialog.is_valid():
-    #         slave,func,channel,datatype,devicetype,devicename,title,valuetype,scale = dialog.save()
-    #         print(slave,func[0],channel,datatype,devicetype,devicename,title,valuetype,scale)
+
     def network_setting(self):
         self.network = Ui_network()
         self.network.setupUi(self)
@@ -148,7 +142,6 @@ class Gateway(QMainWindow):
         self.network.update.clicked.connect(self.update_network)
     def update_network(self):
         str = 'network'+' '+self.network.ip.text()+' '+ self.network.netmask.text()+' '+ self.network.gateway.text()+'\r'
-        print(str)
         self.serial.send(str)
 
     def telemetry_control(self):
@@ -163,14 +156,23 @@ class Gateway(QMainWindow):
         self.control.telemetryon.clicked.connect(self.set_telemetry)
         self.control.telemetryoff.clicked.connect(self.off_telemetry)
     def send_provision(self):
-        str = 'sendprovision\r'
+        str = 'provision\r'
         self.serial.send(str)
+        self.control.provision.setStyleSheet("background-color:rgb(255, 223, 183)")
+        self.control.telemetryon.setStyleSheet("background-color:rgb(255, 255, 255)")
+        self.control.telemetryoff.setStyleSheet("background-color:rgb(255, 255, 255)")
     def set_telemetry(self):
         str = 'telemetry 1\r'
         self.serial.send(str)
+        self.control.provision.setStyleSheet("background-color:rgb(255, 255, 255)")
+        self.control.telemetryon.setStyleSheet("background-color:rgb(255, 223, 183)")
+        self.control.telemetryoff.setStyleSheet("background-color:rgb(255, 255, 255)")
     def off_telemetry(self):
         str = 'telemetry 0\r'
         self.serial.send(str)
+        self.control.provision.setStyleSheet("background-color:rgb(255, 255, 255)")
+        self.control.telemetryon.setStyleSheet("background-color:rgb(255, 255, 255)")
+        self.control.telemetryoff.setStyleSheet("background-color:rgb(255, 223, 183)")
 
     def test_tool(self):
         self.test = Ui_toolLogin()

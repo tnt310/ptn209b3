@@ -1,554 +1,108 @@
 {
-  "entity": "60f197c7bb3058a471acd852",
-  "data": [
-      {
-          "device_id": "01",
-          "device_name": "inverter01",
-          "device_kind": "inverter",
-          "device_channels": [
-              {
-      "channel_id": "01",
-      "channel_name": "Inverter_Operation_State",
-      "channel_type": "string"
-  },
-  {
-      "channel_id": "02",
-      "channel_name": "Inverter_Production",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "03",
-      "channel_name": "Inverter_Active_Power",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "04",
-      "channel_name": "Inverter_Reactive_Power",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "05",
-      "channel_name": "Inverter_Input_Power",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "06",
-      "channel_name": "Inverter_Efficiency",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "07",
-      "channel_name": "Inverter_Main_Frequency",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "08",
-      "channel_name": "Inverter_Internal_Temp",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "09",
-      "channel_name": "Inverter_Power_Factor",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "10",
-      "channel_name": "Inverter_R_Phase_Current",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "11",
-      "channel_name": "Inverter_S_Phase_Current",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "12",
-      "channel_name": "Inverter_T_Phase_Current",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "13",
-      "channel_name": "Inverter_R_Phase_Voltage",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "14",
-      "channel_name": "Inverter_S_Phase_Voltage",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "15",
-      "channel_name": "Inverter_T_Phase_Voltage",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "16",
-      "channel_name": "Inverter_Line_Voltage_L1L2",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "17",
-      "channel_name": "Inverter_Line_Voltage_L2L3",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "18",
-      "channel_name": "Inverter_Line_Voltage_L3L1",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "19",
-      "channel_name": "Inverter_String_Current1",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "20",
-      "channel_name": "Inverter_String_Current2",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "21",
-      "channel_name": "Inverter_String_Current3",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "22",
-      "channel_name": "Inverter_String_Current4",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "23",
-      "channel_name": "Inverter_String_Current5",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "24",
-      "channel_name": "Inverter_String_Current6",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "25",
-      "channel_name": "Inverter_String_Current7",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "26",
-      "channel_name": "Inverter_String_Current8",
-      "channel_type": "number"
+  "timestamp": "2021-07-30T11:23:24.000Z",
+  "data": {
+    "9": {
+      "32287": 256,
+      "32306": 2716.59,
+      "32290": 143.265,
+      "32292": 140.231,
+      "32296": 256.321,
+      "32285": 0.0,
+      "32283": 0.0,
+      "32286": 45.6,
+      "32284": 0.0,
+      "32280": 2.0,
+      "32281": 1.9,
+      "32282": 1.8,
+      "32277": 219.3,
+      "32278": 218.6,
+      "32279": 219.5,
+      "32274": 379.9,
+      "32275": 380.1,
+      "32276": 378.9,
+      "32263": 21.1,
+      "32265": 21.2,
+      "32267": 21.3,
+      "32269": 22.3,
+      "32271": 22.4,
+      "32273": 22.5,
+      "32315": 21.3,
+      "32317": 23.2
+    },
+    "11": {
+      "32287": 256,
+      "32306": 2716.59,
+      "32290": 143.265,
+      "32292": 140.231,
+      "32296": 256.321,
+      "32285": 0.0,
+      "32283": 0.0,
+      "32286": 45.6,
+      "32284": 0.0,
+      "32280": 2.0,
+      "32281": 1.9,
+      "32282": 1.8,
+      "32277": 219.3,
+      "32278": 218.6,
+      "32279": 219.5,
+      "32274": 379.9,
+      "32275": 380.1,
+      "32276": 378.9,
+      "32263": 21.1,
+      "32265": 21.2,
+      "32267": 21.3,
+      "32269": 22.3,
+      "32271": 22.4,
+      "32273": 22.5,
+      "32315": 21.3,
+      "32317": 23.2
+    },
+    "12": {
+      "32287": 256,
+      "32306": 2716.59,
+      "32290": 143.265,
+      "32292": 140.231,
+      "32296": 256.321,
+      "32285": 1.18,
+      "32283": 60.0,
+      "32286": 45.6,
+      "32284": 0.0,
+      "32280": 2.0,
+      "32281": 1.9,
+      "32282": 1.8,
+      "32277": 219.3,
+      "32278": 218.6,
+      "32279": 219.5,
+      "32274": 379.9,
+      "32275": 380.1,
+      "32276": 378.9,
+      "32263": 21.1,
+      "32265": 21.2,
+      "32267": 21.3,
+      "32269": 22.3,
+      "32271": 22.4,
+      "32273": 22.5,
+      "32315": 21.3,
+      "32317": 23.2
+    },
+    "8": {
+      "88": 1370,
+      "86": 1467,
+      "85": 100,
+      "72": 29.3,
+      "92": 45.2,
+      "75": 35,
+      "76": 68,
+      "73": 89,
+      "77": 20
+    },
+    "10": {
+      "2700": 3241.36,
+      "2702": 2365.125,
+      "2708": 2365.213,
+      "2710": 2154.326,
+      "2700": 3241.36,
+      "3060": 145.231
+    }
   }
-          ]
-      },
-      {
-          "device_id": "02",
-          "device_name": "inverter02",
-          "device_kind": "inverter",
-          "device_channels": [
-              {
-      "channel_id": "01",
-      "channel_name": "Inverter_Operation_State",
-      "channel_type": "string"
-  },
-  {
-      "channel_id": "02",
-      "channel_name": "Inverter_Production",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "03",
-      "channel_name": "Inverter_Active_Power",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "04",
-      "channel_name": "Inverter_Reactive_Power",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "05",
-      "channel_name": "Inverter_Input_Power",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "06",
-      "channel_name": "Inverter_Efficiency",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "07",
-      "channel_name": "Inverter_Main_Frequency",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "08",
-      "channel_name": "Inverter_Internal_Temp",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "09",
-      "channel_name": "Inverter_Power_Factor",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "10",
-      "channel_name": "Inverter_R_Phase_Current",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "11",
-      "channel_name": "Inverter_S_Phase_Current",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "12",
-      "channel_name": "Inverter_T_Phase_Current",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "13",
-      "channel_name": "Inverter_R_Phase_Voltage",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "14",
-      "channel_name": "Inverter_S_Phase_Voltage",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "15",
-      "channel_name": "Inverter_T_Phase_Voltage",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "16",
-      "channel_name": "Inverter_Line_Voltage_L1L2",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "17",
-      "channel_name": "Inverter_Line_Voltage_L2L3",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "18",
-      "channel_name": "Inverter_Line_Voltage_L3L1",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "19",
-      "channel_name": "Inverter_String_Current1",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "20",
-      "channel_name": "Inverter_String_Current2",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "21",
-      "channel_name": "Inverter_String_Current3",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "22",
-      "channel_name": "Inverter_String_Current4",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "23",
-      "channel_name": "Inverter_String_Current5",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "24",
-      "channel_name": "Inverter_String_Current6",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "25",
-      "channel_name": "Inverter_String_Current7",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "26",
-      "channel_name": "Inverter_String_Current8",
-      "channel_type": "number"
-  }
-          ]
-      },
-      {
-          "device_id": "03",
-          "device_name": "inverter03",
-          "device_kind": "inverter",
-          "device_channels": [
-             {
-      "channel_id": "01",
-      "channel_name": "Inverter_Operation_State",
-      "channel_type": "string"
-  },
-  {
-      "channel_id": "02",
-      "channel_name": "Inverter_Production",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "03",
-      "channel_name": "Inverter_Active_Power",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "04",
-      "channel_name": "Inverter_Reactive_Power",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "05",
-      "channel_name": "Inverter_Input_Power",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "06",
-      "channel_name": "Inverter_Efficiency",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "07",
-      "channel_name": "Inverter_Main_Frequency",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "08",
-      "channel_name": "Inverter_Internal_Temp",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "09",
-      "channel_name": "Inverter_Power_Factor",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "10",
-      "channel_name": "Inverter_R_Phase_Current",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "11",
-      "channel_name": "Inverter_S_Phase_Current",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "12",
-      "channel_name": "Inverter_T_Phase_Current",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "13",
-      "channel_name": "Inverter_R_Phase_Voltage",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "14",
-      "channel_name": "Inverter_S_Phase_Voltage",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "15",
-      "channel_name": "Inverter_T_Phase_Voltage",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "16",
-      "channel_name": "Inverter_Line_Voltage_L1L2",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "17",
-      "channel_name": "Inverter_Line_Voltage_L2L3",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "18",
-      "channel_name": "Inverter_Line_Voltage_L3L1",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "19",
-      "channel_name": "Inverter_String_Current1",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "20",
-      "channel_name": "Inverter_String_Current2",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "21",
-      "channel_name": "Inverter_String_Current3",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "22",
-      "channel_name": "Inverter_String_Current4",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "23",
-      "channel_name": "Inverter_String_Current5",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "24",
-      "channel_name": "Inverter_String_Current6",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "25",
-      "channel_name": "Inverter_String_Current7",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "26",
-      "channel_name": "Inverter_String_Current8",
-      "channel_type": "number"
-  }
-          ]
-      },
-      {
-          "device_id": "04",
-          "device_name": "WeatherStation1",
-          "device_kind": "WeatherStation",
-          "device_channels": [
-              {
-      "channel_id": "01",
-      "channel_name": "Irradiation",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "02",
-      "channel_name": "POA",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "03",
-      "channel_name": "GHI",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "04",
-      "channel_name": "Ambient_Temp",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "05",
-      "channel_name": "Module_Temp",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "06",
-      "channel_name": "Wind_Speed",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "07",
-      "channel_name": "wind_direction",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "08",
-      "channel_name": "Humidity",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "09",
-      "channel_name": "Rainfall",
-      "channel_type": "number"
-  }
-          ]
-      },
-      {
-           "device_id": "05",
-          "device_name": "EnergyMeter1",
-          "device_kind": "EnergyMeter",
-          "device_channels": [
-              {
-      "channel_id": "01",
-      "channel_name": "Active_Generated_Energy",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "02",
-      "channel_name": "Active_Consumed_Energy",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "03",
-      "channel_name": "Reactive_Generated_Energy",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "04",
-      "channel_name": "Reactive_Consumed_Energy",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "05",
-      "channel_name": "Energy_Meter_Production",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "06",
-      "channel_name": "Active_Power",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "07",
-      "channel_name": "Reactive_Power",
-      "channel_type": "number"
-  }
-          ]
-      },
-
-      {
-           "device_id": "06",
-          "device_name": "EnergyMeter2",
-          "device_kind": "EnergyMeter",
-          "device_channels": [
-              {
-      "channel_id": "01",
-      "channel_name": "Active_Generated_Energy",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "02",
-      "channel_name": "Active_Consumed_Energy",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "03",
-      "channel_name": "Reactive_Generated_Energy",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "04",
-      "channel_name": "Reactive_Consumed_Energy",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "05",
-      "channel_name": "Energy_Meter_Production",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "06",
-      "channel_name": "Active_Power",
-      "channel_type": "number"
-  },
-  {
-      "channel_id": "07",
-      "channel_name": "Reactive_Power",
-      "channel_type": "number"
-  }
-          ]
-      }
-
-  ]
 }
