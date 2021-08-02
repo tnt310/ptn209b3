@@ -77,9 +77,13 @@ class Gateway(QMainWindow):
         str = 'mqtt'+' '+self.gateway.broker.text()+' '+ self.gateway.id.text()+' '+ self.gateway.username.text()+' '+ self.gateway.password.text()+' '+ self.gateway.mqttport.text()+'\r'
         self.serial.send(str)
     def update_timeout(self):
+        global timeout
         temp = self.gateway.timeout.currentText().split()
-        str = 'timeout'+' '+ temp[0]+'\r'
-        self.serial.send(str)
+        if temp[1] == 'minute':
+            timeout = 'timeout'+' '+ str(int(temp[0])*60) +'\r'
+        elif temp[1] == 'second':
+            timeout = 'timeout'+' '+temp[0]+'\r'
+        self.serial.send(timeout)
     def update_apikey(self):
         str = 'apikey'+' '+ self.gateway.apikey.text()+'\r'
         print(str)
@@ -158,6 +162,7 @@ class Gateway(QMainWindow):
     def send_provision(self):
         str = 'provision\r'
         self.serial.send(str)
+        print(self.serial.receive())
         self.control.provision.setStyleSheet("background-color:rgb(255, 223, 183)")
         self.control.telemetryon.setStyleSheet("background-color:rgb(255, 255, 255)")
         self.control.telemetryoff.setStyleSheet("background-color:rgb(255, 255, 255)")

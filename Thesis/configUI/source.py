@@ -16,8 +16,8 @@ import paho.mqtt.client as mqttclient
 class Serial(QtSerialPort.QSerialPort,Ui_logingateway):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.serial = QtSerialPort.QSerialPort(self)
-
+        self.serial = QtSerialPort.QSerialPort(self,readyRead=self.receive)
+        self.control = Ui_telemetry()
     @QtCore.pyqtSlot()
     def openport(self,portname,baudrate):
         self.serial.setPortName(portname)
@@ -28,6 +28,30 @@ class Serial(QtSerialPort.QSerialPort,Ui_logingateway):
     def send(self,string):
         self.serial.write(string.encode())
 
+    @QtCore.pyqtSlot()
+    def receive(self):
+        while self.serial.canReadLine():
+            text = self.serial.readLine().data().decode()
+            text = text.rstrip('\n')
+            print(str(text))
+            # if text == 'provision':
+            #     print('provision')
+            # elif text == 'on':
+            #     print('telemetry on')
+            # elif text == 'off':
+            #     print('telemetry off')
+            # elif text == 'port0':
+            #     print('port 0')
+            # elif text == 'port1':
+            #     print('port 1')
+            # elif text == 'network':
+            #     print('network')
+            # elif text == 'mqtt':
+            #     print('mqtt')
+            # elif text == 'timeout':
+            #     print('timeout')
+            # elif text == 'apikey':
+            #     print('apikey')
 class Dialog(QtWidgets.QDialog):
     def __init__(self, parent=None):
         super(Dialog, self).__init__(parent)
