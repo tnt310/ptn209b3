@@ -1,4 +1,5 @@
 import sqlite3
+from time import sleep
 from PyQt5 import QtCore, QtWidgets, QtSerialPort
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QApplication,QMainWindow
@@ -109,17 +110,16 @@ class Gateway(QMainWindow):
         dialog = Dialog()
         dialog.exec_()
         if dialog.check_button() == True:
-            print('DIEU KIEN TRUE')
-            # port,slave,func,channel,datatype,devicetype,devicename,channeltitle,valuetype,scale = dialog.save()
-            # self.database.insert(port,slave,func[0],channel,datatype,devicetype,devicename,channeltitle,valuetype,scale)
-            # self.loadData()
+            port,slave,func,channel,datatype,devicetype,devicename,channeltitle,valuetype,scale = dialog.save()
+            self.database.insert(port,slave,func[0],channel,datatype,devicetype,devicename,channeltitle,valuetype,scale)
+            self.loadData()
 
     def updateDevice(self,port,slave,func,channel,datatype,devicetype,devicename,title,valuetype,scale):
         device = 'device'+' '+ port+' '+ slave+' '+ func+' '+ channel\
                   +' '+ devicetype+' '+ devicename+' '+ title+' '+ valuetype\
                   +' '+ datatype+' '+ scale+'\r'
         print(device)
-        self.serial.send(device)
+        # self.serial.send(device)
     def deleteChannel(self):
         row = self.device.table.currentIndex().row()
         print(row)
@@ -162,7 +162,6 @@ class Gateway(QMainWindow):
     def send_provision(self):
         str = 'provision\r'
         self.serial.send(str)
-        print(self.serial.receive())
         self.control.provision.setStyleSheet("background-color:rgb(255, 223, 183)")
         self.control.telemetryon.setStyleSheet("background-color:rgb(255, 255, 255)")
         self.control.telemetryoff.setStyleSheet("background-color:rgb(255, 255, 255)")

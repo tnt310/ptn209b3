@@ -33,7 +33,7 @@ class Serial(QtSerialPort.QSerialPort,Ui_logingateway):
         while self.serial.canReadLine():
             text = self.serial.readLine().data().decode()
             text = text.rstrip('\n')
-            print(str(text))
+            # print(str(text))
             # if text == 'provision':
             #     print('provision')
             # elif text == 'on':
@@ -52,17 +52,18 @@ class Serial(QtSerialPort.QSerialPort,Ui_logingateway):
             #     print('timeout')
             # elif text == 'apikey':
             #     print('apikey')
+
 class Dialog(QtWidgets.QDialog):
     def __init__(self, parent=None):
         super(Dialog, self).__init__(parent)
         self.ui = Ui_slavesetting()
         self.ui.setupUi(self)
         self.ui.save.clicked.connect(self.check_button)
-        # self.ui.save.clicked.connect(self.save)
+        self.ui.save.clicked.connect(self.save)
 
     def check_button(self):
         if self.ui.save.isChecked:
-            print('DA NHAN NUT')
+            return True
             # self.ui.save.setEnabled(False)
 
     def save(self):
@@ -70,7 +71,6 @@ class Dialog(QtWidgets.QDialog):
             self.ui.devicechannel.text(),self.ui.datatype.currentText(),\
             self.ui.devicetype.currentText(),self.ui.devicename.text(),self.ui.channeltitle.text(),\
             self.ui.valuetype.currentText(),self.ui.scale.currentText()
-
 #--------------------------------------------------------------------------------------#
 class WarningDialog(QtWidgets.QDialog):
     def __init__(self, parent=None):

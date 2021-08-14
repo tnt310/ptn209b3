@@ -144,13 +144,6 @@ class Ui_telemetry(object):
         font.setPointSize(10)
         self.telemetryoff.setFont(font)
         self.telemetryoff.setObjectName("telemetryoff")
-        self.groupBox_3 = QtWidgets.QGroupBox(self.seial_workspace)
-        self.groupBox_3.setGeometry(QtCore.QRect(10, 260, 811, 381))
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setUnderline(False)
-        self.groupBox_3.setFont(font)
-        self.groupBox_3.setObjectName("groupBox_3")
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.scrollArea)
         telemetry.setCentralWidget(self.centralwidget)
@@ -173,7 +166,6 @@ class Ui_telemetry(object):
         self.provision.setText(_translate("telemetry", "SEND PROVISION"))
         self.telemetryon.setText(_translate("telemetry", "SEND TELEMETRY"))
         self.telemetryoff.setText(_translate("telemetry", "OFF TELEMETRY"))
-        self.groupBox_3.setTitle(_translate("telemetry", "Response from server"))
 
 
 if __name__ == "__main__":

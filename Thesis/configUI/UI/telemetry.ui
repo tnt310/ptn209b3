@@ -338,25 +338,6 @@
           </property>
          </widget>
         </widget>
-        <widget class="QGroupBox" name="groupBox_3">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>260</y>
-           <width>811</width>
-           <height>381</height>
-          </rect>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>12</pointsize>
-           <underline>false</underline>
-          </font>
-         </property>
-         <property name="title">
-          <string>Response from server</string>
-         </property>
-        </widget>
        </widget>
       </widget>
      </widget>
